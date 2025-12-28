@@ -1,10 +1,10 @@
 [gd_scene load_steps=5 format=3 uid="uid://npc00001"]
 
-[ext_resource type="Script" path="res://scripts/npc.gd" id="1_npc"]
-[ext_resource type="Texture2D" uid="uid://tile0121" path="res://assets/sprites/Tiles/tile_0121.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://dijsfvs7gwoig" path="res://scripts/npc.gd" id="1_npc"]
+[ext_resource type="Texture2D" uid="uid://c27376e1uqkjb" path="res://assets/sprites/Tiles/tile_0121.png" id="2_sprite"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
-size = Vector2(42, 42)
+[sub_resource type="CircleShape2D" id="CircleShape2D_abqhh"]
+radius = 14.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
 radius = 64.0
@@ -13,16 +13,16 @@ radius = 64.0
 script = ExtResource("1_npc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_sprite")
 texture_filter = 1
 scale = Vector2(3, 3)
+texture = ExtResource("2_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_body")
+position = Vector2(0, 11)
+shape = SubResource("CircleShape2D_abqhh")
 
 [node name="InteractionZone" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
 shape = SubResource("CircleShape2D_zone")
@@ -32,5 +32,5 @@ offset_left = -20.0
 offset_top = -45.0
 offset_right = 20.0
 offset_bottom = -25.0
-horizontal_alignment = 1
 text = "E"
+horizontal_alignment = 1

@@ -1,18 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://player001"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
-[ext_resource type="Texture2D" uid="uid://tile0112" path="res://assets/sprites/Tiles/tile_0112.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://diimyieeyd0se" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://b2uucxef5kvhp" path="res://assets/sprites/Tiles/tile_0112.png" id="2_sprite"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
-size = Vector2(42, 42)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_g2els"]
+radius = 13.0
+height = 36.0
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_player")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_sprite")
 texture_filter = 1
 scale = Vector2(3, 3)
+texture = ExtResource("2_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_player")
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_g2els")
