@@ -2,6 +2,9 @@ extends CanvasLayer
 
 ## Dialogue box UI for displaying NPC conversations
 
+signal dialogue_started
+signal dialogue_ended
+
 @onready var panel: Panel = $Panel
 @onready var name_label: Label = $Panel/NameLabel
 @onready var text_label: Label = $Panel/TextLabel
@@ -49,6 +52,7 @@ func start_dialogue(npc_id: String) -> void:
 	_show_current_line()
 	show_dialogue()
 	GameManager.start_dialogue()
+	dialogue_started.emit()
 
 func advance() -> void:
 	current_line_index += 1
@@ -62,6 +66,7 @@ func end_dialogue() -> void:
 	current_lines = []
 	current_line_index = 0
 	GameManager.end_dialogue()
+	dialogue_ended.emit()
 
 func _show_current_line() -> void:
 	if current_line_index < current_lines.size():
