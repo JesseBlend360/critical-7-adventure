@@ -1,0 +1,26 @@
+{
+  "sage": {
+    "name": "Sage",
+    "lines": [
+      "Welcome to the AI Initiative.",
+      "Before we build anything, we need to understand the business case.",
+      "What problem are we really trying to solve?"
+    ]
+  },
+  "delta": {
+    "name": "Delta",
+    "lines": [
+      "Ah, you're the new lead.",
+      "I hope you're ready to talk about data quality.",
+      "Because nobody else around here wants to."
+    ]
+  },
+  "nova": {
+    "name": "Nova",
+    "lines": [
+      "Hey! I've been prototyping something cool.",
+      "Check this out - it's not production-ready but...",
+      "Actually, nothing I make is production-ready. That's my brand."
+    ]
+  }
+}
