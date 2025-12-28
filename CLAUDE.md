@@ -46,12 +46,12 @@ godot --headless --export-release "Web" build/index.html
 ## Key Mechanics
 
 - Player movement: 8 directions at ~200 px/sec, disabled during dialogue
-- NPC interaction: Area2D detects player proximity, shows "Press E to talk" prompt
-- Dialogue flow: Press E/Space to start and advance dialogue, box closes after final line
+- NPC interaction: Area2D detects player proximity, shows "[space]" prompt
+- Dialogue flow: Press Space to start and advance dialogue, box closes after final line
 
 ## Controls
 
 | Action | Keys |
 |--------|------|
 | Move | WASD / Arrow keys |
-| Interact | E / Space |
+| Interact | Space / E |

@@ -13,7 +13,7 @@ script = ExtResource("1_main")
 
 [node name="NPCs" type="Node2D" parent="."]
 y_sort_enabled = true
-position = Vector2(-1, -2)
+position = Vector2(-2, -2)
 
 [node name="Sage" parent="NPCs" instance=ExtResource("4_npc")]
 position = Vector2(150, 150)

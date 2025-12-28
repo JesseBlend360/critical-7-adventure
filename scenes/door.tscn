@@ -35,5 +35,5 @@ offset_left = -20.0
 offset_top = -45.0
 offset_right = 20.0
 offset_bottom = -25.0
-text = "E"
+text = "[space]"
 horizontal_alignment = 1
