@@ -1,0 +1,83 @@
+{
+  "tiers": {
+    "catastrophic": {
+      "title": "Project Abandoned",
+      "subtitle": "Another one for the graveyard",
+      "narratives": {
+        "budget": "The money ran out before the project could deliver anything meaningful. In the post-mortem, everyone agreed that someone else should have seen it coming. No one mentioned your name specifically. That was almost worse.",
+        "time": "Week 16 came and went. The deadline wasn't so much missed as obliterated. Harry didn't say anything when you passed him in the hallway. He didn't have to.",
+        "scores": "Some things can't be fixed. The data was too broken, the team too burned out, the stakeholders too alienated. Project Atlas joins Falcon, SmartRoute, and 'The Chatbot' in the Nexus Dynamics hall of cautionary tales."
+      },
+      "closing": "They're bringing in someone new next quarter. Someone who 'really understands AI transformation.' You've heard that before.",
+      "chip_line": "Well. That happened. I'll just... update my training data. For the next person."
+    },
+    "partial_failure": {
+      "title": "Partial Delivery",
+      "subtitle": "Not quite what anyone hoped for",
+      "narrative": "The project shipped something. It works, mostly, in controlled conditions. Nobody calls it a failure to your face, but nobody calls it a success either. The demo that wowed executives in Week 8 quietly disappeared from the quarterly review.",
+      "closing": "Harry nods when he sees you. It's not warm, but it's not cold either. You're allowed to stay. For now.",
+      "chip_line": "We delivered... something. That's more than most AI projects can say. The bar is very low. I've checked."
+    },
+    "mixed": {
+      "title": "Mixed Results",
+      "subtitle": "The realistic outcome",
+      "narrative": "Some wins, some losses. The data pipeline actually works now - Delta reluctantly admits you did okay there. The strategic alignment is... in progress. The team is tired but intact. It's messy and incomplete, exactly like real projects always are.",
+      "closing": "Harry invites you to his office for the quarterly review. 'You didn't break anything,' he says. For Harry, that's practically effusive praise.",
+      "chip_line": "Against considerable odds, we're still here. I've updated my probability models. You're slightly more competent than the baseline."
+    },
+    "success": {
+      "title": "Project Success",
+      "subtitle": "It actually worked",
+      "narrative": "Project Atlas is in production. Real users, real data, real impact. The $4.2M annual savings target? You hit $3.8M, which accounting rounded up 'for optics.' Nova's prototype became a real product. Delta's data actually flows where it's supposed to.",
+      "closing": "Harry shakes your hand at the all-hands meeting. 'You did what nobody else could,' he says. His voice catches slightly. 'Thank you.'",
+      "chip_line": "I... I don't have a snappy comment for this. You actually did it. My training data has no precedent."
+    },
+    "exceptional": {
+      "title": "Exceptional Success",
+      "subtitle": "The 10% that makes it",
+      "narrative": "You didn't just deliver an AI project. You changed how Nexus Dynamics thinks about AI. The Critical 7 framework you developed is now being taught to other teams. Congo's still bigger, but they're watching now. They're worried.",
+      "closing": "Harry promotes you to Chief AI Officer. 'I didn't think this was possible,' he admits. 'I thought AI was just another buzzword that would fail like all the others. You proved me wrong.' He smiles - actually smiles. 'Don't let it go to your head.'",
+      "chip_line": "I... need a moment. This isn't supposed to happen. You broke my probability models. In a good way. I think?",
+      "special": {
+        "harry_champion": "Harry personally presents you at the board meeting. 'This is what leadership looks like,' he tells them. After 37 years, he's finally found his successor."
+      }
+    }
+  },
+  "score_summaries": {
+    "strategy": {
+      "high": "Business alignment was exceptional. Executives actually understood the value.",
+      "medium": "Strategic alignment was decent. The business case held together.",
+      "low": "The business case never quite landed. Too much AI, not enough ROI."
+    },
+    "data": {
+      "high": "Data foundations are rock solid. Delta is actually optimistic now.",
+      "medium": "Data quality improved. Not perfect, but workable.",
+      "low": "The data problems were never really solved. They just got papered over."
+    },
+    "technical": {
+      "high": "The architecture will scale. Nova's proud of what the team built.",
+      "medium": "The technical approach is sound enough. It works, mostly.",
+      "low": "Technical debt is piling up. This won't age well."
+    },
+    "innovation": {
+      "high": "The team tried new things and some of them actually worked.",
+      "medium": "Innovation was... adequate. Nothing revolutionary, but functional.",
+      "low": "No one took any risks. The safest path was also the least impactful."
+    },
+    "change": {
+      "high": "The organization actually changed. People use the new tools by choice.",
+      "medium": "Change happened, slowly. Adoption is growing.",
+      "low": "The humans didn't change. They're still doing things the old way, just with extra steps."
+    },
+    "talent": {
+      "high": "The team grew. Skills developed. People are excited about what's next.",
+      "medium": "The team survived. Some learned new things. Some are job hunting.",
+      "low": "The team is burned out. Two resignations are already on HR's desk."
+    },
+    "trust": {
+      "high": "Stakeholder confidence is high. You're the person they call first now.",
+      "medium": "Trust was... maintained. No bridges burned, none really built either.",
+      "low": "Nobody trusts the project anymore. Or you. Meetings got very quiet."
+    }
+  }
+}

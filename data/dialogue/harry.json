@@ -1,0 +1,283 @@
+{
+  "character": {
+    "name": "Harry Vance",
+    "role": "CEO & Founder"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "text": "So. You're the new consultant. The one who's going to 'transform our AI strategy.'",
+          "speaker": "npc",
+          "next": "intro_2"
+        },
+        "intro_2": {
+          "text": "I've heard that pitch before. Three times, actually. Falcon. SmartRoute. That chatbot thing.",
+          "speaker": "npc",
+          "next": "intro_3"
+        },
+        "intro_3": {
+          "text": "Tell me something. What makes you different from the last three people who failed?",
+          "speaker": "npc",
+          "choices": [
+            {
+              "text": "I'll be honest with you, even when it's hard to hear.",
+              "effects": { "trust": 10, "strategy": 5 },
+              "flags": { "set": ["harry_honesty"] },
+              "next": "response_honest"
+            },
+            {
+              "text": "I have a proven framework - the Critical 7.",
+              "effects": { "strategy": 5, "trust": -5 },
+              "next": "response_framework"
+            },
+            {
+              "text": "I don't know yet. But I'll figure it out.",
+              "effects": { "trust": 5, "innovation": 5 },
+              "next": "response_humble"
+            },
+            {
+              "text": "Those projects failed because of execution, not vision. I execute.",
+              "effects": { "trust": -10, "strategy": -5 },
+              "next": "response_arrogant"
+            }
+          ]
+        },
+        "response_honest": {
+          "text": "Honesty. That's... refreshing. The last consultant told me we'd have AI predicting demand by month two. We didn't.",
+          "speaker": "npc",
+          "next": "response_honest_2"
+        },
+        "response_honest_2": {
+          "text": "Fine. You have 16 weeks and $750,000. Don't waste either.",
+          "speaker": "npc",
+          "effects": { "set_flags": ["met_harry"] },
+          "next": "closing"
+        },
+        "response_framework": {
+          "text": "A framework. Everyone has a framework. Frameworks don't ship products.",
+          "speaker": "npc",
+          "next": "response_framework_2"
+        },
+        "response_framework_2": {
+          "text": "But fine. Show me what this 'Critical 7' can do. 16 weeks. $750K. Make it count.",
+          "speaker": "npc",
+          "effects": { "set_flags": ["met_harry"] },
+          "next": "closing"
+        },
+        "response_humble": {
+          "text": "At least you're not promising me the moon. I've had enough of that.",
+          "speaker": "npc",
+          "next": "response_humble_2"
+        },
+        "response_humble_2": {
+          "text": "Figure it out fast. 16 weeks. $750,000. The board is watching.",
+          "speaker": "npc",
+          "effects": { "set_flags": ["met_harry"] },
+          "next": "closing"
+        },
+        "response_arrogant": {
+          "text": "Execute? Those other consultants 'executed' too. Right into a wall.",
+          "speaker": "npc",
+          "next": "response_arrogant_2"
+        },
+        "response_arrogant_2": {
+          "text": "You want to prove you're different? Actions, not words. 16 weeks. $750K. Don't disappoint me.",
+          "speaker": "npc",
+          "effects": { "set_flags": ["met_harry"] },
+          "next": "closing"
+        },
+        "closing": {
+          "text": "Now if you'll excuse me, I have a company to run. Check in with me when you have something to show.",
+          "speaker": "npc"
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "check_state",
+      "nodes": {
+        "check_state": {
+          "text": "You're back. How's the project coming?",
+          "speaker": "npc",
+          "choices": [
+            {
+              "text": "We're making good progress on data foundations.",
+              "conditions": { "score_min": { "data": 10 } },
+              "next": "progress_data"
+            },
+            {
+              "text": "The strategic alignment is coming together.",
+              "conditions": { "score_min": { "strategy": 10 } },
+              "next": "progress_strategy"
+            },
+            {
+              "text": "I need to be honest - we're hitting some challenges.",
+              "next": "challenges"
+            },
+            {
+              "text": "Everything's on track!",
+              "conditions": { "score_max": { "trust": 5 } },
+              "effects": { "trust": -10 },
+              "next": "lying"
+            }
+          ]
+        },
+        "progress_data": {
+          "text": "Data. Yes. Delta mentioned something about that. Said you actually listened to her.",
+          "speaker": "npc",
+          "next": "progress_data_2"
+        },
+        "progress_data_2": {
+          "text": "That's more than the last three leads managed. Keep at it.",
+          "speaker": "npc",
+          "effects": { "trust": 5 }
+        },
+        "progress_strategy": {
+          "text": "Good. I'm tired of AI projects that can't explain their ROI.",
+          "speaker": "npc",
+          "next": "progress_strategy_2"
+        },
+        "progress_strategy_2": {
+          "text": "The board asks questions. It's nice to have answers for once.",
+          "speaker": "npc",
+          "effects": { "trust": 5, "strategy": 5 }
+        },
+        "challenges": {
+          "text": "Challenges. At least you're telling me.",
+          "speaker": "npc",
+          "conditions": { "flags": ["harry_honesty"] },
+          "next": "challenges_honest"
+        },
+        "challenges_honest": {
+          "text": "What do you need? Resources? More time? Tell me straight.",
+          "speaker": "npc",
+          "choices": [
+            {
+              "text": "The team needs more support. Training, maybe a hire.",
+              "effects": { "talent": 5 },
+              "next": "ask_talent"
+            },
+            {
+              "text": "The data infrastructure needs work before we can do anything fancy.",
+              "effects": { "data": 5 },
+              "next": "ask_data"
+            },
+            {
+              "text": "Honestly? I just need you to trust the process.",
+              "effects": { "trust": 10 },
+              "next": "ask_trust"
+            }
+          ]
+        },
+        "ask_talent": {
+          "text": "Training and hiring. That costs money and time. But if it's what you need...",
+          "speaker": "npc",
+          "next": "ask_talent_2"
+        },
+        "ask_talent_2": {
+          "text": "I'll approve it. Don't make me regret it.",
+          "speaker": "npc",
+          "effects": { "talent": 10, "trust": 5 },
+          "flags": { "set": ["harry_approved_talent"] }
+        },
+        "ask_data": {
+          "text": "Data infrastructure. Delta's been saying that for years. Maybe I should have listened.",
+          "speaker": "npc",
+          "next": "ask_data_2"
+        },
+        "ask_data_2": {
+          "text": "Fine. Get it done right this time.",
+          "speaker": "npc",
+          "effects": { "data": 10, "trust": 5 },
+          "flags": { "set": ["harry_approved_data"] }
+        },
+        "ask_trust": {
+          "text": "Trust the process. Everyone says that. And then they fail.",
+          "speaker": "npc",
+          "next": "ask_trust_2"
+        },
+        "ask_trust_2": {
+          "text": "But you've been straight with me so far. Fine. I'll give you space. Just... deliver something.",
+          "speaker": "npc",
+          "effects": { "trust": 15 },
+          "flags": { "set": ["harry_trusting"] }
+        },
+        "lying": {
+          "text": "Is it? Because that's not what I'm hearing.",
+          "speaker": "npc",
+          "next": "lying_2"
+        },
+        "lying_2": {
+          "text": "Don't lie to me. I've been doing this for 37 years. I can smell BS from across the building.",
+          "speaker": "npc",
+          "next": "lying_3"
+        },
+        "lying_3": {
+          "text": "This meeting is over. Come back when you have the truth.",
+          "speaker": "npc",
+          "effects": { "trust": -15 },
+          "flags": { "set": ["harry_distrusts"] }
+        }
+      }
+    },
+    "high_trust": {
+      "trigger_conditions": { "score_min": { "trust": 20 } },
+      "trigger": "return_visit",
+      "start_node": "champion",
+      "nodes": {
+        "champion": {
+          "text": "I've been watching how you work. You're not like the others.",
+          "speaker": "npc",
+          "next": "champion_2"
+        },
+        "champion_2": {
+          "text": "You tell people what they need to hear, not what they want to hear. I respect that.",
+          "speaker": "npc",
+          "next": "champion_3"
+        },
+        "champion_3": {
+          "text": "The board's been asking questions about Project Atlas. Skeptical questions.",
+          "speaker": "npc",
+          "next": "champion_4"
+        },
+        "champion_4": {
+          "text": "I told them to back off. That this one's different.",
+          "speaker": "npc",
+          "effects": { "trust": 10, "strategy": 10 },
+          "flags": { "set": ["harry_champion"] },
+          "next": "champion_5"
+        },
+        "champion_5": {
+          "text": "Don't make me wrong.",
+          "speaker": "npc"
+        }
+      }
+    },
+    "low_trust": {
+      "trigger_conditions": { "score_max": { "trust": -5 } },
+      "trigger": "return_visit",
+      "start_node": "disappointed",
+      "nodes": {
+        "disappointed": {
+          "text": "I've been hearing things. Broken promises. Missed alignments.",
+          "speaker": "npc",
+          "next": "disappointed_2"
+        },
+        "disappointed_2": {
+          "text": "The board is asking why we haven't cut our losses yet.",
+          "speaker": "npc",
+          "next": "disappointed_3"
+        },
+        "disappointed_3": {
+          "text": "I'm giving you one more chance. Prove them wrong.",
+          "speaker": "npc",
+          "effects": { "trust": -5 },
+          "flags": { "set": ["harry_final_warning"] }
+        }
+      }
+    }
+  }
+}

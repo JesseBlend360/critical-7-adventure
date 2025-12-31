@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://hud001"]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+[ext_resource type="PackedScene" uid="uid://chip001" path="res://scenes/chip.tscn" id="3_chip"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_hud")
+
+[node name="TopBar" type="HBoxContainer" parent="."]
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 60.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+
+[node name="BudgetContainer" type="VBoxContainer" parent="TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BudgetLabel" type="Label" parent="TopBar/BudgetContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "$750K / $750K"
+
+[node name="BudgetBar" type="ProgressBar" parent="TopBar/BudgetContainer"]
+custom_minimum_size = Vector2(200, 20)
+layout_mode = 2
+value = 100.0
+show_percentage = false
+
+[node name="WeekContainer" type="VBoxContainer" parent="TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="WeekLabel" type="Label" parent="TopBar/WeekContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "Week 1 / 16"
+horizontal_alignment = 1
+
+[node name="CHIP" parent="." instance=ExtResource("3_chip")]

@@ -1,0 +1,68 @@
+[gd_scene load_steps=2 format=3 uid="uid://chip001"]
+
+[ext_resource type="Script" path="res://scripts/chip.gd" id="1_chip"]
+
+[node name="CHIP" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 150.0
+grow_horizontal = 0
+script = ExtResource("1_chip")
+
+[node name="IconButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -48.0
+offset_bottom = 48.0
+grow_horizontal = 0
+tooltip_text = "Ask CHIP for advice"
+
+[node name="IconLabel" type="Label" parent="IconButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SpeechBubble" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 55.0
+offset_right = 0.0
+offset_bottom = 175.0
+grow_horizontal = 0
+
+[node name="Label" type="Label" parent="SpeechBubble"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "CHIP message here"
+autowrap_mode = 2
+
+[node name="BounceTimer" type="Timer" parent="."]
+one_shot = false
+
+[node name="HideTimer" type="Timer" parent="."]
+one_shot = true

@@ -32,3 +32,9 @@ mono_crash.*.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Downloaded material
+.download/
+
+# Proprietary assets
+p-assets/

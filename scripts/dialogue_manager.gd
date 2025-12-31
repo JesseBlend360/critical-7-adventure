@@ -5,8 +5,9 @@ extends Node
 
 signal dialogue_started(npc_id: String)
 signal node_displayed(node: Dictionary)
-signal choices_presented(choices: Array)
+signal choices_presented(choices: Array)  # Now includes all choices with lock info
 signal dialogue_ended
+signal decision_triggered(decision_id: String)  # When a choice triggers a decision
 
 var dialogue_cache: Dictionary = {}  # Cached dialogue data per NPC
 var current_npc_id: String = ""
@@ -110,29 +111,91 @@ func get_current_node() -> Dictionary:
 	return nodes.get(current_node_id, {})
 
 
-func get_available_choices() -> Array:
+## Get all choices with availability info (for showing locked choices)
+func get_all_choices_with_status() -> Array:
 	var node = get_current_node()
 	if not node.has("choices"):
 		return []
 
-	var available: Array = []
+	var result: Array = []
 	for choice in node["choices"]:
-		# Check conditions for this choice
+		var choice_info = choice.duplicate()
+		choice_info["available"] = true
+		choice_info["failed_requirements"] = []
+
+		# Check legacy conditions (hidden choices)
 		if choice.has("conditions"):
 			if not GameState.check_conditions(choice["conditions"]):
-				continue
-		available.append(choice)
+				choice_info["hidden"] = true
+				continue  # These choices are hidden entirely
 
+		# Check "requires" field (visible but possibly locked)
+		if choice.has("requires"):
+			var check_result = GameState.check_conditions_detailed(choice["requires"])
+			if not check_result["allowed"]:
+				choice_info["available"] = false
+				choice_info["failed_requirements"] = check_result["failed"]
+
+		# Check if adds_decision is possible
+		if choice.has("adds_decision"):
+			var decision_id = choice["adds_decision"]
+			var can_make = DecisionManager.can_make_decision(decision_id)
+			if not can_make["allowed"]:
+				choice_info["available"] = false
+				# Add decision-related failures
+				for reason in can_make["reasons"]:
+					choice_info["failed_requirements"].append({
+						"type": "decision_blocked",
+						"reason": reason
+					})
+
+			# Add cost info for display
+			var decision = DecisionManager.get_decision(decision_id)
+			if not decision.is_empty():
+				choice_info["decision_cost"] = decision.get("cost", {})
+				choice_info["decision_title"] = decision.get("title", "")
+
+		result.append(choice_info)
+
+	return result
+
+
+## Get only available choices (legacy compatibility)
+func get_available_choices() -> Array:
+	var all_choices = get_all_choices_with_status()
+	var available: Array = []
+	for choice in all_choices:
+		if choice.get("available", true) and not choice.get("hidden", false):
+			available.append(choice)
 	return available
 
 
+## Select a choice by index from all visible choices
 func select_choice(index: int) -> void:
-	var choices = get_available_choices()
-	if index < 0 or index >= choices.size():
+	var all_choices = get_all_choices_with_status()
+
+	# Filter to visible choices only (not hidden)
+	var visible_choices: Array = []
+	for choice in all_choices:
+		if not choice.get("hidden", false):
+			visible_choices.append(choice)
+
+	if index < 0 or index >= visible_choices.size():
 		push_error("Invalid choice index: " + str(index))
 		return
 
-	var choice = choices[index]
+	var choice = visible_choices[index]
+
+	# Check if choice is locked
+	if not choice.get("available", true):
+		push_warning("Attempted to select locked choice")
+		return
+
+	# Apply decision if this choice triggers one
+	if choice.has("adds_decision"):
+		var decision_id = choice["adds_decision"]
+		if DecisionManager.make_decision(decision_id):
+			decision_triggered.emit(decision_id)
 
 	# Apply effects from choice
 	if choice.has("effects"):
@@ -216,7 +279,12 @@ func _display_current_node() -> void:
 	# Emit node display signal
 	node_displayed.emit(node)
 
-	# Check for choices
-	var choices = get_available_choices()
-	if choices.size() > 0:
-		choices_presented.emit(choices)
+	# Check for choices - emit all visible choices with status
+	var all_choices = get_all_choices_with_status()
+	var visible_choices: Array = []
+	for choice in all_choices:
+		if not choice.get("hidden", false):
+			visible_choices.append(choice)
+
+	if visible_choices.size() > 0:
+		choices_presented.emit(visible_choices)

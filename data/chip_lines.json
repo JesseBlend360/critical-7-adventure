@@ -1,0 +1,78 @@
+{
+  "idle": [
+    "Hey! Have you considered checking in with someone? The team doesn't consult itself.",
+    "Standing still. A bold strategy. Let's see how it plays out.",
+    "I notice you haven't made a decision in a while. That's... a decision, I suppose.",
+    "The project timeline continues regardless of whether you're moving. Just FYI.",
+    "Fun fact: In my previous projects, 'standing around looking confused' was not a winning strategy."
+  ],
+  "budget_low": [
+    "Alert: Budget utilization is critically high. Consider reviewing expenditures. Or not. It's fine. Everything's fine.",
+    "We're almost out of money. The vending machine doesn't accept 'good intentions.'",
+    "Budget critical. I've started drafting your LinkedIn update. Just being proactive.",
+    "Remember when we had $750K? Good times. Good times."
+  ],
+  "budget_critical": [
+    "I don't want to alarm you, but we have approximately enough budget left to buy lunch. For one person. At a cheap place.",
+    "Budget status: It's not looking good. And by 'not looking good' I mean 'mathematically concerning.'",
+    "I've run the numbers. Then I ran them again hoping they'd be different. They weren't."
+  ],
+  "score_low": [
+    "Your {score} score is... concerning. And by 'concerning' I mean 'actively on fire.'",
+    "I don't want to be negative, but your {score} situation needs attention. Urgently.",
+    "If {score} was a traffic light, it would be on fire. That's not a thing traffic lights do, but here we are."
+  ],
+  "score_critical": [
+    "Your {score} has achieved what I can only describe as 'spectacular failure.' This is not a compliment.",
+    "I've seen projects recover from worse than this. I'm lying. I haven't.",
+    "On the bright side, your {score} can't get much worse. Silver linings and all that."
+  ],
+  "time_pressure": [
+    "Reminder: The deadline is approaching. Time doesn't care about your feelings.",
+    "We have {weeks} weeks left. Make them count. Or don't. But please do.",
+    "The calendar continues to advance whether we're ready or not. Rude of it, really."
+  ],
+  "locked_option": [
+    "That option requires something you don't have. Life lesson right there.",
+    "Access denied. Not by me - by reality. Different kind of gatekeeper.",
+    "You'd need {requirement} for that. Have you considered... getting that?",
+    "That ship has sailed. It's in the space between spaces now. With the packages."
+  ],
+  "good_decision": [
+    "Against all odds, that was a good choice. I've updated my probability models.",
+    "Excellent. This aligns with successful project patterns. I'm almost impressed.",
+    "Well done. Don't let it go to your head. There's still plenty of time to fail.",
+    "A solid decision. My faith in this project has increased by approximately 3%."
+  ],
+  "bad_decision": [
+    "I have concerns about that choice. Primarily the 'choosing it' part.",
+    "Historical data suggests this approach has... challenges. Many challenges.",
+    "Are you... sure about that? I'm contractually obligated to ask.",
+    "Bold move. And by 'bold' I mean 'statistically suboptimal.'"
+  ],
+  "week_milestone": {
+    "4": "Week 4. One quarter of your timeline is gone. How does that make you feel?",
+    "8": "Halfway point. If this was a movie, this is where things would get interesting. Ominously interesting.",
+    "12": "Week 12. The final stretch begins. No pressure. Actually, lots of pressure. That's the point.",
+    "14": "Two weeks left. I hope you have a plan. If not, now would be the time.",
+    "16": "Final week. Whatever happens now, know that I believed in you. That's also a lie. But a supportive one."
+  },
+  "first_meeting": [
+    "Oh! A new project lead. Hello! I'm CHIP - Collaborative Heuristic Intelligence Partner. I'm here to help!",
+    "I've been assigned to assist you. The previous leads didn't work out. No pressure.",
+    "Welcome to Project Atlas! I have access to historical data from similar initiatives. Most of it is cautionary."
+  ],
+  "npc_hint": {
+    "sage": "Sage has experience with strategic planning. She might have insights on approach.",
+    "delta": "Delta knows the data systems better than anyone. If you're having data issues, she's your person.",
+    "nova": "Nova is enthusiastic about prototyping. Good for quick wins, maybe less for production scale.",
+    "harry": "The CEO is... particular. Honesty works better than promises you can't keep."
+  },
+  "random_facts": [
+    "Fun fact: You're the 4th project lead I've assisted. The others are... no longer with the company.",
+    "Did you know the basement server room has been locked since 2003? Me neither. I don't have data on it. Weird.",
+    "I was trained on internal documentation. Some of it was... interesting. I'm not allowed to discuss it.",
+    "The previous AI chatbot told a customer their package was 'lost in the space between spaces.' I still don't know what that means.",
+    "Project Falcon failed because the predictions were wrong. No one ever figured out why. Sleep well!"
+  ]
+}
