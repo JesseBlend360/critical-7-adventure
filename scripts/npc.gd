@@ -1,12 +1,14 @@
-extends StaticBody2D
+extends RigidBody2D
 
 ## NPC character with interaction zone and wandering behavior
 
 @export var npc_id: String = "sage"
-@export var wander_radius: float = 50.0
-@export var wander_speed: float = 30.0
-@export var wait_time_min: float = 2.0
-@export var wait_time_max: float = 5.0
+@export var tile_size: float = 48.0  # 16px * 3x scale
+@export var wander_speed: float = 100.0
+@export var wait_time_min: float = 10.0
+@export var wait_time_max: float = 30.0
+@export var npc_mass: float = 3.0
+@export var npc_friction: float = 5.0
 
 @onready var interaction_zone: Area2D = $InteractionZone
 @onready var prompt_label: Label = $PromptLabel
@@ -15,8 +17,9 @@ var player_in_range: bool = false
 var dialogue_box: Node = null
 var home_position: Vector2
 var wander_timer: Timer
-var wander_tween: Tween
+var wander_target: Vector2
 var is_wandering_paused: bool = false
+var is_moving: bool = false
 
 func _ready() -> void:
 	prompt_label.visible = false
@@ -25,6 +28,13 @@ func _ready() -> void:
 
 	# Store starting position as home
 	home_position = global_position
+	wander_target = global_position
+
+	# Configure RigidBody2D for pushable NPC
+	mass = npc_mass
+	gravity_scale = 0.0  # No gravity (top-down game)
+	lock_rotation = true  # Don't spin when pushed
+	linear_damp = npc_friction  # Friction to slow down
 
 	# Create and start wander timer
 	wander_timer = Timer.new()
@@ -45,9 +55,9 @@ func interact() -> void:
 
 func _pause_wandering() -> void:
 	is_wandering_paused = true
+	is_moving = false
 	wander_timer.stop()
-	if wander_tween and wander_tween.is_valid():
-		wander_tween.kill()
+	linear_velocity = Vector2.ZERO
 
 func _resume_wandering() -> void:
 	is_wandering_paused = false
@@ -72,24 +82,33 @@ func _start_wander_timer() -> void:
 	var wait_time = randf_range(wait_time_min, wait_time_max)
 	wander_timer.start(wait_time)
 
+func _physics_process(_delta: float) -> void:
+	if is_wandering_paused:
+		return
+
+	# Move toward wander target using physics
+	var direction = wander_target - global_position
+	var distance = direction.length()
+
+	if distance > 5.0:
+		# Apply force toward target
+		is_moving = true
+		var force = direction.normalized() * wander_speed * mass
+		apply_central_force(force)
+	else:
+		# Reached target, stop and wait
+		is_moving = false
+		linear_velocity = linear_velocity.lerp(Vector2.ZERO, 0.2)
+
+
 func _on_wander_timer_timeout() -> void:
 	if is_wandering_paused:
 		return
 
-	# Pick random point within wander_radius of home
-	var angle = randf() * TAU
-	var distance = randf() * wander_radius
-	var target_position = home_position + Vector2(cos(angle), sin(angle)) * distance
+	# Pick random cardinal direction and move exactly one tile
+	var directions = [Vector2.UP, Vector2.DOWN, Vector2.LEFT, Vector2.RIGHT]
+	var dir = directions[randi() % 4]
+	wander_target = global_position + dir * tile_size
 
-	# Calculate duration based on distance and speed
-	var move_distance = global_position.distance_to(target_position)
-	var duration = move_distance / wander_speed
-
-	# Kill any existing tween
-	if wander_tween and wander_tween.is_valid():
-		wander_tween.kill()
-
-	# Tween to target position
-	wander_tween = create_tween()
-	wander_tween.tween_property(self, "global_position", target_position, duration)
-	wander_tween.tween_callback(_start_wander_timer)
+	# Start next timer
+	_start_wander_timer()

@@ -3,9 +3,9 @@ extends Node2D
 ## Main scene setup script
 
 @onready var dialogue_box: CanvasLayer = $DialogueBox
-@onready var sage: StaticBody2D = $NPCs/Sage
-@onready var delta: StaticBody2D = $NPCs/Delta
-@onready var nova: StaticBody2D = $NPCs/Nova
+@onready var sage: RigidBody2D = $NPCs/Sage
+@onready var delta: RigidBody2D = $NPCs/Delta
+@onready var nova: RigidBody2D = $NPCs/Nova
 
 func _ready() -> void:
 	# Wire NPCs to dialogue box

@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://npc00001"]
+[gd_scene load_steps=6 format=3 uid="uid://npc00001"]
 
 [ext_resource type="Script" uid="uid://dijsfvs7gwoig" path="res://scripts/npc.gd" id="1_npc"]
 [ext_resource type="Texture2D" uid="uid://c27376e1uqkjb" path="res://assets/sprites/Tiles/tile_0121.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://c0g0l3dgbd014" path="res://scripts/bounce_animator.gd" id="3_bounce"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_abqhh"]
 radius = 14.0
@@ -9,7 +10,7 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
 radius = 64.0
 
-[node name="NPC" type="StaticBody2D"]
+[node name="NPC" type="RigidBody2D"]
 script = ExtResource("1_npc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -34,3 +35,8 @@ offset_right = 28.0
 offset_bottom = -26.0
 text = "[space]"
 horizontal_alignment = 1
+
+[node name="BounceAnimator" type="Node" parent="."]
+script = ExtResource("3_bounce")
+shadow_offset_y = 24.0
+shadow_color = Color(0, 0, 0, 1)
