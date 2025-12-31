@@ -1,0 +1,99 @@
+{
+  "id": "sage",
+  "character": {
+    "name": "Sage",
+    "title": "Strategy Consultant"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Welcome to the AI Initiative.",
+          "next": "business_case"
+        },
+        "business_case": {
+          "speaker": "npc",
+          "text": "Before we build anything, we need to understand the business case. What problem are we really trying to solve?",
+          "choices": [
+            {
+              "text": "I want to learn about AI strategy.",
+              "effects": { "strategy": 5 },
+              "flags": { "set": ["interested_in_strategy"] },
+              "next": "strategy_response"
+            },
+            {
+              "text": "Tell me about ROI calculations.",
+              "effects": { "strategy": 10, "data": 5 },
+              "flags": { "set": ["learned_roi"] },
+              "next": "roi_response"
+            },
+            {
+              "text": "Just exploring for now.",
+              "next": "casual_response"
+            }
+          ]
+        },
+        "strategy_response": {
+          "speaker": "npc",
+          "text": "Excellent mindset! Strategy is about alignment - making sure AI efforts connect to real business value.",
+          "effects": { "strategy": 5 },
+          "next": "closing"
+        },
+        "roi_response": {
+          "speaker": "npc",
+          "text": "Smart thinking. ROI isn't just about cost savings - it's about measuring transformation impact. You're already ahead of most.",
+          "effects": { "strategy": 5 },
+          "flags": { "set": ["sage_impressed"] },
+          "next": "closing"
+        },
+        "casual_response": {
+          "speaker": "npc",
+          "text": "Fair enough. Take your time. When you're ready to talk strategy, you know where to find me.",
+          "next": null
+        },
+        "closing": {
+          "speaker": "npc",
+          "text": "Come back anytime. We have much more to discuss.",
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "welcome_back",
+      "nodes": {
+        "welcome_back": {
+          "speaker": "npc",
+          "text": "Good to see you again. How's your progress?",
+          "choices": [
+            {
+              "text": "I've been talking to the team.",
+              "conditions": { "talked_to": ["delta"] },
+              "effects": { "strategy": 10 },
+              "next": "delta_knowledge"
+            },
+            {
+              "text": "Still figuring things out.",
+              "next": "encouragement"
+            }
+          ]
+        },
+        "delta_knowledge": {
+          "speaker": "npc",
+          "text": "You talked to Delta? Good. Data quality is foundational. Without clean data, even the best AI strategy falls apart.",
+          "effects": { "trust": 5 },
+          "flags": { "set": ["sage_delta_connection"] },
+          "next": null
+        },
+        "encouragement": {
+          "speaker": "npc",
+          "text": "That's normal. AI transformation is complex. Keep asking questions.",
+          "next": null
+        }
+      }
+    }
+  }
+}

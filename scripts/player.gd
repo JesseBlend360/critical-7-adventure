@@ -8,8 +8,9 @@ var can_move: bool = true
 var nearby_npc: Node = null
 
 func _ready() -> void:
-	GameManager.dialogue_started.connect(_on_dialogue_started)
-	GameManager.dialogue_ended.connect(_on_dialogue_ended)
+	# Connect to DialogueManager signals for movement control
+	DialogueManager.dialogue_started.connect(_on_dialogue_started)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 func _physics_process(_delta: float) -> void:
 	if not can_move:
@@ -37,7 +38,7 @@ func clear_nearby_npc(npc: Node) -> void:
 	if nearby_npc == npc:
 		nearby_npc = null
 
-func _on_dialogue_started() -> void:
+func _on_dialogue_started(_npc_id: String) -> void:
 	can_move = false
 
 func _on_dialogue_ended() -> void:

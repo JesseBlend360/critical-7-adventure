@@ -1,0 +1,101 @@
+{
+  "id": "delta",
+  "character": {
+    "name": "Delta",
+    "title": "Data Engineer"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Ah, you're the new lead.",
+          "next": "data_quality"
+        },
+        "data_quality": {
+          "speaker": "npc",
+          "text": "I hope you're ready to talk about data quality. Because nobody else around here wants to.",
+          "choices": [
+            {
+              "text": "Tell me about the data challenges.",
+              "effects": { "data": 10 },
+              "flags": { "set": ["learned_data_challenges"] },
+              "next": "challenges_response"
+            },
+            {
+              "text": "Sage mentioned data is foundational.",
+              "conditions": { "talked_to": ["sage"] },
+              "effects": { "data": 10, "trust": 5 },
+              "next": "sage_connection"
+            },
+            {
+              "text": "I'll come back later.",
+              "next": "dismissive"
+            }
+          ]
+        },
+        "challenges_response": {
+          "speaker": "npc",
+          "text": "Finally, someone who listens! Our data pipelines are a mess. Missing values, inconsistent formats, no documentation. AI can't learn from garbage.",
+          "effects": { "data": 5 },
+          "next": "technical_detail"
+        },
+        "sage_connection": {
+          "speaker": "npc",
+          "text": "So Sage already got to you? Good. At least someone around here understands that strategy without data infrastructure is just wishful thinking.",
+          "effects": { "strategy": 5 },
+          "flags": { "set": ["delta_sage_aligned"] },
+          "next": "technical_detail"
+        },
+        "dismissive": {
+          "speaker": "npc",
+          "text": "Sure. Everyone always comes back... eventually. When their models fail.",
+          "effects": { "expectations_gap": 5 },
+          "next": null
+        },
+        "technical_detail": {
+          "speaker": "npc",
+          "text": "If you want to make real progress, we need to audit the data first. No shortcuts.",
+          "flags": { "set": ["data_audit_mentioned"] },
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "check_in",
+      "nodes": {
+        "check_in": {
+          "speaker": "npc",
+          "text": "Back again. Ready to take data seriously this time?",
+          "choices": [
+            {
+              "text": "What's the status of the data audit?",
+              "conditions": { "flags": ["data_audit_mentioned"] },
+              "effects": { "data": 5, "technical": 5 },
+              "next": "audit_update"
+            },
+            {
+              "text": "Any quick wins we can get?",
+              "next": "quick_wins"
+            }
+          ]
+        },
+        "audit_update": {
+          "speaker": "npc",
+          "text": "I've started documenting the worst offenders. Customer data is the messiest - 40% incomplete records. We need to fix that before any ML work.",
+          "effects": { "data": 5 },
+          "next": null
+        },
+        "quick_wins": {
+          "speaker": "npc",
+          "text": "Quick wins? In data? Ha! ...Actually, we could standardize the date formats. That alone would save hours of preprocessing.",
+          "effects": { "data": 5, "innovation": 5 },
+          "next": null
+        }
+      }
+    }
+  }
+}

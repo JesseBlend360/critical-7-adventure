@@ -35,7 +35,6 @@ text = "NPC Name"
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 10.0
 offset_top = 60.0
 offset_right = -10.0
@@ -44,6 +43,38 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 36
 text = "Dialogue text goes here..."
 autowrap_mode = 2
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 60.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="Choice1" type="Button" parent="Panel/ChoicesContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "[1] Choice 1"
+alignment = 0
+
+[node name="Choice2" type="Button" parent="Panel/ChoicesContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "[2] Choice 2"
+alignment = 0
+
+[node name="Choice3" type="Button" parent="Panel/ChoicesContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 28
+text = "[3] Choice 3"
+alignment = 0
 
 [node name="AdvanceIndicator" type="Label" parent="Panel"]
 layout_mode = 1

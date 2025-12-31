@@ -1,0 +1,104 @@
+{
+  "id": "nova",
+  "character": {
+    "name": "Nova",
+    "title": "ML Engineer"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Hey! I've been prototyping something cool.",
+          "next": "prototype"
+        },
+        "prototype": {
+          "speaker": "npc",
+          "text": "Check this out - it's not production-ready but... Actually, nothing I make is production-ready. That's my brand.",
+          "choices": [
+            {
+              "text": "What are you working on?",
+              "effects": { "innovation": 10, "technical": 5 },
+              "flags": { "set": ["interested_in_prototypes"] },
+              "next": "show_work"
+            },
+            {
+              "text": "Why isn't anything production-ready?",
+              "effects": { "technical": 5 },
+              "next": "production_issues"
+            },
+            {
+              "text": "Delta mentioned data quality issues.",
+              "conditions": { "talked_to": ["delta"] },
+              "effects": { "innovation": 5, "data": 5 },
+              "next": "delta_connection"
+            }
+          ]
+        },
+        "show_work": {
+          "speaker": "npc",
+          "text": "A sentiment analysis model for customer feedback! It's 87% accurate on my test set. The problem is... we don't have a proper test set.",
+          "effects": { "innovation": 5 },
+          "flags": { "set": ["seen_nova_demo"] },
+          "next": "reality_check"
+        },
+        "production_issues": {
+          "speaker": "npc",
+          "text": "Deploying ML is hard! You need monitoring, version control, data pipelines... I'm good at the science part, not the engineering part.",
+          "effects": { "technical": 5 },
+          "next": "reality_check"
+        },
+        "delta_connection": {
+          "speaker": "npc",
+          "text": "Delta? Yeah, they keep telling me my training data is garbage. They're probably right. But the models still do cool stuff!",
+          "effects": { "trust": 5 },
+          "flags": { "set": ["nova_delta_aware"] },
+          "next": "reality_check"
+        },
+        "reality_check": {
+          "speaker": "npc",
+          "text": "I know I need to be more rigorous. It's just... exploration is so much more fun than validation.",
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "excited",
+      "nodes": {
+        "excited": {
+          "speaker": "npc",
+          "text": "Perfect timing! I just tried a new architecture and the results are... interesting.",
+          "choices": [
+            {
+              "text": "Show me what you found.",
+              "effects": { "innovation": 10 },
+              "next": "new_results"
+            },
+            {
+              "text": "Have you validated it properly this time?",
+              "conditions": { "flags": ["seen_nova_demo"] },
+              "effects": { "technical": 10 },
+              "next": "validation_check"
+            }
+          ]
+        },
+        "new_results": {
+          "speaker": "npc",
+          "text": "The new model picks up sarcasm! Well, sometimes. Okay, 60% of the time. But that's better than before!",
+          "effects": { "innovation": 5 },
+          "next": null
+        },
+        "validation_check": {
+          "speaker": "npc",
+          "text": "Actually... yes! Delta helped me set up a proper holdout set. The accuracy dropped to 73% on real data. But at least now I know it's real.",
+          "effects": { "data": 5, "technical": 5, "trust": 10 },
+          "flags": { "set": ["nova_validated"] },
+          "next": null
+        }
+      }
+    }
+  }
+}

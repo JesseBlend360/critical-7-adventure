@@ -3,6 +3,7 @@ extends RigidBody2D
 ## NPC character with interaction zone and wandering behavior
 
 @export var npc_id: String = "sage"
+@export var display_name: String = ""
 @export var tile_size: float = 48.0  # 16px * 3x scale
 @export var wander_speed: float = 100.0
 @export var wait_time_min: float = 10.0
@@ -14,7 +15,6 @@ extends RigidBody2D
 @onready var prompt_label: Label = $PromptLabel
 
 var player_in_range: bool = false
-var dialogue_box: Node = null
 var home_position: Vector2
 var wander_timer: Timer
 var wander_target: Vector2
@@ -43,15 +43,13 @@ func _ready() -> void:
 	add_child(wander_timer)
 	_start_wander_timer()
 
-func set_dialogue_box(box: Node) -> void:
-	dialogue_box = box
-	if dialogue_box:
-		dialogue_box.dialogue_ended.connect(_on_dialogue_ended)
+	# Connect to DialogueManager signals
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 func interact() -> void:
-	if dialogue_box and player_in_range:
+	if player_in_range:
 		_pause_wandering()
-		dialogue_box.start_dialogue(npc_id)
+		DialogueManager.start_conversation(npc_id)
 
 func _pause_wandering() -> void:
 	is_wandering_paused = true
