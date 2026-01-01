@@ -85,6 +85,7 @@ data/
     harry.json
 assets/
   sprites/Tilemap/       # Kenney Tiny Dungeon tileset (16x16)
+p-assets/                # Proprietary assets (gitignored, not in repo)
 docs/
   game_state_and_dialogue.md  # System design spec
 ```
