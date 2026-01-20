@@ -35,7 +35,8 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and is_visible:
+	# Cancel action closes the screen
+	if (event.is_action_pressed("cancel") or event.is_action_pressed("ui_cancel")) and is_visible:
 		hide_screen()
 		get_viewport().set_input_as_handled()
 	elif event is InputEventKey and event.pressed:

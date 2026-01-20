@@ -1,93 +1,147 @@
-[gd_scene load_steps=3 format=3 uid="uid://dialoguebox"]
+[gd_scene load_steps=5 format=3 uid="uid://dialoguebox"]
 
-[ext_resource type="Script" path="res://scripts/dialogue_box.gd" id="1_dialogue"]
-[ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+[ext_resource type="Script" uid="uid://b1f02g0twtrfn" path="res://scripts/dialogue_box.gd" id="1_dialogue"]
+[ext_resource type="FontFile" uid="uid://b1ar1wgvrq8p1" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://ckh6uka1kxbe0" path="res://p-assets/sprites/modern_ui.png" id="3_ui"]
+[ext_resource type="Theme" uid="uid://bfejpav84vi1k" path="res://assets/themes/dialogue_theme.tres" id="4_theme"]
 
 [node name="DialogueBox" type="CanvasLayer"]
 layer = 10
 script = ExtResource("1_dialogue")
 
-[node name="Panel" type="Panel" parent="."]
+[node name="DialoguePanel" type="NinePatchRect" parent="."]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = -180.0
+offset_top = -283.0
 offset_right = -20.0
 offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
+texture = ExtResource("3_ui")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
 
-[node name="NameLabel" type="Label" parent="Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="DialoguePanel"]
 layout_mode = 1
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 55.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 20.0
+offset_right = -14.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialoguePanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NameLabel" type="Label" parent="DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 42
 text = "NPC Name"
 
-[node name="TextLabel" type="Label" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-offset_left = 10.0
-offset_top = 60.0
-offset_right = -10.0
-offset_bottom = -30.0
+[node name="TextLabel" type="Label" parent="DialoguePanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 36
+theme_override_font_sizes/font_size = 32
 text = "Dialogue text goes here..."
 autowrap_mode = 2
 
-[node name="ChoicesContainer" type="VBoxContainer" parent="Panel"]
-visible = false
+[node name="AdvanceIndicator" type="Label" parent="DialoguePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "[Space] ▼"
+
+[node name="ChoicesPanel" type="NinePatchRect" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -250.0
+offset_top = 100.0
+offset_right = 250.0
+offset_bottom = 400.0
+grow_horizontal = 2
+texture = ExtResource("3_ui")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="ChoicesPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 60.0
-offset_right = -10.0
-offset_bottom = -10.0
+anchor_left = 0.028
+anchor_top = 0.040000003
+anchor_right = 0.96800005
+anchor_bottom = 0.95000005
+offset_right = -3.0517578e-05
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
 
-[node name="Choice1" type="Button" parent="Panel/ChoicesContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="ChoicesPanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ChoicesTitle" type="Label" parent="ChoicesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 36
+text = "What will you do?"
+horizontal_alignment = 1
+
+[node name="ChoicesContainer" type="VBoxContainer" parent="ChoicesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("4_theme")
+theme_override_constants/separation = 8
+
+[node name="Choice1" type="Button" parent="ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
 text = "[1] Choice 1"
 alignment = 0
 
-[node name="Choice2" type="Button" parent="Panel/ChoicesContainer"]
+[node name="Choice2" type="Button" parent="ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 text = "[2] Choice 2"
 alignment = 0
 
-[node name="Choice3" type="Button" parent="Panel/ChoicesContainer"]
+[node name="Choice3" type="Button" parent="ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 24
 text = "[3] Choice 3"
 alignment = 0
 
-[node name="AdvanceIndicator" type="Label" parent="Panel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -50.0
-offset_top = -45.0
-offset_right = -15.0
-offset_bottom = -10.0
+[node name="HintLabel" type="Label" parent="ChoicesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 30
-horizontal_alignment = 2
-text = "▼"
+theme_override_font_sizes/font_size = 20
+text = "[Esc] Back to dialogue"
+horizontal_alignment = 1

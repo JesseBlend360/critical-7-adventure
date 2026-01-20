@@ -1,0 +1,48 @@
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bfejpav84vi1k"]
+
+[ext_resource type="Texture2D" uid="uid://ckh6uka1kxbe0" path="res://p-assets/sprites/modern_ui.png" id="1_ui"]
+[ext_resource type="FontFile" uid="uid://b1ar1wgvrq8p1" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xsnil"]
+texture = ExtResource("1_ui")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(60, 13, 24, 22)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_focus"]
+texture = ExtResource("1_ui")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(51, 80, 42, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hover"]
+texture = ExtResource("1_ui")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(51, 80, 42, 16)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_normal"]
+texture = ExtResource("1_ui")
+region_rect = Rect2(18, 21, 11, 9)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_pressed"]
+texture = ExtResource("1_ui")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(60, 14, 24, 21)
+
+[resource]
+default_font = ExtResource("2_font")
+Button/styles/disabled = SubResource("StyleBoxTexture_xsnil")
+Button/styles/focus = SubResource("StyleBoxTexture_focus")
+Button/styles/hover = SubResource("StyleBoxTexture_hover")
+Button/styles/normal = SubResource("StyleBoxTexture_normal")
+Button/styles/pressed = SubResource("StyleBoxTexture_pressed")
