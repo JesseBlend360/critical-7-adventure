@@ -1,100 +1,126 @@
-[gd_scene load_steps=3 format=3 uid="uid://kcta0f2c6mj5"]
+[gd_scene load_steps=4 format=3 uid="uid://kcta0f2c6mj5"]
 
 [ext_resource type="Script" path="res://scripts/status_screen.gd" id="1_status"]
 [ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" path="res://assets/sprites/critical-7-menu.png" id="3_seven"]
 
 [node name="StatusScreen" type="CanvasLayer"]
 layer = 15
+process_mode = 3
 script = ExtResource("1_status")
 
-[node name="Panel" type="Panel" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -280.0
-offset_right = 250.0
-offset_bottom = 280.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBox" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
+[node name="Background" type="ColorRect" parent="."]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 15
+color = Color(0.09, 0.14, 0.24, 0.95)
 
-[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+[node name="Content" type="MarginContainer" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 30
+
+[node name="VBox" type="VBoxContainer" parent="Content"]
 layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="TitleLabel" type="Label" parent="Content/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.9, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 36
-text = "PROJECT ATLAS"
+theme_override_font_sizes/font_size = 48
+text = "THE CRITICAL 7"
 horizontal_alignment = 1
 
-[node name="Separator1" type="HSeparator" parent="Panel/VBox"]
+[node name="SubtitleLabel" type="Label" parent="Content/VBox"]
 layout_mode = 2
-
-[node name="ScoresLabel" type="Label" parent="Panel/VBox"]
-layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 28
-text = "THE CRITICAL 7"
+theme_override_font_sizes/font_size = 24
+text = "Scaling to Production AI"
+horizontal_alignment = 1
 
-[node name="ScoresContainer" type="VBoxContainer" parent="Panel/VBox"]
+[node name="MainContent" type="HBoxContainer" parent="Content/VBox"]
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_constants/separation = 5
+theme_override_constants/separation = 20
 
-[node name="Separator2" type="HSeparator" parent="Panel/VBox"]
-layout_mode = 2
-
-[node name="ResourcesContainer" type="HBoxContainer" parent="Panel/VBox"]
-layout_mode = 2
-theme_override_constants/separation = 30
-
-[node name="BudgetLabel" type="Label" parent="Panel/VBox/ResourcesContainer"]
+[node name="LeftScores" type="VBoxContainer" parent="Content/VBox/MainContent"]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 20
+
+[node name="SevenImage" type="TextureRect" parent="Content/VBox/MainContent"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("3_seven")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="RightScores" type="VBoxContainer" parent="Content/VBox/MainContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 1.0
+theme_override_constants/separation = 15
+
+[node name="Separator" type="HSeparator" parent="Content/VBox"]
+layout_mode = 2
+theme_override_colors/separator_color = Color(0, 0.9, 0.9, 0.3)
+
+[node name="BottomInfo" type="HBoxContainer" parent="Content/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="BudgetLabel" type="Label" parent="Content/VBox/BottomInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "Budget: $750K / $750K"
 
-[node name="WeekLabel" type="Label" parent="Panel/VBox/ResourcesContainer"]
+[node name="WeekLabel" type="Label" parent="Content/VBox/BottomInfo"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "Week: 1 / 16"
+horizontal_alignment = 1
+
+[node name="DecisionCountLabel" type="Label" parent="Content/VBox/BottomInfo"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.7, 0.8, 0.9, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+text = "Decisions: 0"
 horizontal_alignment = 2
 
-[node name="Separator3" type="HSeparator" parent="Panel/VBox"]
+[node name="TrajectoryLabel" type="Label" parent="Content/VBox"]
 layout_mode = 2
-
-[node name="TrajectoryLabel" type="Label" parent="Panel/VBox"]
-layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 22
 text = "UNCERTAIN: The path forward isn't clear yet."
+horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="DecisionCountLabel" type="Label" parent="Panel/VBox"]
+[node name="CloseHint" type="Label" parent="Content/VBox"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.5, 0.6, 0.7, 1)
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 20
-text = "Decisions Made: 0"
+text = "[Tab] Close"
 horizontal_alignment = 1
-
-[node name="CloseButton" type="Button" parent="Panel/VBox"]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 24
-text = "Close [Tab]"
