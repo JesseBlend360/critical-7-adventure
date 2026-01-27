@@ -69,6 +69,15 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "[Space] ▼"
 
+[node name="DimOverlay" type="ColorRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0)
+
 [node name="ChoicesPanel" type="NinePatchRect" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -123,6 +132,7 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "[1] Choice 1"
 alignment = 0
+autowrap_mode = 2
 
 [node name="Choice2" type="Button" parent="ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer"]
 layout_mode = 2
@@ -130,6 +140,7 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "[2] Choice 2"
 alignment = 0
+autowrap_mode = 2
 
 [node name="Choice3" type="Button" parent="ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer"]
 layout_mode = 2
@@ -137,6 +148,7 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 24
 text = "[3] Choice 3"
 alignment = 0
+autowrap_mode = 2
 
 [node name="HintLabel" type="Label" parent="ChoicesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -145,3 +157,44 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 20
 text = "[Esc] Back to dialogue"
 horizontal_alignment = 1
+
+[node name="EffectsPanel" type="NinePatchRect" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 260.0
+offset_top = 100.0
+offset_right = 460.0
+offset_bottom = 168.0
+grow_horizontal = 2
+texture = ExtResource("3_ui")
+region_rect = Rect2(0, 0, 48, 48)
+patch_margin_left = 32
+patch_margin_top = 32
+patch_margin_right = 32
+patch_margin_bottom = 32
+
+[node name="MarginContainer" type="MarginContainer" parent="EffectsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = -4.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 12
+
+[node name="EffectsLabel" type="RichTextLabel" parent="EffectsPanel/MarginContainer"]
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_font")
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "+3 Strategy"
+fit_content = true
+scroll_active = false

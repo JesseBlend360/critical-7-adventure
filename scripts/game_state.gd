@@ -8,6 +8,7 @@ signal budget_changed(new_budget: int, old_budget: int)
 signal week_changed(new_week: int)
 signal decision_made(decision_id: String)
 signal game_over(reason: String)
+signal score_changed(score_name: String, change: int, new_value: int)
 
 # The Critical 7 Scores
 var scores: Dictionary = {
@@ -42,7 +43,9 @@ func apply_effects(effects: Dictionary) -> void:
 	# Apply score changes
 	for score_name in scores.keys():
 		if effects.has(score_name):
-			scores[score_name] += effects[score_name]
+			var change = effects[score_name]
+			scores[score_name] += change
+			score_changed.emit(score_name, change, scores[score_name])
 
 	# Apply expectations_gap change
 	if effects.has("expectations_gap"):

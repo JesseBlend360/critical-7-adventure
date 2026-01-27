@@ -9,7 +9,10 @@ extends CanvasLayer
 @onready var text_label: Label = $DialoguePanel/MarginContainer/VBoxContainer/TextLabel
 @onready var advance_indicator: Label = $DialoguePanel/MarginContainer/VBoxContainer/AdvanceIndicator
 
+@onready var dim_overlay: ColorRect = $DimOverlay
 @onready var choices_panel: NinePatchRect = $ChoicesPanel
+@onready var effects_panel: NinePatchRect = $EffectsPanel
+@onready var effects_label: RichTextLabel = $EffectsPanel/MarginContainer/EffectsLabel
 @onready var choices_title: Label = $ChoicesPanel/MarginContainer/VBoxContainer/ChoicesTitle
 @onready var choices_container: VBoxContainer = $ChoicesPanel/MarginContainer/VBoxContainer/ChoicesContainer
 @onready var choice_buttons: Array[Button] = [
@@ -27,6 +30,10 @@ var selected_choice_index: int = 0
 
 # Colors for requirement display
 const COLOR_LOCKED = Color(0.5, 0.5, 0.5)
+const DIM_OPACITY = 0.6
+const DIM_FADE_DURATION = 0.2
+
+var dim_tween: Tween
 
 
 func _ready() -> void:
@@ -42,6 +49,8 @@ func _ready() -> void:
 	for i in range(choice_buttons.size()):
 		var button = choice_buttons[i]
 		button.pressed.connect(_on_choice_pressed.bind(i))
+		button.focus_entered.connect(_on_choice_focus_entered.bind(i))
+		button.mouse_entered.connect(_on_choice_mouse_entered.bind(i))
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -166,6 +175,16 @@ func _on_choice_pressed(index: int) -> void:
 	DialogueManager.select_choice(index)
 
 
+func _on_choice_focus_entered(index: int) -> void:
+	if showing_choices:
+		_set_selected_choice(index)
+
+
+func _on_choice_mouse_entered(index: int) -> void:
+	if showing_choices and choice_buttons[index].visible:
+		_set_selected_choice(index)
+
+
 func _populate_choices(choices: Array) -> void:
 	# Hide all buttons first
 	for button in choice_buttons:
@@ -251,8 +270,20 @@ func _show_choices_panel() -> void:
 	showing_choices = true
 	choices_panel.visible = true
 	advance_indicator.text = "[Esc] Back"
+	# Fade in the dim overlay
+	_fade_dim_overlay(DIM_OPACITY)
 	# Select first available choice
 	_select_first_available_choice()
+
+
+func _fade_dim_overlay(target_alpha: float) -> void:
+	if dim_tween:
+		dim_tween.kill()
+	dim_overlay.visible = true
+	dim_tween = create_tween()
+	dim_tween.tween_property(dim_overlay, "color:a", target_alpha, DIM_FADE_DURATION)
+	if target_alpha == 0.0:
+		dim_tween.tween_callback(func(): dim_overlay.visible = false)
 
 
 func _select_first_available_choice() -> void:
@@ -289,11 +320,69 @@ func _set_selected_choice(index: int) -> void:
 			choice_buttons[i].grab_focus()
 		elif choice_buttons[i].visible:
 			choice_buttons[i].release_focus()
+	# Update effects panel
+	_update_effects_panel(index)
+
+
+func _update_effects_panel(index: int) -> void:
+	if index < 0 or index >= current_choices.size():
+		effects_panel.visible = false
+		return
+
+	var choice = current_choices[index]
+	if not choice.has("effects") or choice["effects"].is_empty():
+		effects_panel.visible = false
+		return
+
+	var effects_text = _format_effects(choice["effects"])
+	if effects_text.is_empty():
+		effects_panel.visible = false
+		return
+
+	effects_label.text = effects_text
+	effects_panel.visible = true
+
+	# Position the effects panel at the same Y as the selected button
+	# Use call_deferred to ensure button layout is complete
+	_position_effects_panel.call_deferred(index)
+
+
+func _position_effects_panel(index: int) -> void:
+	if index < 0 or index >= choice_buttons.size():
+		return
+	var button = choice_buttons[index]
+	if not button.visible:
+		return
+	# Get button's global Y position
+	var button_y = button.global_position.y
+	# Calculate required height based on label content + margins
+	var label_height = effects_label.get_content_height()
+	var panel_height = label_height + 24 + 64  # margins (12*2) + nine-patch padding
+	# Position effects panel Y to align with button
+	effects_panel.offset_top = button_y
+	effects_panel.offset_bottom = button_y + panel_height
+
+
+func _format_effects(effects: Dictionary) -> String:
+	var lines: Array = []
+
+	for key in effects.keys():
+		var value = effects[key]
+		if value is int or value is float:
+			var score_name = key.capitalize()
+			if value > 0:
+				lines.append("[color=#228b22]+%d %s[/color]" % [value, score_name])
+			elif value < 0:
+				lines.append("[color=red]%d %s[/color]" % [value, score_name])
+
+	return "\n".join(lines)
 
 
 func _hide_choices_panel() -> void:
 	showing_choices = false
 	choices_panel.visible = false
+	effects_panel.visible = false
+	_fade_dim_overlay(0.0)
 	_update_advance_indicator()
 
 
@@ -311,7 +400,12 @@ func show_dialogue() -> void:
 
 func hide_dialogue() -> void:
 	dialogue_panel.visible = false
+	if dim_tween:
+		dim_tween.kill()
+	dim_overlay.visible = false
+	dim_overlay.color.a = 0.0
 	choices_panel.visible = false
+	effects_panel.visible = false
 	is_active = false
 	has_choices = false
 	showing_choices = false

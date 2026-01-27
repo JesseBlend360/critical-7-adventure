@@ -2,6 +2,51 @@
 
 All notable changes to Critical 7 will be documented in this file.
 
+## [Unreleased] - UI Polish & Furniture
+
+### Added
+
+#### UI Improvements
+- **Pixel art dialogue system** using LimeZu's Modern UI spritesheet
+  - NinePatchRect panels with 9-slice scaling for dialogue and choices
+  - Two-panel system: DialoguePanel (bottom) and ChoicesPanel (center popup)
+  - StyleBoxTexture theme for button states (normal, hover, focus, pressed, disabled)
+  - Keyboard navigation for choices (arrow keys + focus highlight)
+  - `patch_margin: 32` for proper pixel scaling
+
+- **Cancel action** (`cancel` input mapped to ESC)
+  - ESC closes dialogue when not at choice point
+  - ESC goes back from choices panel to dialogue
+  - ESC closes status screen
+
+- **UI System Documentation** (`docs/ui_system.md`)
+  - Comprehensive guide to UI architecture
+  - Sprite region references for modern_ui.png
+  - Container pattern documentation
+  - Theme system documentation
+
+#### Furniture
+- **Office Chair** (`scenes/furniture/office_chair.tscn`, `scripts/office_chair.gd`)
+  - RigidBody2D pushable furniture
+  - Spin interaction (press E/Space when nearby)
+  - 4-direction sprites that cycle during spin
+  - Physics-based momentum and friction
+
+### Changed
+- **DialogueBox** refactored for two-panel system
+  - Separate DialoguePanel and ChoicesPanel NinePatchRects
+  - Arrow key navigation with wrap-around
+  - First available choice auto-focused when panel opens
+  - Space/Enter selects currently highlighted choice
+
+- **Player** can push RigidBody2D objects
+  - Uses `apply_central_force` with player's movement direction
+  - Only applies force when actively moving
+
+- **StatusScreen** responds to `cancel` action
+
+---
+
 ## [Unreleased] - PRD v0.2: Decisions & Game Loop
 
 ### Added
