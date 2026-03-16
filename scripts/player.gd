@@ -7,6 +7,7 @@ extends CharacterBody2D
 
 var can_move: bool = true
 var nearby_npc: Node = null
+var nearby_chip: Node = null
 
 func _ready() -> void:
 	# Connect to DialogueManager signals for movement control
@@ -41,12 +42,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and can_move and nearby_npc:
 		nearby_npc.interact()
 
+func _is_chip(node: Node) -> bool:
+	return node is Node2D and node.has_method("show_locked_message")
+
 func set_nearby_npc(npc: Node) -> void:
-	nearby_npc = npc
+	if _is_chip(npc):
+		nearby_chip = npc
+		if nearby_npc == null:
+			nearby_npc = npc
+	else:
+		nearby_npc = npc
 
 func clear_nearby_npc(npc: Node) -> void:
+	if _is_chip(npc):
+		nearby_chip = null
 	if nearby_npc == npc:
-		nearby_npc = null
+		# Fall back to CHIP if it's still in range
+		nearby_npc = nearby_chip
 
 func _on_dialogue_started(_npc_id: String) -> void:
 	can_move = false
