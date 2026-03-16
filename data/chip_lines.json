@@ -66,8 +66,27 @@
     "sage": "Sage has experience with strategic planning. She might have insights on approach.",
     "delta": "Delta knows the data systems better than anyone. If you're having data issues, she's your person.",
     "nova": "Nova is enthusiastic about prototyping. Good for quick wins, maybe less for production scale.",
-    "harry": "The CEO is... particular. Honesty works better than promises you can't keep."
+    "harry": "The CEO is... particular. Honesty works better than promises you can't keep.",
+    "rex": "Rex keeps the servers running. All of them. By himself. He might appreciate someone asking about infrastructure.",
+    "morgan": "Morgan handles internal comms. If you want people to actually use the AI tools, she's essential.",
+    "casey": "Casey runs Learning & Development. Training attendance is... low. She has ideas about fixing that."
   },
+  "terminal": [
+    "A company-wide email. Powerful. Also terrifying. Have you talked to Morgan about comms strategy?",
+    "Mass communication: the nuclear option of organizational change. Use wisely.",
+    "Remember Project Falcon? One badly worded email and two people quit. Just... keep that in mind.",
+    "Sending messages without a comms plan is like juggling chainsaws. Impressive if it works. Usually doesn't.",
+    "Morgan knows how to frame these things. I'm just saying. Not judging. Okay, maybe judging a little."
+  ],
+  "terminal_sent_prepared": [
+    "That message went out with Morgan's blessing. Smart move. The org actually trusts this one.",
+    "Professional. Clear. Well-timed. Morgan's fingerprints are all over this. In a good way."
+  ],
+  "terminal_sent_unprepared": [
+    "You sent that without Morgan's input. Bold. I've updated my risk models accordingly.",
+    "Message sent. No comms plan. This is how Falcon started. I'm sure it'll be different this time.",
+    "Morgan is going to have feelings about this. Strong ones."
+  ],
   "random_facts": [
     "Fun fact: You're the 4th project lead I've assisted. The others are... no longer with the company.",
     "Did you know the basement server room has been locked since 2003? Me neither. I don't have data on it. Weird.",

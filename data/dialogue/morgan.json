@@ -1,0 +1,199 @@
+{
+  "id": "morgan",
+  "character": {
+    "name": "Morgan",
+    "title": "Internal Comms Lead"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Hi! Sorry, I was just finishing an email to the account managers about... well, another change they didn't ask for.",
+          "next": "intro_2"
+        },
+        "intro_2": {
+          "speaker": "npc",
+          "text": "I'm Morgan. Five years of trying to help people through transitions they didn't want. You're the new AI lead, right?",
+          "next": "assess"
+        },
+        "assess": {
+          "speaker": "npc",
+          "text": "People don't resist change. They resist being changed. Remember that and we'll get along fine.",
+          "choices": [
+            {
+              "text": "What's the mood like around here?",
+              "effects": { "change": 10, "trust": 5 },
+              "flags": { "set": ["learned_morale"] },
+              "next": "mood"
+            },
+            {
+              "text": "How did previous changes go?",
+              "effects": { "change": 5, "strategy": 5 },
+              "flags": { "set": ["learned_change_history"] },
+              "next": "history"
+            },
+            {
+              "text": "Sage mentioned stakeholder alignment is critical.",
+              "conditions": { "talked_to": ["sage"] },
+              "effects": { "change": 10, "strategy": 5 },
+              "next": "sage_connection"
+            },
+            {
+              "text": "I'm sure people will come around.",
+              "effects": { "change": -5 },
+              "next": "naive"
+            }
+          ]
+        },
+        "mood": {
+          "speaker": "npc",
+          "text": "Honestly? Tired. Falcon burned through a lot of goodwill. SmartRoute burned through the rest. People hear 'AI initiative' and they hear 'more disruption for no benefit.'",
+          "effects": { "change": 5 },
+          "flags": { "set": ["met_morgan"] },
+          "next": "mood_2"
+        },
+        "mood_2": {
+          "speaker": "npc",
+          "text": "The account managers especially. They've been promised AI tools three times now. Three times they reorganized their workflows. Three times the projects died.",
+          "next": "closing"
+        },
+        "history": {
+          "speaker": "npc",
+          "text": "Project Falcon? Management sent a company-wide email on a Monday morning: 'AI is coming, embrace the future.' No context. No training. No warning to managers.",
+          "effects": { "change": 5 },
+          "flags": { "set": ["met_morgan"] },
+          "next": "history_2"
+        },
+        "history_2": {
+          "speaker": "npc",
+          "text": "Half the customer service team thought they were being replaced. Two people quit that week. We weren't even replacing anyone. The comms just... didn't explain that.",
+          "next": "closing"
+        },
+        "sage_connection": {
+          "speaker": "npc",
+          "text": "Sage gets it. Strategy without buy-in is just a PowerPoint nobody reads. I can help make the strategy real — if people actually trust the process this time.",
+          "effects": { "trust": 5 },
+          "flags": { "set": ["met_morgan", "morgan_sage_aligned"] },
+          "next": "closing"
+        },
+        "naive": {
+          "speaker": "npc",
+          "text": "That's what the last three project leads said. And the one before that. People don't 'come around.' They get brought along, or they dig in.",
+          "flags": { "set": ["met_morgan"] },
+          "next": null
+        },
+        "closing": {
+          "speaker": "npc",
+          "text": "I want this to work. I really do. But it has to be done right this time. Talk to me before you announce anything to the team.",
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "check_in",
+      "nodes": {
+        "check_in": {
+          "speaker": "npc",
+          "text": "Hey. How's the change management side looking? Please tell me we have a communication plan.",
+          "choices": [
+            {
+              "text": "I want your help building a change communication plan.",
+              "effects": { "change": 10, "trust": 5 },
+              "next": "comm_plan"
+            },
+            {
+              "text": "The stakeholder roadshow is going well.",
+              "conditions": { "flags": ["stakeholder_roadshow"] },
+              "effects": { "change": 10, "trust": 10 },
+              "next": "roadshow_feedback"
+            },
+            {
+              "text": "What's the team's current sentiment?",
+              "next": "sentiment"
+            }
+          ]
+        },
+        "comm_plan": {
+          "speaker": "npc",
+          "text": "Yes! Finally! Okay. First, we need manager briefings before any team-wide announcements. Managers need to feel prepared, not ambushed.",
+          "effects": { "change": 5 },
+          "flags": { "set": ["morgan_comm_plan"] },
+          "next": "comm_plan_2"
+        },
+        "comm_plan_2": {
+          "speaker": "npc",
+          "text": "Second, weekly 'ask anything' sessions. Short. Honest. People need a place to voice concerns without feeling judged. I can facilitate those.",
+          "effects": { "trust": 5 },
+          "next": null
+        },
+        "roadshow_feedback": {
+          "speaker": "npc",
+          "text": "I've been hearing good things! For the first time in years, people are cautiously optimistic. That's huge. Cautious optimism is Morgan-speak for 'not openly hostile.'",
+          "effects": { "change": 5 },
+          "next": null
+        },
+        "sentiment": {
+          "speaker": "npc",
+          "text": "Mixed. The early adopters are excited. The skeptics are watching. The middle — which is most people — are waiting to see if this one sticks.",
+          "effects": { "change": 5 },
+          "next": "sentiment_2"
+        },
+        "sentiment_2": {
+          "speaker": "npc",
+          "text": "Win over the middle, and you win the organization. Ignore them, and you'll have a great tool that nobody uses.",
+          "next": null
+        }
+      }
+    },
+    "terminal_reaction": {
+      "trigger": "return_visit",
+      "priority": 10,
+      "start_node": "terminal_angry",
+      "conditions": {
+        "flags": ["terminal_announce_sent"],
+        "not_flags": ["morgan_comm_plan", "morgan_terminal_confronted"]
+      },
+      "nodes": {
+        "terminal_angry": {
+          "speaker": "npc",
+          "text": "You sent a company-wide email. Without talking to me. Without a comms plan. Do you know how I found out? My inbox. Like everyone else.",
+          "effects": { "change": -5 },
+          "flags": { "set": ["morgan_terminal_confronted"] },
+          "next": "terminal_angry_2"
+        },
+        "terminal_angry_2": {
+          "speaker": "npc",
+          "text": "This is exactly what happened with Falcon. Management sends a blast email, nobody's prepared, managers get blindsided with questions they can't answer.",
+          "choices": [
+            {
+              "text": "You're right. I should have come to you first.",
+              "effects": { "trust": 5, "change": 5 },
+              "next": "terminal_forgive"
+            },
+            {
+              "text": "The message needed to go out. We can fix it.",
+              "effects": { "change": -5 },
+              "next": "terminal_grudge"
+            }
+          ]
+        },
+        "terminal_forgive": {
+          "speaker": "npc",
+          "text": "Thank you. Look — the damage is done on that one. But going forward, let me help you draft these. I can make sure the messaging lands right.",
+          "effects": { "change": 5 },
+          "flags": { "set": ["morgan_comm_plan"] },
+          "next": null
+        },
+        "terminal_grudge": {
+          "speaker": "npc",
+          "text": "Fix it. Sure. I'll just explain to 200 anxious employees that the email they're panicking about was sent without any comms strategy. That'll be a fun afternoon.",
+          "next": null
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "messages": [
+    {
+      "id": "announce",
+      "title": "AI Initiative Announcement",
+      "preview_text": "To: All Staff\nSubject: Exciting News — Our AI Transformation Journey\n\nDear team, I'm writing to share that Nexus Dynamics is embarking on a new AI initiative...",
+      "unlock_flag": "met_morgan",
+      "sent_flag": "terminal_announce_sent",
+      "prepared_decision": "terminal_announce_prepared",
+      "unprepared_decision": "terminal_announce_unprepared",
+      "flavor_sent_prepared": "Message sent. Morgan nods approvingly — managers were briefed first this time.",
+      "flavor_sent_unprepared": "Message sent. Your inbox immediately fills with panicked replies. Morgan is going to be upset."
+    },
+    {
+      "id": "roles",
+      "title": "Roles Not Being Eliminated",
+      "preview_text": "To: All Staff\nSubject: AI and Your Role at Nexus Dynamics\n\nI want to address concerns directly: no roles are being eliminated as part of this initiative...",
+      "unlock_flag": "learned_morale",
+      "sent_flag": "terminal_roles_sent",
+      "prepared_decision": "terminal_roles_prepared",
+      "unprepared_decision": "terminal_roles_unprepared",
+      "flavor_sent_prepared": "The message lands with exactly the right tone. People actually believe it this time.",
+      "flavor_sent_unprepared": "People read 'roles not being eliminated' and hear 'roles being eliminated.' Classic."
+    },
+    {
+      "id": "training",
+      "title": "Training Opportunities Available",
+      "preview_text": "To: All Staff\nSubject: New AI Skills Training — Sign Up Now\n\nWe're excited to announce a series of hands-on AI training workshops...",
+      "unlock_flag": "met_casey",
+      "sent_flag": "terminal_training_sent",
+      "prepared_decision": "terminal_training_prepared",
+      "unprepared_decision": "terminal_training_unprepared",
+      "flavor_sent_prepared": "Casey's inbox explodes with sign-ups. She texts you a row of party emojis.",
+      "flavor_sent_unprepared": "A few polite RSVPs trickle in. Most people assume it's optional and ignore it."
+    },
+    {
+      "id": "progress",
+      "title": "Progress Update to Stakeholders",
+      "preview_text": "To: Executive Team, Department Heads\nSubject: AI Initiative — Progress Report\n\nI'm pleased to share our progress to date on the AI transformation initiative...",
+      "unlock_flag": "stakeholder_roadshow",
+      "sent_flag": "terminal_progress_sent",
+      "prepared_decision": "terminal_progress_prepared",
+      "unprepared_decision": "terminal_progress_unprepared",
+      "flavor_sent_prepared": "Harry forwards it to the board with a note: 'Finally, a project lead who communicates.'",
+      "flavor_sent_unprepared": "The update disappears into executive inboxes. No response. The silence is deafening."
+    },
+    {
+      "id": "adopters",
+      "title": "Call for Early Adopters",
+      "preview_text": "To: All Staff\nSubject: Be Part of the Future — Join Our AI Pilot Program\n\nWe're looking for enthusiastic team members to be among the first to use our new AI tools...",
+      "unlock_flag": "quick_win_achieved",
+      "sent_flag": "terminal_adopters_sent",
+      "prepared_decision": "terminal_adopters_prepared",
+      "unprepared_decision": "terminal_adopters_unprepared",
+      "flavor_sent_prepared": "The volunteer list fills up in two days. Nova starts planning onboarding sprints.",
+      "flavor_sent_unprepared": "A handful of curious souls sign up. The rest wonder what 'pilot program' means for their jobs."
+    }
+  ]
+}
