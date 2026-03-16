@@ -48,6 +48,12 @@ func _load_endings() -> void:
 
 
 func _on_game_over(reason: String) -> void:
+	# Don't show ending when boss fight will intercept time_expired
+	if reason == "time_expired":
+		var boss_fight = get_tree().current_scene.get_node_or_null("BossFight")
+		if boss_fight:
+			return  # Boss fight node exists, it will handle the sequence
+
 	var ending = DecisionManager.calculate_ending()
 	ending["reason"] = reason
 	show_ending(ending)

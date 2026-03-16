@@ -3,12 +3,24 @@ extends Node
 ## GameState - Central store for all game state (Autoload singleton)
 ## Persists across scenes. Single source of truth.
 
+# Difficulty
+enum Difficulty { EASY, MEDIUM, HARD }
+
+const DIFFICULTY_SETTINGS = {
+	Difficulty.EASY:   { "budget": 1000000, "weeks": 20, "label": "Easy" },
+	Difficulty.MEDIUM: { "budget": 750000,  "weeks": 16, "label": "Medium" },
+	Difficulty.HARD:   { "budget": 500000,  "weeks": 12, "label": "Hard" },
+}
+
+var difficulty: Difficulty = Difficulty.MEDIUM
+
 # Signals
 signal budget_changed(new_budget: int, old_budget: int)
 signal week_changed(new_week: int)
 signal decision_made(decision_id: String)
 signal game_over(reason: String)
 signal score_changed(score_name: String, change: int, new_value: int)
+signal difficulty_set(diff: Difficulty)
 
 # The Critical 7 Scores
 var scores: Dictionary = {
@@ -322,6 +334,23 @@ func get_critical_failures() -> Array:
 	return failures
 
 
+## Difficulty
+
+func set_difficulty(diff: Difficulty) -> void:
+	difficulty = diff
+	var settings = DIFFICULTY_SETTINGS[diff]
+	budget = settings["budget"]
+	budget_total = settings["budget"]
+	total_weeks = settings["weeks"]
+	budget_changed.emit(budget, budget)
+	week_changed.emit(current_week)
+	difficulty_set.emit(diff)
+
+
+func get_difficulty_label() -> String:
+	return DIFFICULTY_SETTINGS[difficulty]["label"]
+
+
 ## Reset
 
 func reset() -> void:
@@ -334,10 +363,11 @@ func reset() -> void:
 		"talent": 0,
 		"trust": 0
 	}
-	budget = 750000
-	budget_total = 750000
+	var settings = DIFFICULTY_SETTINGS[difficulty]
+	budget = settings["budget"]
+	budget_total = settings["budget"]
 	current_week = 1
-	total_weeks = 16
+	total_weeks = settings["weeks"]
 	decisions_made = []
 	decision_log = []
 	expectations_gap = 0

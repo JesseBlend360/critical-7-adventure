@@ -271,6 +271,14 @@ func calculate_ending() -> Dictionary:
 	if GameState.has_flag("harry_champion"):
 		result["special"] = "CEO Champion"
 
+	# Boss fight modifiers
+	if GameState.has_flag("boss_fight_great"):
+		result["boss_fight"] = "great"
+	elif GameState.has_flag("boss_fight_good"):
+		result["boss_fight"] = "good"
+	elif GameState.has_flag("boss_fight_poor"):
+		result["boss_fight"] = "poor"
+
 	return result
 
 

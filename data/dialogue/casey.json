@@ -1,0 +1,159 @@
+{
+  "id": "casey",
+  "character": {
+    "name": "Casey",
+    "title": "L&D Manager"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Oh hey! Welcome! I just put fresh coffee on. Want some? No? Okay, more for me.",
+          "next": "intro_2"
+        },
+        "intro_2": {
+          "speaker": "npc",
+          "text": "I'm Casey, Learning & Development. Three years of designing training programs that approximately 12% of the company voluntarily attends.",
+          "next": "assess"
+        },
+        "assess": {
+          "speaker": "npc",
+          "text": "So you're leading the AI thing. Need people trained up? Because I have some thoughts. Many thoughts.",
+          "choices": [
+            {
+              "text": "What's the skill gap situation?",
+              "effects": { "talent": 10, "change": 5 },
+              "flags": { "set": ["learned_skill_gaps"] },
+              "next": "skill_gaps"
+            },
+            {
+              "text": "Why is attendance so low?",
+              "effects": { "talent": 5, "trust": 5 },
+              "flags": { "set": ["learned_training_issues"] },
+              "next": "attendance"
+            },
+            {
+              "text": "Morgan mentioned people are tired of changes.",
+              "conditions": { "talked_to": ["morgan"] },
+              "effects": { "talent": 5, "change": 5, "trust": 5 },
+              "next": "morgan_connection"
+            },
+            {
+              "text": "We'll train people when we need to.",
+              "effects": { "talent": -5 },
+              "next": "dismissive"
+            }
+          ]
+        },
+        "skill_gaps": {
+          "speaker": "npc",
+          "text": "Where do I start? Most of the team can use basic spreadsheets and our CRM. AI literacy? Data interpretation? Prompt engineering? We're starting from zero.",
+          "effects": { "talent": 5 },
+          "flags": { "set": ["met_casey"] },
+          "next": "skill_gaps_2"
+        },
+        "skill_gaps_2": {
+          "speaker": "npc",
+          "text": "But here's the thing — people want to learn. They're just scared of looking stupid. The trick is making it safe to not know things.",
+          "next": "closing"
+        },
+        "attendance": {
+          "speaker": "npc",
+          "text": "Because training is optional, boring, and scheduled during people's busiest hours. I've been fighting for better time slots for two years.",
+          "effects": { "talent": 5 },
+          "flags": { "set": ["met_casey"] },
+          "next": "attendance_2"
+        },
+        "attendance_2": {
+          "speaker": "npc",
+          "text": "Also, the last 'AI training' was a vendor demo disguised as education. People felt tricked. Can't blame them.",
+          "next": "closing"
+        },
+        "morgan_connection": {
+          "speaker": "npc",
+          "text": "Morgan's right. Change fatigue is real. But you know what helps? When people feel competent. When they understand the tools they're asked to use. That's where I come in.",
+          "effects": { "trust": 5 },
+          "flags": { "set": ["met_casey", "casey_morgan_aligned"] },
+          "next": "closing"
+        },
+        "dismissive": {
+          "speaker": "npc",
+          "text": "Sure. 'Train when we need to.' That's how you end up with a $200K AI tool that everyone's afraid to touch. But hey, your call.",
+          "flags": { "set": ["met_casey"] },
+          "next": null
+        },
+        "closing": {
+          "speaker": "npc",
+          "text": "Come talk to me when you're ready to invest in people. The tech is the easy part. Getting humans to use it? That's the real challenge.",
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "check_in",
+      "nodes": {
+        "check_in": {
+          "speaker": "npc",
+          "text": "Hey! Got any updates on the training front? I've been sketching out curriculum ideas.",
+          "choices": [
+            {
+              "text": "Let's design a proper AI literacy program.",
+              "effects": { "talent": 10, "change": 5 },
+              "next": "literacy_program"
+            },
+            {
+              "text": "We went with mandatory training.",
+              "conditions": { "flags": ["mandatory_training"] },
+              "effects": { "talent": 5 },
+              "next": "mandatory_feedback"
+            },
+            {
+              "text": "How's the team responding to the changes so far?",
+              "next": "team_response"
+            }
+          ]
+        },
+        "literacy_program": {
+          "speaker": "npc",
+          "text": "Yes! Okay, I've been thinking about this. Short modules — 20 minutes max. Real examples from our data. Hands-on exercises, not just slides.",
+          "effects": { "talent": 5, "innovation": 5 },
+          "flags": { "set": ["casey_literacy_program"] },
+          "next": "literacy_program_2"
+        },
+        "literacy_program_2": {
+          "speaker": "npc",
+          "text": "And peer mentoring! Pair the early adopters with the skeptics. Nothing works better than seeing your colleague succeed.",
+          "effects": { "change": 5 },
+          "next": null
+        },
+        "mandatory_feedback": {
+          "speaker": "npc",
+          "text": "Mandatory... okay. Attendance will be 100% but engagement might be 30%. People show up, tune out, check a box. I've seen it a hundred times.",
+          "effects": { "change": -5 },
+          "next": "mandatory_feedback_2"
+        },
+        "mandatory_feedback_2": {
+          "speaker": "npc",
+          "text": "But! If we make the content actually good? Relevant? Hands-on? We can turn compliance into enthusiasm. Let me redesign the curriculum.",
+          "effects": { "talent": 5 },
+          "next": null
+        },
+        "team_response": {
+          "speaker": "npc",
+          "text": "The engineers are excited — they always are. The account managers are cautious. The operations team is suspicious. Pretty standard distribution.",
+          "effects": { "change": 5, "talent": 5 },
+          "next": "team_response_2"
+        },
+        "team_response_2": {
+          "speaker": "npc",
+          "text": "The good news? Nobody's actively hostile yet. That's better than Falcon. The bar is low, but we're clearing it!",
+          "next": null
+        }
+      }
+    }
+  }
+}

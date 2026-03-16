@@ -1,0 +1,158 @@
+{
+  "id": "rex",
+  "character": {
+    "name": "Rex",
+    "title": "Platform Architect"
+  },
+  "conversations": {
+    "first_meeting": {
+      "trigger": "first_meeting",
+      "start_node": "intro",
+      "nodes": {
+        "intro": {
+          "speaker": "npc",
+          "text": "Oh. You're the new lead. I'd shake your hand but I've been debugging the auth service since 3 AM.",
+          "next": "intro_2"
+        },
+        "intro_2": {
+          "speaker": "npc",
+          "text": "Eight years I've kept this infrastructure running. Eight years of 'we'll fix the technical debt next quarter.'",
+          "next": "assess"
+        },
+        "assess": {
+          "speaker": "npc",
+          "text": "So. What's your plan for the platform? Please tell me it's not 'move fast and break things.'",
+          "choices": [
+            {
+              "text": "Tell me about the current architecture.",
+              "effects": { "technical": 10, "trust": 5 },
+              "flags": { "set": ["learned_architecture"] },
+              "next": "architecture"
+            },
+            {
+              "text": "What keeps you up at night?",
+              "effects": { "technical": 5, "change": 5 },
+              "flags": { "set": ["rex_concerns"] },
+              "next": "concerns"
+            },
+            {
+              "text": "Nova mentioned deployment challenges.",
+              "conditions": { "talked_to": ["nova"] },
+              "effects": { "technical": 10, "trust": 5 },
+              "next": "nova_connection"
+            },
+            {
+              "text": "I'll figure it out. Don't worry.",
+              "effects": { "trust": -5 },
+              "next": "dismissive"
+            }
+          ]
+        },
+        "architecture": {
+          "speaker": "npc",
+          "text": "Our stack is a decade of accumulated decisions. Some good, some... 'expedient.' The core services are stable but the deployment pipeline is held together with scripts I wrote in 2019.",
+          "effects": { "technical": 5 },
+          "flags": { "set": ["met_rex"] },
+          "next": "architecture_2"
+        },
+        "architecture_2": {
+          "speaker": "npc",
+          "text": "If you want AI in production, we need monitoring, rollback capability, and frankly, a server room that doesn't overheat in summer.",
+          "next": "closing"
+        },
+        "concerns": {
+          "speaker": "npc",
+          "text": "What keeps me up? The single point of failure in our data pipeline. The fact that our 'DR plan' is my phone number on a sticky note. The server room lock that's been broken since 2019.",
+          "effects": { "technical": 5 },
+          "flags": { "set": ["met_rex"] },
+          "next": "concerns_2"
+        },
+        "concerns_2": {
+          "speaker": "npc",
+          "text": "Will it run at 2 AM on a Saturday? That's my test for everything. Most things fail it.",
+          "next": "closing"
+        },
+        "nova_connection": {
+          "speaker": "npc",
+          "text": "Nova's brilliant. Also terrifying. She deploys prototypes to production at 11 PM on Fridays. I've aged ten years since she joined.",
+          "effects": { "trust": 5 },
+          "flags": { "set": ["met_rex", "rex_nova_dynamic"] },
+          "next": "nova_connection_2"
+        },
+        "nova_connection_2": {
+          "speaker": "npc",
+          "text": "If we're going to run ML in production, we need guardrails. Real ones. Not 'we'll add monitoring later.'",
+          "next": "closing"
+        },
+        "dismissive": {
+          "speaker": "npc",
+          "text": "'Don't worry.' Right. The last person who said that deployed to production without a rollback plan. We were down for 14 hours.",
+          "flags": { "set": ["met_rex"] },
+          "next": null
+        },
+        "closing": {
+          "speaker": "npc",
+          "text": "Come back when you've got a real plan. I'll be here. I'm always here.",
+          "next": null
+        }
+      }
+    },
+    "return_visit": {
+      "trigger": "return_visit",
+      "start_node": "check_in",
+      "nodes": {
+        "check_in": {
+          "speaker": "npc",
+          "text": "Back again. Got a technical question, or just checking that the servers are still running? They are. Barely.",
+          "choices": [
+            {
+              "text": "I want to invest in platform reliability.",
+              "requires": { "min_scores": { "technical": 5 } },
+              "effects": { "technical": 10 },
+              "next": "reliability"
+            },
+            {
+              "text": "Can you help with the server room?",
+              "conditions": { "flags": ["rex_concerns"] },
+              "next": "server_room"
+            },
+            {
+              "text": "How are things holding up?",
+              "next": "status_update"
+            }
+          ]
+        },
+        "reliability": {
+          "speaker": "npc",
+          "text": "You... actually want to invest in reliability? I'm not used to hearing that. Usually it's 'can you make it faster' or 'can you add this feature by Friday.'",
+          "effects": { "trust": 10, "technical": 5 },
+          "next": "reliability_2"
+        },
+        "reliability_2": {
+          "speaker": "npc",
+          "text": "Give me the resources and I'll build you a platform that doesn't wake me up at 2 AM. That's all I've ever wanted.",
+          "flags": { "set": ["rex_reliability_plan"] },
+          "next": null
+        },
+        "server_room": {
+          "speaker": "npc",
+          "text": "The server room? It's been locked since the 'incident.' Nobody talks about the incident. I have a key somewhere... but you'd need a good reason to go down there.",
+          "effects": { "technical": 5 },
+          "flags": { "set": ["server_room_mentioned"] },
+          "next": "server_room_2"
+        },
+        "server_room_2": {
+          "speaker": "npc",
+          "text": "If you can convince Harry it's worth the risk, I'll give you the key. The old monitoring hardware down there could be... useful.",
+          "next": null
+        },
+        "status_update": {
+          "speaker": "npc",
+          "text": "The usual. Three near-incidents this week, two of which I fixed before anyone noticed. The third one... let's not talk about the third one.",
+          "effects": { "technical": 5 },
+          "next": null
+        }
+      }
+    }
+  }
+}

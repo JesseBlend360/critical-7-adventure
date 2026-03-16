@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://chip_companion"]
+
+[ext_resource type="Script" path="res://scripts/chip_companion.gd" id="1_chip"]
+[ext_resource type="Texture2D" uid="uid://c27376e1uqkjb" path="res://assets/sprites/Tiles/tile_0121.png" id="2_sprite"]
+[ext_resource type="Script" uid="uid://c0g0l3dgbd014" path="res://scripts/bounce_animator.gd" id="3_bounce"]
+[ext_resource type="FontFile" uid="uid://b1ar1wgvrq8p1" path="res://assets/fonts/Jersey15-Regular.ttf" id="4_font"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_chip"]
+radius = 40.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bubble"]
+bg_color = Color(0.12, 0.1, 0.08, 0.9)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+content_margin_left = 8.0
+content_margin_top = 6.0
+content_margin_right = 8.0
+content_margin_bottom = 6.0
+
+[node name="ChipCompanion" type="Node2D"]
+z_index = 5
+script = ExtResource("1_chip")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+modulate = Color(0.6, 0.9, 1.0, 0.9)
+scale = Vector2(2, 2)
+texture = ExtResource("2_sprite")
+
+[node name="BounceAnimator" type="Node" parent="."]
+script = ExtResource("3_bounce")
+idle_bob_px = 2.0
+idle_bob_period = 1.5
+shadow_enabled = true
+shadow_offset_y = 18.0
+shadow_base_scale = Vector2(0.6, 0.3)
+shadow_color = Color(0.3, 0.6, 0.9, 0.3)
+
+[node name="SpeechBubble" type="PanelContainer" parent="."]
+visible = false
+offset_left = -140.0
+offset_top = -80.0
+offset_right = 140.0
+offset_bottom = -20.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bubble")
+
+[node name="Label" type="Label" parent="SpeechBubble"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_font")
+theme_override_font_sizes/font_size = 16
+text = "CHIP message"
+autowrap_mode = 2
+horizontal_alignment = 1
+
+[node name="InteractionZone" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+shape = SubResource("CircleShape2D_chip")
+
+[node name="FlitTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="HideTimer" type="Timer" parent="."]
+one_shot = true

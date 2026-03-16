@@ -6,7 +6,8 @@
       "narratives": {
         "budget": "The money ran out before the project could deliver anything meaningful. In the post-mortem, everyone agreed that someone else should have seen it coming. No one mentioned your name specifically. That was almost worse.",
         "time": "Week 16 came and went. The deadline wasn't so much missed as obliterated. Harry didn't say anything when you passed him in the hallway. He didn't have to.",
-        "scores": "Some things can't be fixed. The data was too broken, the team too burned out, the stakeholders too alienated. Project Atlas joins Falcon, SmartRoute, and 'The Chatbot' in the Nexus Dynamics hall of cautionary tales."
+        "scores": "Some things can't be fixed. The data was too broken, the team too burned out, the stakeholders too alienated. Project Atlas joins Falcon, SmartRoute, and 'The Chatbot' in the Nexus Dynamics hall of cautionary tales.",
+        "presentation_complete": "The board presentation was a disaster. The demo crashed. The numbers didn't add up. Harry's face told the whole story. Project Atlas is dead on arrival."
       },
       "closing": "They're bringing in someone new next quarter. Someone who 'really understands AI transformation.' You've heard that before.",
       "chip_line": "Well. That happened. I'll just... update my training data. For the next person."
@@ -14,6 +15,9 @@
     "partial_failure": {
       "title": "Partial Delivery",
       "subtitle": "Not quite what anyone hoped for",
+      "narratives": {
+        "presentation_complete": "The board presentation was... underwhelming. Some parts worked. Others didn't. The board approved a smaller scope and a longer timeline. It's not what anyone wanted, but it's not over yet."
+      },
       "narrative": "The project shipped something. It works, mostly, in controlled conditions. Nobody calls it a failure to your face, but nobody calls it a success either. The demo that wowed executives in Week 8 quietly disappeared from the quarterly review.",
       "closing": "Harry nods when he sees you. It's not warm, but it's not cold either. You're allowed to stay. For now.",
       "chip_line": "We delivered... something. That's more than most AI projects can say. The bar is very low. I've checked."
@@ -28,6 +32,9 @@
     "success": {
       "title": "Project Success",
       "subtitle": "It actually worked",
+      "narratives": {
+        "presentation_complete": "The board presentation went well. Nova's demo brought the room to its feet. The data was clean. Rex's servers held. Harry smiled — actually smiled. The board approved full funding for Phase 2."
+      },
       "narrative": "Project Atlas is in production. Real users, real data, real impact. The $4.2M annual savings target? You hit $3.8M, which accounting rounded up 'for optics.' Nova's prototype became a real product. Delta's data actually flows where it's supposed to.",
       "closing": "Harry shakes your hand at the all-hands meeting. 'You did what nobody else could,' he says. His voice catches slightly. 'Thank you.'",
       "chip_line": "I... I don't have a snappy comment for this. You actually did it. My training data has no precedent."
@@ -35,6 +42,9 @@
     "exceptional": {
       "title": "Exceptional Success",
       "subtitle": "The 10% that makes it",
+      "narratives": {
+        "presentation_complete": "The board presentation was a masterpiece. Every objective nailed. Every question answered. The board didn't just approve Phase 2 — they tripled the budget. Congo's CEO called Harry the next day."
+      },
       "narrative": "You didn't just deliver an AI project. You changed how Nexus Dynamics thinks about AI. The Critical 7 framework you developed is now being taught to other teams. Congo's still bigger, but they're watching now. They're worried.",
       "closing": "Harry promotes you to Chief AI Officer. 'I didn't think this was possible,' he admits. 'I thought AI was just another buzzword that would fail like all the others. You proved me wrong.' He smiles - actually smiles. 'Don't let it go to your head.'",
       "chip_line": "I... need a moment. This isn't supposed to happen. You broke my probability models. In a good way. I think?",
