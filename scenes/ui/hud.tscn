@@ -1,7 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://hud001"]
+[gd_scene load_steps=6 format=3 uid="uid://hud001"]
 
 [ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
 [ext_resource type="FontFile" path="res://assets/fonts/Jersey15-Regular.ttf" id="2_font"]
+[ext_resource type="Texture2D" path="res://assets/ui/panel_frame.png" id="3_panel"]
+[ext_resource type="Texture2D" path="res://assets/ui/coin.png" id="4_coin"]
+[ext_resource type="Texture2D" path="res://assets/ui/hourglass.png" id="5_hourglass"]
 
 [node name="HUD" type="CanvasLayer"]
 layer = 5
@@ -10,36 +13,133 @@ script = ExtResource("1_hud")
 [node name="TopBar" type="HBoxContainer" parent="."]
 anchors_preset = 10
 anchor_right = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 60.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 56.0
 grow_horizontal = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 12
 
-[node name="BudgetContainer" type="VBoxContainer" parent="TopBar"]
+[node name="BudgetPanel" type="NinePatchRect" parent="TopBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(280, 0)
+texture = ExtResource("3_panel")
+texture_filter = 1
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Margin" type="MarginContainer" parent="TopBar/BudgetPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="TopBar/BudgetPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="CoinIcon" type="TextureRect" parent="TopBar/BudgetPanel/Margin/HBox"]
+layout_mode = 2
+texture = ExtResource("4_coin")
+texture_filter = 1
+expand_mode = 3
+stretch_mode = 5
+custom_minimum_size = Vector2(28, 28)
+
+[node name="VBox" type="VBoxContainer" parent="TopBar/BudgetPanel/Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_constants/separation = 0
 
-[node name="BudgetLabel" type="Label" parent="TopBar/BudgetContainer"]
+[node name="BudgetLabel" type="Label" parent="TopBar/BudgetPanel/Margin/HBox/VBox"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 text = "$750K / $750K"
 
-[node name="BudgetBar" type="ProgressBar" parent="TopBar/BudgetContainer"]
-custom_minimum_size = Vector2(200, 20)
+[node name="BudgetBar" type="ProgressBar" parent="TopBar/BudgetPanel/Margin/HBox/VBox"]
 layout_mode = 2
+custom_minimum_size = Vector2(0, 8)
 value = 100.0
 show_percentage = false
 
-[node name="WeekContainer" type="VBoxContainer" parent="TopBar"]
+[node name="WeekPanel" type="NinePatchRect" parent="TopBar"]
+layout_mode = 2
+size_flags_horizontal = 0
+custom_minimum_size = Vector2(160, 0)
+texture = ExtResource("3_panel")
+texture_filter = 1
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Margin" type="MarginContainer" parent="TopBar/WeekPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="HBox" type="HBoxContainer" parent="TopBar/WeekPanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HourglassIcon" type="TextureRect" parent="TopBar/WeekPanel/Margin/HBox"]
+layout_mode = 2
+texture = ExtResource("5_hourglass")
+texture_filter = 1
+expand_mode = 3
+stretch_mode = 5
+custom_minimum_size = Vector2(24, 28)
+
+[node name="WeekLabel" type="Label" parent="TopBar/WeekPanel/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "Week 1 / 16"
+
+[node name="Spacer" type="Control" parent="TopBar"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="WeekLabel" type="Label" parent="TopBar/WeekContainer"]
+[node name="ScorePanel" type="NinePatchRect" parent="TopBar"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 28
-text = "Week 1 / 16"
-horizontal_alignment = 1
+size_flags_horizontal = 0
+texture = ExtResource("3_panel")
+texture_filter = 1
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="Margin" type="MarginContainer" parent="TopBar/ScorePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 3
+
+[node name="ScoreContainer" type="HBoxContainer" parent="TopBar/ScorePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
