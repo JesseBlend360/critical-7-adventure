@@ -30,12 +30,12 @@ godot --headless --export-release "Web" build/index.html
 
 ### Scene Structure
 - `scenes/main.tscn` - Main game scene containing map, NPCs, player, HUD, UI, BossFight, ChipCompanion, Terminal
-- `scenes/player.tscn` - CharacterBody2D with movement and BounceAnimator
-- `scenes/npc.tscn` - RigidBody2D NPC with interaction zone, BounceAnimator, per-instance sprites
+- `scenes/player.tscn` - CharacterBody2D with AnimatedSprite2D, BounceAnimator, CharacterAnimator
+- `scenes/npc.tscn` - RigidBody2D NPC with AnimatedSprite2D, BounceAnimator, CharacterAnimator, interaction zone
 - `scenes/chip_companion.tscn` - In-world Node2D CHIP companion that follows player (replaces old HUD chip.tscn)
 - `scenes/interactable.tscn` - Generic interactable object (breakable, container, readable, switch)
 - `scenes/ui/dialogue_box.tscn` - CanvasLayer dialogue UI with portraits, RichTextLabel, choice buttons
-- `scenes/ui/hud.tscn` - Always-visible budget bar and week counter
+- `scenes/ui/hud.tscn` - Pixel art HUD with NinePatch panels, coin/hourglass icons, budget bar, week counter, Critical 7 score indicators
 - `scenes/ui/status_screen.tscn` - Tab menu showing Critical 7 scores
 - `scenes/ui/ending_screen.tscn` - End game summary with narrative
 - `scenes/terminal.tscn` - Computer terminal for sending company-wide messages
@@ -47,17 +47,18 @@ godot --headless --export-release "Web" build/index.html
 - Maps are painted in the Godot editor (not generated at runtime)
 
 ### Script Responsibilities
-- `scripts/player.gd` - 8-direction movement, connects to DialogueManager signals
-- `scripts/npc.gd` - RigidBody2D physics, wandering with bounds, per-instance sprites, boss fight support
+- `scripts/player.gd` - 8-direction movement, feeds direction to CharacterAnimator, connects to DialogueManager signals
+- `scripts/npc.gd` - RigidBody2D physics, wandering with bounds, feeds direction to CharacterAnimator, boss fight support
+- `scripts/character_animator.gd` - Builds SpriteFrames at runtime from character sprite sheets (16x32 frames, shared layout)
 - `scripts/dialogue_box.gd` - Portraits, RichTextLabel with BBCode, punctuation-aware typewriter, locked choices
 - `scripts/dialogue_manager.gd` - Loads dialogue JSON, manages conversation state, handles `adds_decision`
 - `scripts/game_state.gd` - Tracks scores, flags, budget, timeline; evaluates conditions; applies effects
 - `scripts/decision_manager.gd` - Loads decisions.json, applies costs/effects, calculates endings with boss fight
-- `scripts/hud.gd` - Updates budget bar and week display from GameState signals
+- `scripts/hud.gd` - Pixel art HUD: budget bar with coin icon, week display with hourglass, 7 score indicators color-coded by health
 - `scripts/status_screen.gd` - Shows Critical 7 scores, trajectory text, toggles on Tab key
 - `scripts/chip_companion.gd` - In-world Navi-like companion: follows player, flits, states (idle/talking/excited/alarmed), speech bubbles
 - `scripts/ending_screen.gd` - Shows ending narrative based on calculated tier, boss fight results
-- `scripts/bounce_animator.gd` - Reusable component for idle bob and walk bounce animations
+- `scripts/bounce_animator.gd` - Reusable component for idle bob, walk bounce, and shadows (supports both Sprite2D and AnimatedSprite2D)
 - `scripts/boss_fight.gd` - "The Board Presentation" end-game sequence with action budget and objectives
 - `scripts/interactable.gd` - Generic interactable: breakable boxes, readables, containers, switches
 - `scripts/door.gd` - Interactable door with optional flag-based lock
@@ -93,6 +94,28 @@ godot --headless --export-release "Web" build/index.html
 - ~9 objectives tied to NPCs, each with quality based on relevant score
 - Player runs around office completing objectives until actions run out
 - Results feed into ending calculation
+
+### Character Animation System
+- `CharacterAnimator` builds `SpriteFrames` at runtime from a single sprite sheet PNG
+- All character sheets share the same layout: row 0 = idle (4 directions), row 1 = walk (6 frames x 4 directions)
+- Left-facing = right-facing animation with `flip_h = true`
+- Player: sprite_sheet set via export in `player.tscn`
+- NPCs: sprite_sheet forwarded from `npc_sprite` export in `npc.gd._ready()`
+- `BounceAnimator` adds subtle movement bob and shadow (defaults reduced: idle_bob=0, move_bob=0.5, rotation=0)
+
+### Portrait System
+- 96x96 portraits stored in `assets/portraits/{character_id}.png`
+- Loaded by `dialogue_box.gd._load_portrait()` with cache
+- Player portrait key: `"player"` → `assets/portraits/player.png`
+- NPC portrait key: npc_id (e.g., `"sage"`) → `assets/portraits/sage.png`
+- Falls back to generated colored placeholder if file not found
+- Portrait pulses on each new dialogue line
+
+### HUD System
+- NinePatchRect panels using `assets/ui/panel_frame.png` (extracted from `p-assets/sprites/modern_ui.png`)
+- Budget: coin icon + label + styled ProgressBar (color changes at 20%/40% thresholds)
+- Weeks: hourglass icon + label (color changes at 75%/90% thresholds)
+- Critical 7 indicators: 7 small `panel_small.png` icons modulated green/yellow/red by score value, labeled S/D/T/I/C/Ta/Tr
 
 ### Data Files
 - `data/decisions.json` - 30 major project decisions
@@ -132,8 +155,9 @@ godot --headless --export-release "Web" build/index.html
 - CHIP: In-world companion that follows player, gives contextual advice, reacts to events
 - Terminal: Computer for sending company-wide messages (5 messages, prepared/unprepared variants based on Morgan's comm plan)
 - Interactables: Breakable boxes (score loot), readables (lore), containers (flags), switches
-- Animation: BounceAnimator provides idle bob, walk bounce, rotation, and shadows
-- Portraits: Character portraits in dialogue box (placeholder colored squares until art ready)
+- Animation: CharacterAnimator drives walk/idle sprite animations from sprite sheets; BounceAnimator adds subtle bob and shadows
+- Portraits: 96x96 pixel art portraits in `assets/portraits/` — fantasy-office mashup (elf consultant, ogre data engineer, cat ML engineer, etc.)
+- Sprite Sheets: 896x640 character sheets in `p-assets/sprites/characters/`, all share same frame layout (see `docs/characters.md`)
 
 ## Controls
 

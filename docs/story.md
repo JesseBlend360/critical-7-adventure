@@ -130,20 +130,17 @@ The office-punk aesthetic: The surreal isn't fantastical and whimsical. It's the
 
 ## Supporting Characters (The Critical 7 Guides)
 
-### Introduced
-| Guide | Aspect | Role at Nexus | Personality |
-|-------|--------|---------------|-------------|
-| **Sage** | Strategy | External consultant (like you) | Speaks in frameworks. Has seen this fail before. Cautiously optimistic. |
-| **Delta** | Data | Senior Data Engineer, 12 years at Nexus | Cynical. "I told them about the data problems in 2019. No one listened." |
-| **Nova** | Innovation | Junior ML Engineer, 6 months in | Enthusiastic. Ships demos. Has never seen production. |
+| Guide | Aspect | Role at Nexus | Personality | Portrait |
+|-------|--------|---------------|-------------|----------|
+| **Sage** | Strategy | External consultant (like you) | Measured, analytical. Speaks in frameworks. | Elf woman with glasses |
+| **Delta** | Data | Senior Data Engineer, 12 years at Nexus | Blunt, frustrated. Warned about data problems since 2019. | Blue ogre in suit |
+| **Nova** | Innovation | Junior ML Engineer, 6 months in | Energetic, chaotic. Ships demos at 2 AM. | Green cat in tech gear |
+| **Harry** | Trust | CEO & Founder, 37 years at Nexus | Skeptical, direct. Built the company from nothing. | Bearded dwarf elder |
+| **Rex** | Technical | Platform Architect, 8 years at Nexus | Pragmatic, exhausted. Carries the weight of every system. | Gold android in suit |
+| **Morgan** | Change | Internal Comms Lead, 5 years at Nexus | Empathetic, overwhelmed. Has a comm plan for everything. | Pink-haired gnome with glasses |
+| **Casey** | Talent | L&D Manager, 3 years at Nexus | Optimistic, realistic. Fights for training budgets. | Smiling blonde woman |
 
-### TBD
-| Guide | Aspect | Possible Role |
-|-------|--------|---------------|
-| **???** | Technical | Platform architect? DevOps? The person who actually has to make it run? |
-| **???** | Change | HR? Internal comms? Someone who understands the humans? |
-| **???** | Talent | Training lead? The one person who can upskill the team? |
-| **???** | Trust | Legal? Ethics? The skeptic who asks hard questions? |
+> See `docs/characters.md` for full character bios, portrait sources, and sprite sheet details.
 
 ---
 
@@ -300,11 +297,11 @@ Most decisions affect multiple scores:
 |--------|-------|------------------|
 | **Strategy** | Sage | Business alignment, ROI, executive buy-in |
 | **Data** | Delta | Data quality, governance, infrastructure |
-| **Technical** | ??? | Architecture, scalability, engineering practices |
+| **Technical** | Rex | Architecture, scalability, engineering practices |
 | **Innovation** | Nova | Experimentation, prototyping, creative solutions |
-| **Change** | ??? | Adoption, communication, process transformation |
-| **Talent** | ??? | Skills, training, team health, hiring |
-| **Trust** | ??? | Stakeholder confidence, ethics, managing expectations |
+| **Change** | Morgan | Adoption, communication, process transformation |
+| **Talent** | Casey | Skills, training, team health, hiring |
+| **Trust** | Harry | Stakeholder confidence, ethics, managing expectations |
 
 ---
 
@@ -391,7 +388,8 @@ The ending is determined by:
 
 ## Notes
 
-- The 7 scores already exist in GameState: strategy, data, technical, innovation, change, talent, trust
-- Current NPCs: Sage (strategy), Delta (data), Nova (innovation)
-- Need to create: Technical guide, Change guide, Talent guide, Trust guide
-- Need to add to GameState: budget, timeline/current_week, decision_log
+- All 7 scores tracked in GameState: strategy, data, technical, innovation, change, talent, trust
+- All 7 NPCs implemented with dialogue JSON, sprite sheets, and portraits
+- Budget ($750K) and timeline (16 weeks) tracked in GameState
+- Boss fight triggers at week 16+, endings calculated from scores + boss fight results
+- Character bios and portrait/sprite details: see `docs/characters.md`
