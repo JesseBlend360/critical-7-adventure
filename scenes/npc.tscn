@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://npc00001"]
 
 [ext_resource type="Script" uid="uid://dijsfvs7gwoig" path="res://scripts/npc.gd" id="1_npc"]
-[ext_resource type="Texture2D" uid="uid://c27376e1uqkjb" path="res://assets/sprites/Tiles/tile_0121.png" id="2_sprite"]
 [ext_resource type="Script" uid="uid://c0g0l3dgbd014" path="res://scripts/bounce_animator.gd" id="3_bounce"]
+[ext_resource type="Script" path="res://scripts/character_animator.gd" id="4_charanim"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_abqhh"]
 radius = 14.0
@@ -13,10 +13,9 @@ radius = 64.0
 [node name="NPC" type="RigidBody2D"]
 script = ExtResource("1_npc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(3, 3)
-texture = ExtResource("2_sprite")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 11)
@@ -40,3 +39,6 @@ horizontal_alignment = 1
 script = ExtResource("3_bounce")
 shadow_offset_y = 24.0
 shadow_color = Color(0, 0, 0, 1)
+
+[node name="CharacterAnimator" type="Node" parent="."]
+script = ExtResource("4_charanim")

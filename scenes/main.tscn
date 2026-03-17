@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://mainscene01"]
+[gd_scene format=4 uid="uid://mainscene01"]
 
 [ext_resource type="Script" uid="uid://bmw57gensjsgp" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="PackedScene" uid="uid://player001" path="res://scenes/player.tscn" id="3_player"]
@@ -11,80 +11,80 @@
 [ext_resource type="PackedScene" uid="uid://kcta0f2c6mj5" path="res://scenes/ui/status_screen.tscn" id="7_status"]
 [ext_resource type="PackedScene" uid="uid://cktigcp4yklki" path="res://scenes/ui/ending_screen.tscn" id="8_ending"]
 [ext_resource type="PackedScene" path="res://scenes/chip_companion.tscn" id="9_chip_companion"]
-[ext_resource type="Texture2D" uid="uid://cosf0cybyswwq" path="res://assets/sprites/Tiles/tile_0113.png" id="11_delta_sprite"]
-[ext_resource type="Texture2D" uid="uid://o0f6osublkad" path="res://assets/sprites/Tiles/tile_0114.png" id="12_nova_sprite"]
-[ext_resource type="Texture2D" uid="uid://b5drf4u4f21kp" path="res://assets/sprites/Tiles/tile_0115.png" id="13_harry_sprite"]
-[ext_resource type="Texture2D" uid="uid://cjbksaa802nwm" path="res://assets/sprites/Tiles/tile_0120.png" id="14_sage_actual"]
-[ext_resource type="Texture2D" uid="uid://m74jfuvhl2gx" path="res://assets/sprites/Tiles/tile_0116.png" id="15_rex_sprite"]
-[ext_resource type="Texture2D" uid="uid://bxti6nnt0xps3" path="res://assets/sprites/Tiles/tile_0117.png" id="16_morgan_sprite"]
-[ext_resource type="Texture2D" uid="uid://cinj62lwrvog1" path="res://assets/sprites/Tiles/tile_0118.png" id="17_casey_sprite"]
+[ext_resource type="Texture2D" uid="uid://cxsj0k71pssx" path="res://p-assets/sprites/characters/delta.png" id="11_delta_sheet"]
+[ext_resource type="Texture2D" uid="uid://dgycbaa4awfqm" path="res://p-assets/sprites/characters/nova.png" id="12_nova_sheet"]
+[ext_resource type="Texture2D" uid="uid://cym0cwbr5qlec" path="res://p-assets/sprites/characters/harry.png" id="13_harry_sheet"]
+[ext_resource type="Texture2D" uid="uid://dtwq0mtj6hqvr" path="res://p-assets/sprites/characters/sage.png" id="14_sage_sheet"]
+[ext_resource type="Texture2D" uid="uid://c3mm7caxlho5a" path="res://p-assets/sprites/characters/rex.png" id="15_rex_sheet"]
+[ext_resource type="Texture2D" uid="uid://ccuihkur44p1x" path="res://p-assets/sprites/characters/morgan.png" id="16_morgan_sheet"]
+[ext_resource type="Texture2D" uid="uid://bukl3a5c51qen" path="res://p-assets/sprites/characters/casey.png" id="17_casey_sheet"]
 [ext_resource type="Script" uid="uid://d2m4e66iiubb1" path="res://scripts/boss_fight.gd" id="18_boss_fight"]
-[ext_resource type="PackedScene" path="res://scenes/terminal.tscn" id="19_terminal"]
+[ext_resource type="PackedScene" uid="uid://terminal001" path="res://scenes/terminal.tscn" id="19_terminal"]
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" unique_id=1908905890]
 y_sort_enabled = true
 position = Vector2(-2, 2)
 script = ExtResource("1_main")
 
-[node name="NPCs" type="Node2D" parent="."]
+[node name="NPCs" type="Node2D" parent="." unique_id=1039983342]
 y_sort_enabled = true
 position = Vector2(-2, -2)
 
-[node name="Sage" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Sage" parent="NPCs" unique_id=827372755 instance=ExtResource("4_npc")]
 position = Vector2(150, 150)
-npc_sprite = ExtResource("14_sage_actual")
+npc_sprite = ExtResource("14_sage_sheet")
 
-[node name="Delta" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Delta" parent="NPCs" unique_id=1560523351 instance=ExtResource("4_npc")]
 position = Vector2(400, 120)
 npc_id = "delta"
-npc_sprite = ExtResource("11_delta_sprite")
+npc_sprite = ExtResource("11_delta_sheet")
 
-[node name="Nova" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Nova" parent="NPCs" unique_id=2127213923 instance=ExtResource("4_npc")]
 position = Vector2(600, 400)
 npc_id = "nova"
-npc_sprite = ExtResource("12_nova_sprite")
+npc_sprite = ExtResource("12_nova_sheet")
 
-[node name="Harry" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Harry" parent="NPCs" unique_id=2049978085 instance=ExtResource("4_npc")]
 position = Vector2(750, 100)
 npc_id = "harry"
-npc_sprite = ExtResource("13_harry_sprite")
+npc_sprite = ExtResource("13_harry_sheet")
 
-[node name="Rex" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Rex" parent="NPCs" unique_id=1689015526 instance=ExtResource("4_npc")]
 position = Vector2(300, 400)
 npc_id = "rex"
-npc_sprite = ExtResource("15_rex_sprite")
+npc_sprite = ExtResource("15_rex_sheet")
 
-[node name="Morgan" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Morgan" parent="NPCs" unique_id=383260571 instance=ExtResource("4_npc")]
 position = Vector2(500, 200)
 npc_id = "morgan"
-npc_sprite = ExtResource("16_morgan_sprite")
+npc_sprite = ExtResource("16_morgan_sheet")
 
-[node name="Casey" parent="NPCs" instance=ExtResource("4_npc")]
+[node name="Casey" parent="NPCs" unique_id=1903873910 instance=ExtResource("4_npc")]
 position = Vector2(200, 300)
 npc_id = "casey"
-npc_sprite = ExtResource("17_casey_sprite")
+npc_sprite = ExtResource("17_casey_sheet")
 
-[node name="OfficeMap" type="TileMapLayer" parent="."]
+[node name="OfficeMap" type="TileMapLayer" parent="." unique_id=1804277288]
 position = Vector2(-3, 0)
 scale = Vector2(3, 3)
 tile_map_data = PackedByteArray("AAAOAAAAAAABAAwAAAANAAAAAAABAAwAAAAMAAAAAAABAAwAAAALAAAAAAABAAwAAAAPAAAAAAABAAwAAAAQAAAAAAABAAwAAAAKAAAAAAAAAAwAAAARAP//AAADAAIAAAARAAAAAAALAAEAAAARAAEAAAALAAEAAAARAAIAAAALAAEAAAARAAMAAAALAAEAAAARAAQAAAALAAEAAAARAAUAAAALAAEAAAARAAYAAAALAAEAAAARAAcAAAALAAEAAAARAAgAAAALAAEAAAARAAkAAAALAAEAAAARAAoAAAALAAEAAAARAAsAAAALAAEAAAAQAAoAAAALAAYAAAAQAAsAAAACAAwAAAAPAAsAAAABAAwAAAAOAAsAAAABAAwAAAANAAsAAAABAAwAAAAMAAsAAAABAAwAAAALAAsAAAABAAwAAAAKAAsAAAABAAwAAAAJAAsAAAABAAwAAAAIAAsAAAABAAwAAAAHAAsAAAABAAwAAAAGAAsAAAABAAwAAAAFAAsAAAABAAwAAAAEAAsAAAABAAwAAAADAAsAAAABAAwAAAACAAsAAAABAAwAAAABAAsAAAABAAwAAAAAAAsAAAABAAwAAAD//wsAAAAAAAwAAAAPAAoAAAALAAYAAAAOAAoAAAALAAYAAAANAAoAAAALAAYAAAAMAAoAAAALAAYAAAALAAoAAAALAAYAAAAKAAoAAAALAAYAAAAJAAoAAAALAAYAAAAIAAoAAAALAAYAAAAHAAoAAAALAAYAAAAGAAoAAAALAAYAAAAFAAoAAAALAAYAAAAEAAoAAAALAAYAAAADAAoAAAALAAYAAAACAAoAAAALAAYAAAABAAoAAAALAAYAAAAAAAoAAAAKAAYAAAD//woAAAAAAAsAAAD//wkAAAALAAEAAAD//wgAAAALAAEAAAD//wcAAAALAAEAAAD//wYAAAALAAEAAAD//wUAAAALAAEAAAD//wQAAAALAAEAAAD//wMAAAALAAEAAAD//wIAAAALAAEAAAD//wEAAAALAAEAAAD//wAAAAALAAEAAAAIAAAAAAACAAwAAAAHAAAAAAABAAwAAAAGAAAAAAABAAwAAAAFAAAAAAABAAwAAAAEAAAAAAABAAwAAAADAAAAAAABAAwAAAACAAAAAAABAAwAAAABAAAAAAABAAwAAAAAAAAAAAAAAAwAAAABAAIAAAALAAYAAAABAAMAAAALAAYAAAABAAQAAAALAAYAAAABAAUAAAALAAYAAAABAAYAAAALAAYAAAACAAIAAAALAAYAAAACAAMAAAALAAYAAAACAAQAAAALAAYAAAACAAUAAAALAAYAAAACAAYAAAALAAYAAAADAAIAAAALAAYAAAADAAMAAAALAAYAAAADAAQAAAALAAYAAAADAAUAAAALAAYAAAADAAYAAAALAAYAAAAEAAIAAAALAAYAAAAEAAMAAAALAAYAAAAEAAQAAAALAAYAAAAEAAUAAAALAAYAAAAEAAYAAAALAAYAAAAFAAIAAAALAAYAAAAFAAMAAAALAAYAAAAFAAQAAAALAAYAAAAFAAUAAAALAAYAAAAFAAYAAAALAAYAAAAGAAIAAAALAAYAAAAGAAMAAAALAAYAAAAGAAQAAAALAAYAAAAGAAUAAAALAAYAAAAGAAYAAAALAAYAAAAHAAIAAAALAAYAAAAHAAMAAAALAAYAAAAHAAQAAAALAAYAAAAHAAUAAAALAAYAAAAHAAYAAAALAAYAAAAIAAIAAAALAAYAAAAIAAMAAAALAAYAAAAIAAQAAAALAAYAAAAIAAUAAAALAAYAAAAIAAYAAAALAAYAAAAJAAIAAAALAAYAAAAJAAMAAAALAAYAAAAJAAQAAAALAAYAAAAJAAUAAAALAAYAAAAJAAYAAAALAAYAAAAKAAIAAAALAAYAAAAKAAMAAAALAAYAAAAKAAQAAAALAAYAAAAKAAUAAAALAAYAAAAKAAYAAAALAAYAAAALAAIAAAALAAYAAAALAAMAAAALAAYAAAALAAQAAAALAAYAAAALAAUAAAALAAYAAAALAAYAAAALAAYAAAAMAAIAAAALAAYAAAAMAAMAAAALAAYAAAAMAAQAAAALAAYAAAAMAAUAAAALAAYAAAAMAAYAAAALAAYAAAANAAIAAAALAAYAAAANAAMAAAALAAYAAAANAAQAAAALAAYAAAANAAUAAAALAAYAAAANAAYAAAALAAYAAAAOAAIAAAALAAYAAAAOAAMAAAALAAYAAAAOAAQAAAALAAYAAAAOAAUAAAALAAYAAAAOAAYAAAALAAYAAAAPAAIAAAALAAYAAAAPAAMAAAALAAYAAAAPAAQAAAALAAYAAAAPAAUAAAALAAYAAAAPAAYAAAALAAYAAAABAAcAAAALAAYAAAABAAgAAAALAAYAAAABAAkAAAALAAYAAAACAAcAAAALAAYAAAACAAgAAAALAAYAAAACAAkAAAALAAYAAAADAAcAAAALAAYAAAADAAgAAAALAAYAAAADAAkAAAALAAYAAAAEAAcAAAALAAYAAAAEAAgAAAALAAYAAAAEAAkAAAALAAYAAAAFAAcAAAALAAYAAAAFAAgAAAALAAYAAAAFAAkAAAALAAYAAAAGAAcAAAALAAYAAAAGAAgAAAALAAYAAAAGAAkAAAALAAYAAAAHAAcAAAALAAYAAAAHAAgAAAALAAYAAAAHAAkAAAALAAYAAAAIAAcAAAALAAYAAAAIAAgAAAALAAYAAAAIAAkAAAALAAYAAAAJAAcAAAALAAYAAAAJAAgAAAALAAYAAAAJAAkAAAALAAYAAAAKAAcAAAALAAYAAAAKAAgAAAALAAYAAAAKAAkAAAALAAYAAAALAAcAAAALAAYAAAALAAgAAAALAAYAAAALAAkAAAALAAYAAAAMAAcAAAALAAYAAAAMAAgAAAALAAYAAAAMAAkAAAALAAYAAAANAAcAAAALAAYAAAANAAgAAAALAAYAAAANAAkAAAALAAYAAAAOAAcAAAALAAYAAAAOAAgAAAALAAYAAAAOAAkAAAALAAYAAAAPAAcAAAALAAYAAAAPAAgAAAALAAYAAAAPAAkAAAALAAYAAAAQAAcAAAALAAYAAAAQAAgAAAALAAYAAAAQAAkAAAALAAYAAAAQAAIAAAALAAYAAAAQAAMAAAALAAYAAAAQAAQAAAALAAYAAAAQAAUAAAALAAYAAAAQAAYAAAALAAYAAAAAAAMAAAAKAAYAAAAAAAQAAAAKAAYAAAAAAAUAAAAKAAYAAAAAAAYAAAAKAAYAAAAAAAcAAAAKAAYAAAAAAAgAAAAKAAYAAAAAAAkAAAAKAAYAAAAAAAIAAAAKAAYAAAAAAAEAAAAKAAUAAAABAAEAAAALAAUAAAACAAEAAAALAAUAAAADAAEAAAALAAUAAAAEAAEAAAALAAUAAAAFAAEAAAALAAUAAAAGAAEAAAALAAUAAAAHAAEAAAALAAUAAAAIAAEAAAALAAUAAAAJAAEAAAAMAAUAAAAKAAEAAAALAAUAAAALAAEAAAALAAUAAAAMAAEAAAALAAUAAAANAAEAAAALAAUAAAAOAAEAAAALAAUAAAAPAAEAAAALAAUAAAAQAAEAAAALAAUAAAA=")
 tile_set = ExtResource("4_choun")
 
-[node name="Player" parent="." instance=ExtResource("3_player")]
+[node name="Player" parent="." unique_id=1501385531 instance=ExtResource("3_player")]
 y_sort_enabled = true
 position = Vector2(380, 300)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1309593277]
 zoom = Vector2(1.25, 1.25)
 
-[node name="ChipCompanion" parent="." instance=ExtResource("9_chip_companion")]
+[node name="ChipCompanion" parent="." unique_id=1679915373 instance=ExtResource("9_chip_companion")]
 position = Vector2(350, 260)
 
-[node name="OfficeChair" parent="." instance=ExtResource("5_choun")]
+[node name="OfficeChair" parent="." unique_id=1291234167 instance=ExtResource("5_choun")]
 position = Vector2(277, 316)
 initial_direction = 1
 
-[node name="OfficeMap-overlay" type="TileMapLayer" parent="."]
+[node name="OfficeMap-overlay" type="TileMapLayer" parent="." unique_id=1828021488]
 z_index = 10
 position = Vector2(-4, 2)
 scale = Vector2(3, 3)
@@ -92,19 +92,19 @@ tile_map_data = PackedByteArray("AAAAAP//AAAAAAsAAAABAP//AAABAAsAAAACAP//AAABAAs
 tile_set = ExtResource("4_choun")
 collision_enabled = false
 
-[node name="DialogueBox" parent="." instance=ExtResource("5_dialogue")]
+[node name="DialogueBox" parent="." unique_id=794507986 instance=ExtResource("5_dialogue")]
 
-[node name="HUD" parent="." instance=ExtResource("6_hud")]
+[node name="HUD" parent="." unique_id=865267549 instance=ExtResource("6_hud")]
 
-[node name="StatusScreen" parent="." instance=ExtResource("7_status")]
+[node name="StatusScreen" parent="." unique_id=2046459712 instance=ExtResource("7_status")]
 
-[node name="EndingScreen" parent="." instance=ExtResource("8_ending")]
+[node name="EndingScreen" parent="." unique_id=517269493 instance=ExtResource("8_ending")]
 
-[node name="Door" parent="." instance=ExtResource("4_tefeu")]
+[node name="Door" parent="." unique_id=478201310 instance=ExtResource("4_tefeu")]
 position = Vector2(454, 25)
 
-[node name="Terminal" parent="." instance=ExtResource("19_terminal")]
+[node name="Terminal" parent="." unique_id=461584711 instance=ExtResource("19_terminal")]
 position = Vector2(540, 230)
 
-[node name="BossFight" type="Node" parent="."]
+[node name="BossFight" type="Node" parent="." unique_id=1263259178]
 script = ExtResource("18_boss_fight")

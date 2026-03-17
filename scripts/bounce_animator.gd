@@ -6,15 +6,15 @@ class_name BounceAnimator
 
 # Idle animation
 @export_group("Idle Animation")
-@export var idle_bob_px: float = 1.0
+@export var idle_bob_px: float = 0.0
 @export var idle_bob_period: float = 1.0
 
 # Movement animation
 @export_group("Movement Animation")
-@export var move_bob_px: float = 1.5
-@export var move_hop_px: float = 1.5
+@export var move_bob_px: float = 0.5
+@export var move_hop_px: float = 0.5
 @export var move_bob_period: float = 0.3
-@export var move_rotation_deg: float = 2.0
+@export var move_rotation_deg: float = 0.0
 
 # Options
 @export_group("Options")
@@ -30,7 +30,7 @@ class_name BounceAnimator
 
 # References
 @export_group("References")
-@export var target_sprite: Sprite2D
+@export var target_sprite: Node2D
 
 # Internal state
 var _time: float = 0.0
@@ -41,12 +41,14 @@ var _sprite_base_position: Vector2
 
 
 func _ready() -> void:
-	# Find target sprite if not assigned
+	# Find target sprite if not assigned (supports both Sprite2D and AnimatedSprite2D)
 	if not target_sprite:
 		target_sprite = get_parent().get_node_or_null("Sprite2D")
+	if not target_sprite:
+		target_sprite = get_parent().get_node_or_null("AnimatedSprite2D")
 
 	if not target_sprite:
-		push_warning("BounceAnimator: No Sprite2D found")
+		push_warning("BounceAnimator: No sprite node found")
 		return
 
 	_sprite_base_position = target_sprite.position

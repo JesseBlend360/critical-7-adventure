@@ -11,7 +11,7 @@ extends RigidBody2D
 @export var wait_time_max: float = 30.0
 @export var npc_mass: float = 3.0
 @export var npc_friction: float = 5.0
-@export var npc_sprite: Texture2D  ## Per-NPC sprite override
+@export var npc_sprite: Texture2D  ## Per-NPC character sprite sheet
 @export var wander_bounds: Rect2 = Rect2()  ## If non-zero, constrain wandering to this area
 
 @onready var interaction_zone: Area2D = $InteractionZone
@@ -35,9 +35,9 @@ func _ready() -> void:
 	interaction_zone.body_entered.connect(_on_body_entered)
 	interaction_zone.body_exited.connect(_on_body_exited)
 
-	# Apply custom sprite if set
-	if npc_sprite:
-		$Sprite2D.texture = npc_sprite
+	# Apply sprite sheet to CharacterAnimator
+	if npc_sprite and has_node("CharacterAnimator"):
+		$CharacterAnimator.setup(npc_sprite)
 
 	# Store starting position as home
 	home_position = global_position
@@ -77,6 +77,8 @@ func _pause_wandering() -> void:
 	is_moving = false
 	wander_timer.stop()
 	linear_velocity = Vector2.ZERO
+	if has_node("CharacterAnimator"):
+		$CharacterAnimator.set_moving(false)
 
 func _resume_wandering() -> void:
 	if boss_fight_mode:
@@ -122,10 +124,16 @@ func _physics_process(_delta: float) -> void:
 		is_moving = true
 		var force = direction.normalized() * wander_speed * mass
 		apply_central_force(force)
+		# Update character animation direction
+		if has_node("CharacterAnimator"):
+			$CharacterAnimator.set_direction(direction.normalized())
+			$CharacterAnimator.set_moving(true)
 	else:
 		# Reached target, stop and wait
 		is_moving = false
 		linear_velocity = linear_velocity.lerp(Vector2.ZERO, 0.2)
+		if has_node("CharacterAnimator"):
+			$CharacterAnimator.set_moving(false)
 
 
 func _on_wander_timer_timeout() -> void:

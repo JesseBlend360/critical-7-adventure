@@ -8,6 +8,7 @@ extends CharacterBody2D
 var can_move: bool = true
 var nearby_npc: Node = null
 var nearby_chip: Node = null
+@onready var _char_animator: CharacterAnimator = $CharacterAnimator
 
 func _ready() -> void:
 	# Connect to DialogueManager signals for movement control
@@ -28,6 +29,12 @@ func _physics_process(delta: float) -> void:
 
 	velocity = input_dir * speed
 	move_and_slide()
+
+	# Update character animation
+	if _char_animator:
+		_char_animator.set_moving(input_dir.length() > 0.1)
+		if input_dir.length() > 0.1:
+			_char_animator.set_direction(input_dir)
 
 	# Push any RigidBody2D objects we collide with (only when actively moving)
 	if input_dir.length() > 0.1:
@@ -62,6 +69,8 @@ func clear_nearby_npc(npc: Node) -> void:
 
 func _on_dialogue_started(_npc_id: String) -> void:
 	can_move = false
+	if _char_animator:
+		_char_animator.set_moving(false)
 
 func _on_dialogue_ended() -> void:
 	can_move = true
