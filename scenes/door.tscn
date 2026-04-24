@@ -1,39 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://door00001"]
+[gd_scene format=3 uid="uid://door00001"]
 
 [ext_resource type="Script" uid="uid://84xu6wh2lvo1" path="res://scripts/door.gd" id="1_door"]
-[ext_resource type="Texture2D" uid="uid://d02m6bhl42i16" path="res://assets/sprites/Tiles/tile_0045.png" id="2_closed"]
-[ext_resource type="Texture2D" uid="uid://cme2hyqjy43m6" path="res://assets/sprites/Tiles/tile_0021.png" id="3_open"]
+[ext_resource type="Texture2D" uid="uid://d366kbyaitmlj" path="res://p-assets/sprites/animated_door_big_1.png" id="2_sheet"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door"]
-size = Vector2(40, 16)
+size = Vector2(42, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_zone"]
-size = Vector2(80, 80)
+[sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
+radius = 64.0
 
-[node name="Door" type="StaticBody2D"]
+[node name="Door" type="StaticBody2D" unique_id=670396846]
 script = ExtResource("1_door")
-closed_texture = ExtResource("2_closed")
-open_texture = ExtResource("3_open")
+door_sprite_sheet = ExtResource("2_sheet")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1741673068]
 texture_filter = 1
 scale = Vector2(3, 3)
-texture = ExtResource("2_closed")
+animation = &""
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2035070750]
+position = Vector2(0, 56)
 shape = SubResource("RectangleShape2D_door")
 
-[node name="InteractionZone" type="Area2D" parent="."]
+[node name="InteractionZone" type="Area2D" parent="." unique_id=1609988411]
+position = Vector2(0, 56)
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
-shape = SubResource("RectangleShape2D_zone")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=1601706549]
+shape = SubResource("CircleShape2D_zone")
 
-[node name="PromptLabel" type="Label" parent="."]
-offset_left = -20.0
+[node name="PromptLabel" type="Label" parent="." unique_id=207020641]
+texture_filter = 2
+offset_left = -27.0
 offset_top = -45.0
-offset_right = 20.0
+offset_right = 28.0
 offset_bottom = -25.0
 text = "[space]"
 horizontal_alignment = 1

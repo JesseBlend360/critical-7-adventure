@@ -15,6 +15,23 @@ func _ready() -> void:
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
+	# If we arrived via a scene transition, snap to the requested spawn point.
+	# When there's no pending spawn (e.g., first scene), keep the position the
+	# scene was authored with.
+	_apply_spawn_point()
+
+
+func _apply_spawn_point() -> void:
+	# SceneRouter is an autoload; guard so running a room scene directly in the
+	# editor (with no autoloads loaded) doesn't break.
+	var router := get_node_or_null("/root/SceneRouter")
+	if router == null:
+		return
+
+	var spawn_pos: Vector2 = router.get_spawn_position(global_position)
+	if spawn_pos != Vector2.ZERO:
+		global_position = spawn_pos
+
 func _physics_process(delta: float) -> void:
 	if not can_move:
 		velocity = Vector2.ZERO

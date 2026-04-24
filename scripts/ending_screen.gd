@@ -48,11 +48,10 @@ func _load_endings() -> void:
 
 
 func _on_game_over(reason: String) -> void:
-	# Don't show ending when boss fight will intercept time_expired
-	if reason == "time_expired":
-		var boss_fight = get_tree().current_scene.get_node_or_null("BossFight")
-		if boss_fight:
-			return  # Boss fight node exists, it will handle the sequence
+	# Don't show ending when boss fight will intercept time_expired.
+	# BossFight is an autoload now, so it always exists — check is_active/eligibility instead.
+	if reason == "time_expired" and BossFight:
+		return  # Boss fight autoload handles the sequence
 
 	var ending = DecisionManager.calculate_ending()
 	ending["reason"] = reason

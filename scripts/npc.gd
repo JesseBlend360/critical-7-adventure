@@ -63,10 +63,9 @@ func interact() -> void:
 	if not player_in_range:
 		return
 
-	# During boss fight, route through boss fight system
+	# During boss fight, route through boss fight system (now an autoload)
 	if boss_fight_mode and has_boss_task and not boss_task_complete:
-		var boss_fight = get_tree().current_scene.get_node_or_null("BossFight")
-		if boss_fight and boss_fight.attempt_objective_for_npc(npc_id):
+		if BossFight and BossFight.attempt_objective_for_npc(npc_id):
 			return
 
 	_pause_wandering()

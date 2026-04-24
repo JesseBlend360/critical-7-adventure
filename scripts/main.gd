@@ -1,7 +1,10 @@
-extends Node2D
+extends Node
 
-## Main scene setup script
-## Shows difficulty picker at game start
+## Boot scene
+## Shows the difficulty picker at game start, then routes to the common hub.
+
+const STARTING_SCENE: String = "res://scenes/rooms/common_hub.tscn"
+const STARTING_SPAWN: String = "default"
 
 var difficulty_ui: CanvasLayer
 
@@ -104,3 +107,7 @@ func _on_difficulty_selected(diff: GameState.Difficulty) -> void:
 	GameState.set_difficulty(diff)
 	difficulty_ui.queue_free()
 	get_tree().paused = false
+
+	# Route into the first playable room. SceneRouter handles the scene change
+	# and the Player in the destination scene will snap to the matching spawn point.
+	SceneRouter.go_to(STARTING_SCENE, STARTING_SPAWN)

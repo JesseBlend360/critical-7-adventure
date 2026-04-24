@@ -26,6 +26,10 @@ GameState="*res://scripts/game_state.gd"
 DialogueManager="*res://scripts/dialogue_manager.gd"
 DecisionManager="*res://scripts/decision_manager.gd"
 FloatingTextManager="*res://scripts/floating_text_manager.gd"
+SceneRouter="*res://scripts/scene_router.gd"
+PersistentUI="*res://scenes/ui/persistent_ui.tscn"
+ChipCompanion="*res://scenes/chip_companion.tscn"
+BossFight="*res://scripts/boss_fight.gd"
 
 [display]
 

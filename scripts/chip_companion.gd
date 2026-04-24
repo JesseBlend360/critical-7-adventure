@@ -37,6 +37,9 @@ const IDLE_THRESHOLD: float = 30.0
 # Interaction
 var player_in_range: bool = false
 
+# Persistent-autoload guard: avoid replaying the intro on every scene load.
+var _intro_shown: bool = false
+
 
 func _ready() -> void:
 	_load_lines()
@@ -57,13 +60,19 @@ func _ready() -> void:
 	GameState.decision_made.connect(_on_decision_made)
 	DecisionManager.decision_applied.connect(_on_decision_applied)
 
-	# Find player after scene is ready
+	# Wait until a player actually exists in the tree before greeting.
+	# (As an autoload, CHIP exists before the first room scene has loaded.)
 	await get_tree().process_frame
 	player = get_tree().get_first_node_in_group("player")
+	while not is_instance_valid(player):
+		await get_tree().process_frame
+		player = get_tree().get_first_node_in_group("player")
 
-	# Show intro message after a short delay
-	await get_tree().create_timer(2.0).timeout
-	_show_random_line("first_meeting")
+	# Show intro message after a short delay (only once per game, not per scene).
+	if not _intro_shown:
+		_intro_shown = true
+		await get_tree().create_timer(2.0).timeout
+		_show_random_line("first_meeting")
 
 
 func _load_lines() -> void:
@@ -79,10 +88,14 @@ func _load_lines() -> void:
 
 
 func _process(delta: float) -> void:
-	if not player:
+	# Re-acquire player each frame if the reference is missing or stale
+	# (stale = player from a previous scene that has since been freed).
+	if not is_instance_valid(player):
 		player = get_tree().get_first_node_in_group("player")
-		if not player:
+		if not is_instance_valid(player):
 			return
+		# Snap to new player on scene change instead of lerping across the map.
+		global_position = player.global_position + target_offset
 
 	# Follow player with lerp
 	var target_pos = player.global_position + target_offset

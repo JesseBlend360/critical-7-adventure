@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://persistent_ui_001"]
+
+[ext_resource type="PackedScene" uid="uid://dialoguebox" path="res://scenes/ui/dialogue_box.tscn" id="1_dialogue"]
+[ext_resource type="PackedScene" uid="uid://hud001" path="res://scenes/ui/hud.tscn" id="2_hud"]
+[ext_resource type="PackedScene" uid="uid://kcta0f2c6mj5" path="res://scenes/ui/status_screen.tscn" id="3_status"]
+[ext_resource type="PackedScene" uid="uid://endingscreen001" path="res://scenes/ui/ending_screen.tscn" id="4_ending"]
+
+[node name="PersistentUI" type="Node"]
+
+[node name="DialogueBox" parent="." instance=ExtResource("1_dialogue")]
+
+[node name="HUD" parent="." instance=ExtResource("2_hud")]
+
+[node name="StatusScreen" parent="." instance=ExtResource("3_status")]
+
+[node name="EndingScreen" parent="." instance=ExtResource("4_ending")]
