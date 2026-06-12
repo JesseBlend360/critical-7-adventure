@@ -44,15 +44,17 @@ func _ready() -> void:
 	if door_sprite_sheet:
 		_build_sprite_frames()
 
-	# Set initial state without animation
-	if is_open:
-		sprite.animation = "open"
+	# Set initial state without animation. Guard on sprite_frames so a missing
+	# or failed-to-load door_sprite_sheet doesn't spam "no animation" errors
+	# (the frames only exist if _build_sprite_frames ran).
+	if sprite.sprite_frames and sprite.sprite_frames.has_animation("close"):
+		if is_open:
+			sprite.animation = "open"
+		else:
+			sprite.animation = "close"
 		sprite.frame = FRAME_COUNT - 1
-		collision_shape.disabled = true
-	else:
-		sprite.animation = "close"
-		sprite.frame = FRAME_COUNT - 1
-		collision_shape.disabled = false
+
+	collision_shape.disabled = is_open
 
 	sprite.animation_finished.connect(_on_animation_finished)
 

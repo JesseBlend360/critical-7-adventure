@@ -16,7 +16,6 @@ door_sprite_sheet = ExtResource("2_sheet")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=1741673068]
 texture_filter = 1
 scale = Vector2(3, 3)
-animation = &""
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2035070750]
 position = Vector2(0, 56)
