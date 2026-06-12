@@ -1,0 +1,55 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "agentic-tldraw: dev (vite + api, concurrently)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/jfagan/Library/CloudStorage/OneDrive-Blend360/Projects/agentic-tldraw",
+        "run",
+        "dev"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "agentic-tldraw: vite (frontend only)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/jfagan/Library/CloudStorage/OneDrive-Blend360/Projects/agentic-tldraw",
+        "exec",
+        "vite"
+      ],
+      "port": 5173
+    },
+    {
+      "name": "agentic-tldraw: server (api only)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/jfagan/Library/CloudStorage/OneDrive-Blend360/Projects/agentic-tldraw",
+        "run",
+        "server"
+      ],
+      "port": 8787
+    },
+    {
+      "name": "agentic-tldraw: preview (prod build)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "/Users/jfagan/Library/CloudStorage/OneDrive-Blend360/Projects/agentic-tldraw",
+        "run",
+        "preview"
+      ],
+      "port": 4173
+    },
+    {
+      "name": "critical-7: web (godot html5 export)",
+      "runtimeExecutable": "/Users/jfagan/Library/CloudStorage/Dropbox/projects/critical-7-adventure/tools/serve_web.py",
+      "runtimeArgs": ["8060"],
+      "port": 8060
+    }
+  ]
+}
