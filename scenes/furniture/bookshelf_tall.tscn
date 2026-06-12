@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c7w3s3ml33jur"]
+
+[ext_resource type="Texture2D" uid="uid://7ixcfgmls0g3" path="res://p-assets/sprites/modern_office.png" id="1_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(84, 25.5)
+
+[node name="BookshelfTall" type="StaticBody2D" unique_id=419598510]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=545085800]
+texture_filter = 1
+position = Vector2(2, -3)
+scale = Vector2(3, 3)
+texture = ExtResource("1_tex")
+region_enabled = true
+region_rect = Rect2(112, 198, 33, 34)
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=285764662]
+position = Vector2(0, 28.75)
+shape = SubResource("RectangleShape2D_col")

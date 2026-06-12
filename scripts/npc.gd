@@ -68,6 +68,9 @@ func interact() -> void:
 		if BossFight and BossFight.attempt_objective_for_npc(npc_id):
 			return
 
+	# v0.3: the conversation always opens. Used choices are filtered out by
+	# DialogueManager; if nothing is left, an idle/busy line is shown so the
+	# NPC still says *something*.
 	_pause_wandering()
 	DialogueManager.start_conversation(npc_id)
 

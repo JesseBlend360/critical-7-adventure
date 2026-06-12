@@ -8,7 +8,7 @@
 
 **Project:** Critical 7 - AI Strategy Adventure Game
 **Version:** 0.1 (Prototype)
-**Engine:** Godot 4.x (Compatibility Renderer for web export)
+**Engine:** Godot 4.6 (Compatibility Renderer for web export)
 **Target Platform:** Web (embedded widget on company website)
 **Development Tool:** Claude Code
 

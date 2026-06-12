@@ -90,6 +90,12 @@ func _show_difficulty_picker() -> void:
 			"desc": "$500K budget  |  12 weeks",
 			"color": Color(0.9, 0.3, 0.3)
 		},
+		{
+			"diff": GameState.Difficulty.DEBUG,
+			"label": "Debug",
+			"desc": "$750K budget  |  3 weeks  (fast playthrough)",
+			"color": Color(0.5, 0.5, 0.9)
+		},
 	]
 
 	for d in difficulties:

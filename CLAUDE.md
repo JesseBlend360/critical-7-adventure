@@ -2,6 +2,12 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+> **Design direction:** The canonical game design is
+> [`docs/game_design_v0.3.md`](docs/game_design_v0.3.md). It supersedes the
+> multi-scene model in `docs/scene_system.md` (deprecated) and the
+> score-impact rules in `docs/decisions.md` (deprecated). Read it before
+> making structural changes to gameplay systems.
+
 ## Project Overview
 
 Critical 7 is a top-down 2D AI strategy adventure game built in Godot 4.5. The player walks around an office and talks to NPCs about AI transformation challenges. Target platform is web (HTML5 export via Godot's Compatibility Renderer).
@@ -27,6 +33,8 @@ godot --headless --export-release "Web" build/index.html
 - `DialogueManager` - Conversation flow: loads JSON, evaluates conditions, emits signals
 - `GameManager` - Legacy singleton for dialogue_active state
 - `FloatingTextManager` - Spawns floating score text above the player
+- `DayCycle` (v0.3) - End-of-day cinematic: fade-to-black, week advance, respawn at reception. Trigger via `await DayCycle.end_day()`.
+- `DayClock` (v0.3) - Real-time day timer with pause-reason stack. Pauses during dialogue/menus via signals from `GameManager` and `DayCycle`. Call `DayClock.pause("label")` / `resume("label")` from any UI that should freeze the clock.
 
 ### Scene Structure
 - `scenes/main.tscn` - Main game scene containing map, NPCs, player, HUD, UI, BossFight, ChipCompanion, Terminal
@@ -144,16 +152,38 @@ godot --headless --export-release "Web" build/index.html
 
 ## Key Mechanics
 
+> The list below documents both the **current implementation** (v0.2) and the
+> **v0.3 target** where they diverge. The game is mid-reorientation; see
+> [`docs/game_design_v0.3.md`](docs/game_design_v0.3.md) for the target spec.
+
+**Three orthogonal resources (v0.3 rule — must be preserved by any new code):**
+- **Critical 7 scores** are changed *only* by conversations.
+- **Budget** is burned *only* by emails (sent from the terminal).
+- **Weeks (1→16)** advance *only* on the end-of-day "Next Day" / SEND action.
+
+**Daily loop (v0.3 target):**
+1. Morning — fade in at reception, CHIP briefing, walk and talk.
+2. Evening — terminal in Blenda's office (bottom-right); pick email variants and SEND.
+3. Night — fade to black, week advances, fade back in at reception.
+
+**Day timer (v0.3 target):** real-time clock visible on HUD; runs only while
+the player has world movement; pauses during any dialogue/menu/modal via a
+push/pop reason stack on the `DayClock` autoload. Day lengths: easy 5:00 /
+medium 3:30 / hard 2:30 (playtest).
+
+**Other mechanics:**
 - Player movement: 8 directions at ~200 px/sec, disabled during dialogue
 - NPC interaction: Area2D detects player proximity, shows "[space]" prompt
 - NPC physics: RigidBody2D allows pushing NPCs, they wander tile-by-tile within bounds
-- Dialogue flow: Branching conversations with choices, conditions, and effects
-- Budget: $750K starting, spent by decisions
-- Timeline: 16 weeks, advanced by decisions
-- Boss Fight: "The Board Presentation" — action budget system at week 16+
-- Endings: 5 tiers (catastrophic, partial_failure, mixed, success, exceptional)
-- CHIP: In-world companion that follows player, gives contextual advice, reacts to events
-- Terminal: Computer for sending company-wide messages (5 messages, prepared/unprepared variants based on Morgan's comm plan)
+- Dialogue flow: Branching conversations with choices, conditions, and effects. In v0.3 each NPC has day-N gated conversations spanning the full 16 weeks.
+- Budget: $750K starting (medium difficulty).
+- Timeline: 16 weeks. In v0.3 the week counter advances per *day*, not per *decision*.
+- Emails (was "decisions"): each card has 1–3 tone variants (confident / cautious / snarky) gated by Critical 7 scores. Variants set flags; flags gate tomorrow's conversations. **No score deltas on emails in v0.3.**
+- QBR (boss fight, v0.3 target): cinematic walk up the long hallway → NPCs teleported into conference room while screen is fully in hallway → 5–7 score-gated slides with per-slide timers, advocate NPC reactions, and per-slide teaching beats that surface Blend's value proposition.
+- Endings: 5 tiers (catastrophic, partial_failure, mixed, success, exceptional). Summary screen highlights teaching beats from the lowest-scored slides.
+- CHIP: In-world companion that follows player, gives contextual advice, reacts to events. Also delivers the morning briefing.
+- Terminal: End-of-day decision point. v0.3 merges `terminal_messages.json` into the email card system.
+- Scene model (v0.3): **single scene**. Multi-scene `SceneRouter` is abandoned; the autoload and door `target_scene` exports remain but are unused.
 - Interactables: Breakable boxes (score loot), readables (lore), containers (flags), switches
 - Animation: CharacterAnimator drives walk/idle sprite animations from sprite sheets; BounceAnimator adds subtle bob and shadows
 - Portraits: 96x96 pixel art portraits in `assets/portraits/` — fantasy-office mashup (elf consultant, ogre data engineer, cat ML engineer, etc.)

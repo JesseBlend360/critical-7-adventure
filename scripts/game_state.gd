@@ -4,12 +4,14 @@ extends Node
 ## Persists across scenes. Single source of truth.
 
 # Difficulty
-enum Difficulty { EASY, MEDIUM, HARD }
+enum Difficulty { EASY, MEDIUM, HARD, DEBUG }
 
 const DIFFICULTY_SETTINGS = {
 	Difficulty.EASY:   { "budget": 1000000, "weeks": 20, "label": "Easy" },
 	Difficulty.MEDIUM: { "budget": 750000,  "weeks": 16, "label": "Medium" },
 	Difficulty.HARD:   { "budget": 500000,  "weeks": 12, "label": "Hard" },
+	# DEBUG: short 3-week run with full budget — for shaking out the core loop.
+	Difficulty.DEBUG:  { "budget": 750000,  "weeks":  3, "label": "Debug (3 weeks)" },
 }
 
 var difficulty: Difficulty = Difficulty.MEDIUM
@@ -21,6 +23,9 @@ signal decision_made(decision_id: String)
 signal game_over(reason: String)
 signal score_changed(score_name: String, change: int, new_value: int)
 signal difficulty_set(diff: Difficulty)
+signal flag_set(flag: String)      ## fired once when a new flag is added
+signal flag_unset(flag: String)    ## fired once when a flag is removed
+signal qbr_pending                  ## fired once when the QBR week is reached
 
 # The Critical 7 Scores
 var scores: Dictionary = {
@@ -38,6 +43,7 @@ var budget: int = 750000
 var budget_total: int = 750000
 var current_week: int = 1
 var total_weeks: int = 16
+var is_qbr_pending: bool = false  ## set when the QBR week is reached; player must walk to conference room
 
 # Decision tracking
 var decisions_made: Array[String] = []
@@ -45,10 +51,40 @@ var decision_log: Array[Dictionary] = []  # Full records with timestamps
 
 # Legacy/misc state
 var expectations_gap: int = 0
-var talked_to: Array[String] = []
+var talked_to: Array[String] = []           # NPCs talked to ever, this run
+var talked_to_today: Array[String] = []      # NPCs already talked to this in-game week; cleared on day-start
 var flags: Array[String] = []
 var current_day: int = 1
 var dialogue_history: Dictionary = {}  # Tracks last node visited per NPC
+
+## v0.3: keys (e.g. "node:sage:warm_intro" or "choice:sage:warm_intro:1") of
+## dialogue sites whose effects have already been applied this run.
+## Prevents score-grinding by re-entering the same conversation.
+var applied_effect_keys: Dictionary = {}
+
+## v0.3: keys ("choice:<npc>:<node_id>:<orig_index>") of dialogue choices the
+## player has picked at least once this run. Used to hide them on subsequent
+## visits so each NPC's pool of usable options shrinks over time.
+var chosen_choice_keys: Dictionary = {}
+
+
+func mark_choice_chosen(key: String) -> void:
+	chosen_choice_keys[key] = true
+
+
+func has_chosen_choice(key: String) -> bool:
+	return chosen_choice_keys.has(key)
+
+
+## Apply effects, but only the first time a given key fires this run.
+## Returns true if effects were applied (i.e. this was the first time),
+## false if the call was a no-op (already applied earlier).
+func apply_effects_once(key: String, effects: Dictionary) -> bool:
+	if applied_effect_keys.has(key):
+		return false
+	applied_effect_keys[key] = true
+	apply_effects(effects)
+	return true
 
 
 func apply_effects(effects: Dictionary) -> void:
@@ -77,12 +113,14 @@ func apply_effects(effects: Dictionary) -> void:
 func set_flag(flag: String) -> void:
 	if flag not in flags:
 		flags.append(flag)
+		flag_set.emit(flag)
 
 
 func unset_flag(flag: String) -> void:
 	var idx = flags.find(flag)
 	if idx >= 0:
 		flags.remove_at(idx)
+		flag_unset.emit(flag)
 
 
 func has_flag(flag: String) -> bool:
@@ -92,14 +130,25 @@ func has_flag(flag: String) -> bool:
 func mark_talked_to(npc_id: String) -> void:
 	if npc_id not in talked_to:
 		talked_to.append(npc_id)
+	if npc_id not in talked_to_today:
+		talked_to_today.append(npc_id)
 
 
 func has_talked_to(npc_id: String) -> bool:
 	return npc_id in talked_to
 
 
+func has_talked_today(npc_id: String) -> bool:
+	return npc_id in talked_to_today
+
+
 func get_talked_to_count() -> int:
 	return talked_to.size()
+
+
+## Called by DayCycle at the start of each new in-game week.
+func reset_daily() -> void:
+	talked_to_today = []
 
 
 func check_conditions(conditions: Dictionary) -> bool:
@@ -174,8 +223,14 @@ func _check_budget_game_over() -> void:
 func advance_week(weeks: int = 1) -> void:
 	current_week += weeks
 	week_changed.emit(current_week)
-	if current_week > total_weeks:
-		game_over.emit("time_expired")
+	# v0.3: at the boundary we no longer auto-trigger game_over. Instead we
+	# enter "QBR pending" — the day clock stops, the HUD switches to "QBR",
+	# and the player must walk to the conference room to actually start the
+	# boss fight. The conference-room trigger is the one that emits
+	# game_over("time_expired"), which the BossFight autoload still listens for.
+	if current_week > total_weeks and not is_qbr_pending:
+		is_qbr_pending = true
+		qbr_pending.emit()
 
 
 func get_weeks_remaining() -> int:
@@ -372,6 +427,10 @@ func reset() -> void:
 	decision_log = []
 	expectations_gap = 0
 	talked_to = []
+	talked_to_today = []
 	flags = []
 	current_day = 1
 	dialogue_history = {}
+	applied_effect_keys = {}
+	chosen_choice_keys = {}
+	is_qbr_pending = false

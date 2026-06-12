@@ -25,7 +25,7 @@ class_name BounceAnimator
 @export var shadow_enabled: bool = true
 @export var shadow_base_scale: Vector2 = Vector2(0.9, 0.5)
 @export var shadow_squash: float = 0.2
-@export var shadow_offset_y: float = 22.0
+@export var shadow_offset_y: float = 45.0
 @export var shadow_color: Color = Color(0, 0, 0, 0.5)
 
 # References

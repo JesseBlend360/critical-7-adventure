@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://gnb3633x5ulm"]
+
+[ext_resource type="Texture2D" uid="uid://7ixcfgmls0g3" path="res://p-assets/sprites/modern_office.png" id="1_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(90, 15)
+
+[node name="Whiteboard" type="StaticBody2D" unique_id=1634394857]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1814748928]
+texture_filter = 1
+position = Vector2(-4, -24)
+scale = Vector2(3, 3)
+texture = ExtResource("1_tex")
+region_enabled = true
+region_rect = Rect2(144, 160, 32, 32)
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1333757089]
+position = Vector2(-4, 10)
+shape = SubResource("RectangleShape2D_col")

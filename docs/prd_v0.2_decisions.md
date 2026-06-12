@@ -1,6 +1,6 @@
 # Critical 7 — PRD v0.2: Decisions & Game Loop
 
-**Status: IN PROGRESS**
+**Status: COMPLETED**
 
 ---
 
@@ -8,7 +8,7 @@
 
 **Project:** Critical 7 - AI Strategy Adventure Game
 **Version:** 0.2 (Decisions & Game Loop)
-**Engine:** Godot 4.5 (Compatibility Renderer for web export)
+**Engine:** Godot 4.6 (Compatibility Renderer for web export)
 **Target Platform:** Web
 **Tone:** Office Punk meets Portal 2 meets Chrono Trigger
 
@@ -318,35 +318,35 @@ func check_game_end() -> void
 ## Acceptance Criteria
 
 ### Decision System
-- [ ] Decisions can be triggered from dialogue
-- [ ] Budget and time costs are deducted immediately
-- [ ] Critical 7 impacts are applied but hidden
-- [ ] Prerequisites are checked before allowing decisions
-- [ ] Mutually exclusive decisions lock each other out
+- [x] Decisions can be triggered from dialogue
+- [x] Budget and time costs are deducted immediately
+- [x] Critical 7 impacts are applied but hidden
+- [x] Prerequisites are checked before allowing decisions
+- [x] Mutually exclusive decisions lock each other out
 
 ### UI
-- [ ] Minimal HUD shows budget, week, CHIP
-- [ ] Status screen shows all Critical 7 scores
-- [ ] Dialogue shows requirements on choices
-- [ ] Locked choices are visible but grayed out
-- [ ] Decision log accessible and accurate
+- [x] Minimal HUD shows budget, week, CHIP
+- [x] Status screen shows all Critical 7 scores
+- [x] Dialogue shows requirements on choices
+- [x] Locked choices are visible but grayed out
+- [ ] Decision log accessible and accurate — standalone decision_log.tscn not yet built
 
 ### CHIP
-- [ ] CHIP appears and can be clicked
-- [ ] CHIP comments on idle, low budget, locked options
-- [ ] CHIP has distinct snarky personality
+- [x] CHIP appears — implemented as in-world companion that follows player (evolved beyond original corner-icon concept)
+- [x] CHIP comments on idle, low budget, locked options
+- [x] CHIP has distinct snarky personality
 
 ### Game Loop
-- [ ] Game ends at Week 16 or Budget = 0
-- [ ] Ending tier calculated from scores
-- [ ] Ending screen shows full decision breakdown
-- [ ] Player can understand what went right/wrong
+- [x] Game ends at Week 16 (triggers boss fight) or Budget = 0
+- [x] Ending tier calculated from scores
+- [x] Ending screen shows full decision breakdown
+- [x] Player can understand what went right/wrong
 
 ### Content
-- [ ] At least 15-20 decisions available
-- [ ] Harry (CEO) is interactable
-- [ ] Multiple dialogue paths based on scores
-- [ ] At least 3 distinct ending variations playable
+- [x] 30 decisions available (exceeded 15-20 target)
+- [x] Harry (CEO) is interactable
+- [x] Multiple dialogue paths based on scores
+- [x] 5 distinct ending tiers playable
 
 ---
 
@@ -367,13 +367,37 @@ func check_game_end() -> void
 
 ---
 
-## Open Questions
+## Open Questions (Resolved)
 
-1. **Decision count:** How many decisions for a full playthrough? (Targeting 25-40?)
-2. **Week pacing:** Average decisions per week? (2-3 feels right)
-3. **Score starting values:** All start at 0, or some baseline?
-4. **CHIP visibility:** Always visible or appears on events?
-5. **Multiple playthroughs:** New Game+ or clean restart only?
+1. **Decision count:** 30 decisions implemented
+2. **Week pacing:** Decisions consume variable weeks (1-3)
+3. **Score starting values:** All start at 0
+4. **CHIP visibility:** In-world companion that follows the player (evolved from corner icon)
+5. **Multiple playthroughs:** Clean restart (Play Again button on ending screen)
+
+---
+
+## Beyond Original Scope
+
+The following were originally out of scope but were implemented during v0.2:
+
+- **Boss Fight** ("The Board Presentation") — action budget end-game sequence at week 16+, with objectives tied to NPCs and scores
+- **Full 7 NPCs** — Rex (Technical), Morgan (Change), Casey (Talent) added alongside Sage, Delta, Nova, Harry
+- **Terminal System** — computer for sending company-wide messages with prepared/unprepared variants
+- **Interactables** — breakable boxes, readables, containers, switches
+- **Sprite Sheet Animation** — CharacterAnimator builds SpriteFrames at runtime from character sheets
+- **Character Portraits** — 96x96 pixel art portraits for all characters
+- **Pixel Art HUD** — NinePatch-based UI from sprite sheet
+
+---
+
+## Not Yet Implemented
+
+- **Web export** — not tested
+- **Sound/music**
+- **Save system**
+- **Decision log standalone view** — planned `decision_log.tscn` not built
+- **Playtest & balance pass**
 
 ---
 
@@ -381,4 +405,5 @@ func check_game_end() -> void
 
 - [Story & World Design](story.md)
 - [Decisions System Spec](decisions.md)
+- [Characters](characters.md)
 - [Previous PRD (v0.1)](prd_v0.1_prototype.md)

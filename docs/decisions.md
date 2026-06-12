@@ -1,5 +1,15 @@
 # Decisions System
 
+> **⚠️ DEPRECATED (2026-06-01).** "Decisions" are being renamed to **emails**
+> and their score impact on the Critical 7 has been **removed**. Emails now
+> burn budget and set flags only — score changes live exclusively in
+> conversations. The 30 entries in `data/decisions.json` are being migrated
+> to `data/emails.json` with `impact` blocks stripped.
+>
+> See **[`game_design_v0.3.md`](game_design_v0.3.md)** for the current
+> design. This file is kept as reference for the cost/flag/prereq
+> structure, which carries over to emails unchanged.
+
 ## Overview
 
 Decisions are the core gameplay unit. Every meaningful choice the player makes is recorded as a Decision that affects:

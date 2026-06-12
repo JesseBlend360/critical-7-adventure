@@ -39,6 +39,7 @@ shadow_base_scale = Vector2(0.6, 0.3)
 shadow_color = Color(0.3, 0.6, 0.9, 0.3)
 
 [node name="SpeechBubble" type="PanelContainer" parent="."]
+texture_filter = 2
 visible = false
 offset_left = -140.0
 offset_top = -80.0

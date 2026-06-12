@@ -209,16 +209,15 @@ func _on_decision_made(_decision_id: String) -> void:
 
 
 func _on_decision_applied(decision_id: String, decision_data: Dictionary) -> void:
-	# Comment on decisions based on their impact
-	if decision_data.has("impact"):
-		var total_impact = 0
-		for score in decision_data["impact"]:
-			total_impact += decision_data["impact"][score]
+	# v0.3: emails no longer carry score impact; react to cost instead.
+	var budget_cost: int = 0
+	if decision_data.has("cost") and decision_data["cost"].has("budget"):
+		budget_cost = int(decision_data["cost"]["budget"])
 
-		if total_impact > 15 and randf() < 0.6:
-			_show_random_line("good_decision")
-		elif total_impact < -10 and randf() < 0.6:
-			_show_random_line("bad_decision")
+	if budget_cost >= 30000 and randf() < 0.6:
+		_show_random_line("good_decision")
+	elif budget_cost > 0 and budget_cost <= 10000 and randf() < 0.6:
+		_show_random_line("bad_decision")
 
 
 func _start_bounce() -> void:

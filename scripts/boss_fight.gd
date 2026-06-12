@@ -22,15 +22,18 @@ var action_label: Label
 var objectives_container: VBoxContainer
 var start_button: Button
 
-# NPC positions during boss fight
-var npc_positions: Dictionary = {
-	"delta": Vector2(400, 120),
-	"nova": Vector2(600, 400),
-	"harry": Vector2(750, 100),
-	"sage": Vector2(150, 150),
-	"rex": Vector2(300, 400),
-	"morgan": Vector2(500, 200),
-	"casey": Vector2(200, 300)
+# v0.3: NPC offsets from the player's position at the moment the QBR fires.
+# This used to be absolute world coordinates pinned to the common room, which
+# broke now that QBR triggers from the conference room. Offsets are arranged
+# loosely as a board (Blenda faces north into the room).
+var npc_offsets: Dictionary = {
+	"harry":  Vector2(   0, -240),  # boss seat — head of the table
+	"sage":   Vector2(-180, -140),
+	"delta":  Vector2( 180, -140),
+	"rex":    Vector2(-220,  -40),
+	"nova":   Vector2( 220,  -40),
+	"morgan": Vector2(-160,   60),
+	"casey":  Vector2( 160,   60),
 }
 
 
@@ -189,10 +192,18 @@ func _setup_npcs() -> void:
 	if not npcs_node:
 		return
 
+	# v0.3: anchor NPC positions around the player at trigger time so the
+	# board lays out wherever the QBR was started (conference room).
+	var player := get_tree().get_first_node_in_group("player")
+	var anchor: Vector2 = Vector2.ZERO
+	if player and player is Node2D:
+		anchor = (player as Node2D).global_position
+
 	for npc_node in npcs_node.get_children():
 		if npc_node.has_method("enter_boss_fight"):
 			var npc_id = npc_node.npc_id
-			var pos = npc_positions.get(npc_id, npc_node.global_position)
+			var offset: Vector2 = npc_offsets.get(npc_id, Vector2.ZERO)
+			var pos: Vector2 = anchor + offset
 			npc_node.enter_boss_fight(pos)
 
 			# Check if this NPC has an objective
@@ -432,13 +443,11 @@ func _end_boss_fight() -> void:
 	boss_fight_results["objectives_completed"] = completed_objectives.size()
 	boss_fight_results["objectives_available"] = objectives.filter(func(o): return o["available"]).size()
 
-	# Apply boss fight bonus to scores
-	if total_quality_score > 10:
-		GameState.scores["strategy"] += 5
-		GameState.scores["trust"] += 5
-	elif total_quality_score > 5:
-		GameState.scores["strategy"] += 2
-		GameState.scores["trust"] += 2
+	# v0.3: boss fight no longer grants Critical 7 score deltas — scores come
+	# from conversations only. Quality is communicated to the ending screen
+	# entirely through the `boss_fight_great` / `_good` / `_poor` flags below.
+	# (The action-budget boss fight in this file is itself slated for rewrite
+	#  into the QBR lightning round — see docs/game_design_v0.3.md.)
 
 	# Store results for ending screen
 	GameState.set_flag("boss_fight_complete")

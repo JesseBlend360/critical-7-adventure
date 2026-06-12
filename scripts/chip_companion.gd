@@ -340,17 +340,19 @@ func _on_decision_applied(decision_id: String, decision_data: Dictionary) -> voi
 			set_state(State.ALARMED)
 		return
 
-	if decision_data.has("impact"):
-		var total_impact = 0
-		for score in decision_data["impact"]:
-			total_impact += decision_data["impact"][score]
+	# v0.3: emails no longer carry score impact; react to cost instead.
+	# Cheap emails (≤ $10K) are usually the snarky tone variant — CHIP frets.
+	# Expensive emails (≥ $30K) are usually the confident tone variant — CHIP cheers.
+	var budget_cost: int = 0
+	if decision_data.has("cost") and decision_data["cost"].has("budget"):
+		budget_cost = int(decision_data["cost"]["budget"])
 
-		if total_impact > 15 and randf() < 0.6:
-			set_state(State.EXCITED)
-			_show_random_line("good_decision")
-		elif total_impact < -10 and randf() < 0.6:
-			set_state(State.ALARMED)
-			_show_random_line("bad_decision")
+	if budget_cost >= 30000 and randf() < 0.6:
+		set_state(State.EXCITED)
+		_show_random_line("good_decision")
+	elif budget_cost > 0 and budget_cost <= 10000 and randf() < 0.6:
+		set_state(State.ALARMED)
+		_show_random_line("bad_decision")
 
 
 ## Public method to show a locked choice message

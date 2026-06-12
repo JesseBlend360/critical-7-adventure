@@ -275,6 +275,21 @@ func _build_terminal_ui() -> void:
 	back_button.pressed.connect(_close_terminal)
 	bottom_hbox.add_child(back_button)
 
+	# v0.3: END DAY wraps up the evening — fade to black, advance the week,
+	# respawn the player at reception. See scripts/day_cycle.gd.
+	var end_day_button := Button.new()
+	end_day_button.text = "NEXT WEEK"
+	end_day_button.custom_minimum_size = Vector2(200, 56)
+	if font:
+		end_day_button.add_theme_font_override("font", font)
+	end_day_button.add_theme_font_size_override("font_size", 32)
+	var end_style := _make_button_style(Color(0.25, 0.15, 0.35), Color(0.6, 0.4, 0.85))
+	end_day_button.add_theme_stylebox_override("normal", end_style)
+	var end_hover := _make_button_style(Color(0.35, 0.2, 0.45), Color(0.75, 0.55, 1.0))
+	end_day_button.add_theme_stylebox_override("hover", end_hover)
+	end_day_button.pressed.connect(_on_end_day_pressed)
+	bottom_hbox.add_child(end_day_button)
+
 
 enum MessageState { AVAILABLE, LOCKED, SENT }
 
@@ -438,6 +453,17 @@ func _on_send_pressed() -> void:
 
 		# Show floating text feedback
 		FloatingTextManager.spawn_at("Message Sent!", global_position + Vector2(0, -50), Color(0.3, 0.9, 0.3))
+
+
+## v0.3: END DAY button — closes the terminal, then runs the day-cycle
+## fade/respawn sequence via the DayCycle autoload.
+func _on_end_day_pressed() -> void:
+	if DayCycle.is_transitioning():
+		return
+	_close_terminal()
+	# Let the close-terminal cleanup settle one frame before fading.
+	await get_tree().process_frame
+	await DayCycle.end_day()
 
 
 func _on_body_entered(body: Node2D) -> void:

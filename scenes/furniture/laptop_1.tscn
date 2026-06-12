@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://g1b32lwuii7y"]
+
+[ext_resource type="Texture2D" uid="uid://7ixcfgmls0g3" path="res://p-assets/sprites/modern_office.png" id="1_avwld"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0218u"]
+radius = 13.038404
+
+[node name="Computer1" type="StaticBody2D" unique_id=70564039]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=536917645]
+texture_filter = 1
+position = Vector2(0, -57)
+scale = Vector2(3, 3)
+texture = ExtResource("1_avwld")
+region_enabled = true
+region_rect = Rect2(225, 280, 14, 17)
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1649880233]
+shape = SubResource("CircleShape2D_0218u")
+disabled = true

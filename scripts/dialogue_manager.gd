@@ -16,6 +16,32 @@ var current_node_id: String = ""
 var current_dialogue: Dictionary = {}
 var is_active: bool = false
 
+## v0.3: when true, the current "node" is a synthetic idle/busy line generated
+## because the player has used every meaningful choice on the real node.
+## In this mode the only choice is [Leave] and select_choice() just ends.
+var _idle_mode: bool = false
+
+const IDLE_LINES_PER_NPC := {
+	"sage":   "Sage is mid-thought, scribbling on a notepad. \"Catch me later?\"",
+	"delta":  "Delta is elbow-deep in a query plan. Doesn't look up.",
+	"nova":   "Nova is muttering at a whiteboard. \"Almost… got it…\"",
+	"harry":  "Harry covers his mic and mouths, \"on a call.\"",
+	"rex":    "Rex is in incident mode. \"Not now, Blenda.\"",
+	"morgan": "Morgan is drafting something delicate. \"One sec — actually, tomorrow?\"",
+	"casey":  "Casey is wrapping a 1:1. Mouths \"catch you tomorrow?\"",
+}
+const IDLE_LINES_FALLBACK := [
+	"Heads-down. Doesn't look up.",
+	"Waves you off without looking. Busy.",
+	"Mouths \"busy\" and points at the screen.",
+]
+
+
+func _idle_line_for(npc_id: String) -> String:
+	if IDLE_LINES_PER_NPC.has(npc_id):
+		return IDLE_LINES_PER_NPC[npc_id]
+	return IDLE_LINES_FALLBACK[randi() % IDLE_LINES_FALLBACK.size()]
+
 
 func load_dialogue(npc_id: String) -> Dictionary:
 	# Return cached dialogue if available
@@ -49,6 +75,7 @@ func start_conversation(npc_id: String) -> void:
 
 	current_npc_id = npc_id
 	is_active = true
+	_idle_mode = false
 
 	# Select which conversation to use based on state
 	current_conversation_id = select_conversation(npc_id)
@@ -118,15 +145,26 @@ func get_all_choices_with_status() -> Array:
 		return []
 
 	var result: Array = []
+	var orig_idx: int = -1
 	for choice in node["choices"]:
+		orig_idx += 1
 		var choice_info = choice.duplicate()
+		choice_info["original_index"] = orig_idx
 		choice_info["available"] = true
 		choice_info["failed_requirements"] = []
+
+		# v0.3: hide choices the player has already picked this run.
+		var chosen_key := "choice:%s:%s:%d" % [current_npc_id, current_node_id, orig_idx]
+		if GameState.has_chosen_choice(chosen_key):
+			choice_info["hidden"] = true
+			result.append(choice_info)
+			continue
 
 		# Check legacy conditions (hidden choices)
 		if choice.has("conditions"):
 			if not GameState.check_conditions(choice["conditions"]):
 				choice_info["hidden"] = true
+				result.append(choice_info)
 				continue  # These choices are hidden entirely
 
 		# Check "requires" field (visible but possibly locked)
@@ -172,6 +210,11 @@ func get_available_choices() -> Array:
 
 ## Select a choice by index from all visible choices
 func select_choice(index: int) -> void:
+	# v0.3: idle mode = synthetic "NPC is busy" line, only choice is [Leave].
+	if _idle_mode:
+		end_conversation()
+		return
+
 	var all_choices = get_all_choices_with_status()
 
 	# Filter to visible choices only (not hidden)
@@ -191,15 +234,23 @@ func select_choice(index: int) -> void:
 		push_warning("Attempted to select locked choice")
 		return
 
+	# v0.3: stable per-choice key — original_index survives hide-filtering.
+	var orig_index: int = int(choice.get("original_index", index))
+	var key := "choice:%s:%s:%d" % [current_npc_id, current_node_id, orig_index]
+
+	# Mark this choice as used so it disappears on subsequent visits.
+	GameState.mark_choice_chosen(key)
+
 	# Apply decision if this choice triggers one
 	if choice.has("adds_decision"):
 		var decision_id = choice["adds_decision"]
 		if DecisionManager.make_decision(decision_id):
 			decision_triggered.emit(decision_id)
 
-	# Apply effects from choice
+	# Apply effects from choice — once per run, keyed by NPC/node/choice index.
+	# Prevents score-grinding by repeatedly picking the same choice.
 	if choice.has("effects"):
-		GameState.apply_effects(choice["effects"])
+		GameState.apply_effects_once(key, choice["effects"])
 
 	# Apply flags from choice
 	if choice.has("flags"):
@@ -263,9 +314,11 @@ func _display_current_node() -> void:
 				end_conversation()
 				return
 
-	# Apply effects from node
+	# Apply effects from node — once per run, keyed by NPC/node id.
+	# Prevents score-grinding by re-entering the conversation.
 	if node.has("effects"):
-		GameState.apply_effects(node["effects"])
+		var key := "node:%s:%s" % [current_npc_id, current_node_id]
+		GameState.apply_effects_once(key, node["effects"])
 
 	# Apply flags from node
 	if node.has("flags"):
@@ -276,15 +329,40 @@ func _display_current_node() -> void:
 			for flag in node["flags"]["unset"]:
 				GameState.unset_flag(flag)
 
-	# Emit node display signal
+	# v0.3: if every choice on this node is hidden (chosen already or
+	# condition-locked away), substitute a synthetic "NPC is busy" line so
+	# the player always sees *something* and can dismiss with [Leave].
+	if node.has("choices"):
+		var all_choices = get_all_choices_with_status()
+		var visible_choices: Array = []
+		for choice in all_choices:
+			if not choice.get("hidden", false):
+				visible_choices.append(choice)
+
+		if visible_choices.is_empty():
+			_emit_idle_node()
+			return
+
+		# Normal flow.
+		node_displayed.emit(node)
+		choices_presented.emit(visible_choices)
+		return
+
+	# Node has no choices block at all (linear node) — fall through to display.
 	node_displayed.emit(node)
 
-	# Check for choices - emit all visible choices with status
-	var all_choices = get_all_choices_with_status()
-	var visible_choices: Array = []
-	for choice in all_choices:
-		if not choice.get("hidden", false):
-			visible_choices.append(choice)
 
-	if visible_choices.size() > 0:
-		choices_presented.emit(visible_choices)
+## v0.3: build and emit a synthetic single-line "busy" node + a [Leave] choice.
+func _emit_idle_node() -> void:
+	_idle_mode = true
+	var npc_name: String = current_npc_id.capitalize()
+	var idle_node := {
+		"speaker": npc_name,
+		"text": _idle_line_for(current_npc_id),
+		"npc_id": current_npc_id,
+		"_synthetic_idle": true,
+	}
+	node_displayed.emit(idle_node)
+	choices_presented.emit([
+		{"text": "[Leave]", "available": true, "failed_requirements": []}
+	])

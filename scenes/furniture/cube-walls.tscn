@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bqhlc77r2whp1"]
+
+[ext_resource type="Texture2D" uid="uid://7ixcfgmls0g3" path="res://p-assets/sprites/modern_office.png" id="1_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_col"]
+size = Vector2(291.5, 17.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t7ub5"]
+size = Vector2(6, 91.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pc0or"]
+size = Vector2(9, 90)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_acvis"]
+size = Vector2(6, 91)
+
+[node name="Cube-Walls" type="StaticBody2D" unique_id=419598510]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=545085800]
+texture_filter = 1
+position = Vector2(2, -3)
+scale = Vector2(3, 3)
+texture = ExtResource("1_tex")
+region_enabled = true
+region_rect = Rect2(13, 421, 99, 43)
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=285764662]
+position = Vector2(2.25, 18)
+shape = SubResource("RectangleShape2D_col")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=359624285]
+position = Vector2(-142, 14)
+shape = SubResource("RectangleShape2D_t7ub5")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=1465718160]
+position = Vector2(2.5, 14)
+shape = SubResource("RectangleShape2D_pc0or")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="." unique_id=1530950472]
+position = Vector2(146, 13.5)
+shape = SubResource("RectangleShape2D_acvis")

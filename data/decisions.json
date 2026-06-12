@@ -6,9 +6,14 @@
       "icon": "expand",
       "category": "strategy",
       "description": "Attempt to transform everything at once. Maximum ambition, maximum risk.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "strategy": -10, "trust": -5, "innovation": 5 },
-      "excludes": ["focused_scope", "pilot_first"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "excludes": [
+        "focused_scope",
+        "pilot_first"
+      ],
       "reversible": false,
       "flavor_text": "Sage's eye twitches slightly. 'Bold choice. Very... bold.'"
     },
@@ -18,9 +23,14 @@
       "icon": "target",
       "category": "strategy",
       "description": "Pick one problem and solve it well before expanding.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "strategy": 10, "innovation": -5, "trust": 5 },
-      "excludes": ["broad_scope", "pilot_first"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "excludes": [
+        "broad_scope",
+        "pilot_first"
+      ],
       "reversible": false,
       "flavor_text": "'One thing done well beats ten things done poorly.' Sage actually smiles."
     },
@@ -30,9 +40,14 @@
       "icon": "experiment",
       "category": "strategy",
       "description": "Run a small experiment before committing to a full approach.",
-      "cost": { "budget": 15000, "time": 1 },
-      "impact": { "strategy": 5, "trust": 10, "innovation": 5 },
-      "excludes": ["broad_scope", "focused_scope"],
+      "cost": {
+        "budget": 15000,
+        "time": 1
+      },
+      "excludes": [
+        "broad_scope",
+        "focused_scope"
+      ],
       "reversible": false,
       "flavor_text": "'Test and learn. I can work with this.' Sage nods approvingly."
     },
@@ -42,9 +57,15 @@
       "icon": "skip",
       "category": "data",
       "description": "Proceed with existing data quality. What could go wrong?",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "data": -20, "technical": -5, "trust": 5 },
-      "excludes": ["internal_cleanup", "hire_data_consultant", "full_data_audit"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "excludes": [
+        "internal_cleanup",
+        "hire_data_consultant",
+        "full_data_audit"
+      ],
       "reversible": false,
       "flavor_text": "Delta stares at you for a long moment. 'I'll document that you said that.'"
     },
@@ -54,10 +75,20 @@
       "icon": "broom",
       "category": "data",
       "description": "Have the existing team clean up the data themselves.",
-      "cost": { "budget": 15000, "time": 3 },
-      "impact": { "data": 10, "talent": 5, "change": 5 },
-      "excludes": ["skip_data_cleanup", "hire_data_consultant", "full_data_audit"],
-      "prerequisites": { "flags": ["met_delta"] },
+      "cost": {
+        "budget": 15000,
+        "time": 3
+      },
+      "excludes": [
+        "skip_data_cleanup",
+        "hire_data_consultant",
+        "full_data_audit"
+      ],
+      "prerequisites": {
+        "flags": [
+          "met_delta"
+        ]
+      },
       "reversible": false,
       "flavor_text": "Delta cracks her knuckles. 'Finally. Someone who listens.'"
     },
@@ -67,11 +98,23 @@
       "icon": "person_add",
       "category": "data",
       "description": "Bring in a specialist to audit and clean the customer database.",
-      "cost": { "budget": 45000, "time": 2 },
-      "impact": { "data": 15, "talent": 10, "technical": 5, "change": -5 },
-      "excludes": ["skip_data_cleanup", "internal_cleanup", "full_data_audit"],
-      "prerequisites": { "flags": ["met_delta"] },
-      "unlocks": ["external_help_precedent"],
+      "cost": {
+        "budget": 45000,
+        "time": 2
+      },
+      "excludes": [
+        "skip_data_cleanup",
+        "internal_cleanup",
+        "full_data_audit"
+      ],
+      "prerequisites": {
+        "flags": [
+          "met_delta"
+        ]
+      },
+      "unlocks": [
+        "external_help_precedent"
+      ],
       "reversible": false,
       "flavor_text": "Delta finally smiles. You didn't know she could do that."
     },
@@ -81,11 +124,26 @@
       "icon": "audit",
       "category": "data",
       "description": "Comprehensive review of all data systems. Thorough but expensive.",
-      "cost": { "budget": 80000, "time": 4 },
-      "impact": { "data": 25, "technical": 10, "strategy": 5, "change": -10 },
-      "excludes": ["skip_data_cleanup", "internal_cleanup", "hire_data_consultant"],
-      "prerequisites": { "flags": ["met_delta"], "min_scores": { "trust": 5 } },
-      "unlocks": ["data_audit_complete"],
+      "cost": {
+        "budget": 80000,
+        "time": 4
+      },
+      "excludes": [
+        "skip_data_cleanup",
+        "internal_cleanup",
+        "hire_data_consultant"
+      ],
+      "prerequisites": {
+        "flags": [
+          "met_delta"
+        ],
+        "min_scores": {
+          "trust": 5
+        }
+      },
+      "unlocks": [
+        "data_audit_complete"
+      ],
       "reversible": false,
       "flavor_text": "'This is how you do it right.' Delta's respect is palpable."
     },
@@ -95,10 +153,20 @@
       "icon": "code",
       "category": "technical",
       "description": "Build the AI solution in-house. Full control, full responsibility.",
-      "cost": { "budget": 150000, "time": 6 },
-      "impact": { "technical": 15, "innovation": 10, "talent": 5, "trust": -5 },
-      "excludes": ["buy_vendor", "hybrid_approach"],
-      "prerequisites": { "min_scores": { "technical": 5, "talent": 5 } },
+      "cost": {
+        "budget": 150000,
+        "time": 6
+      },
+      "excludes": [
+        "buy_vendor",
+        "hybrid_approach"
+      ],
+      "prerequisites": {
+        "min_scores": {
+          "technical": 5,
+          "talent": 5
+        }
+      },
       "reversible": false,
       "flavor_text": "Nova's eyes light up. 'Finally, some real engineering.'"
     },
@@ -108,9 +176,14 @@
       "icon": "shopping_cart",
       "category": "technical",
       "description": "Purchase an off-the-shelf AI platform. Fast but limiting.",
-      "cost": { "budget": 200000, "time": 2 },
-      "impact": { "technical": -5, "trust": 5, "change": 10, "innovation": -10 },
-      "excludes": ["build_custom", "hybrid_approach"],
+      "cost": {
+        "budget": 200000,
+        "time": 2
+      },
+      "excludes": [
+        "build_custom",
+        "hybrid_approach"
+      ],
       "reversible": true,
       "flavor_text": "'At least it'll work on day one.' The vendor rep smiles too much."
     },
@@ -120,10 +193,19 @@
       "icon": "merge",
       "category": "technical",
       "description": "Buy a platform but customize key components in-house.",
-      "cost": { "budget": 120000, "time": 4 },
-      "impact": { "technical": 5, "innovation": 5, "trust": 5 },
-      "excludes": ["build_custom", "buy_vendor"],
-      "prerequisites": { "min_scores": { "technical": 3 } },
+      "cost": {
+        "budget": 120000,
+        "time": 4
+      },
+      "excludes": [
+        "build_custom",
+        "buy_vendor"
+      ],
+      "prerequisites": {
+        "min_scores": {
+          "technical": 3
+        }
+      },
       "reversible": false,
       "flavor_text": "'Best of both worlds. Or worst of both. Time will tell.' - Nova"
     },
@@ -133,9 +215,13 @@
       "icon": "school",
       "category": "talent",
       "description": "Require all affected staff to complete AI training.",
-      "cost": { "budget": 30000, "time": 1 },
-      "impact": { "talent": 15, "change": -10, "trust": -5 },
-      "excludes": ["voluntary_training"],
+      "cost": {
+        "budget": 30000,
+        "time": 1
+      },
+      "excludes": [
+        "voluntary_training"
+      ],
       "reversible": false,
       "flavor_text": "The calendar invites go out. The complaints follow immediately."
     },
@@ -145,9 +231,13 @@
       "icon": "hand_raised",
       "category": "talent",
       "description": "Offer training to interested staff. Less resistance, less coverage.",
-      "cost": { "budget": 15000, "time": 0 },
-      "impact": { "talent": 5, "change": 5, "trust": 5 },
-      "excludes": ["mandatory_training"],
+      "cost": {
+        "budget": 15000,
+        "time": 0
+      },
+      "excludes": [
+        "mandatory_training"
+      ],
       "reversible": false,
       "flavor_text": "12% opt-in rate. 'That's... about average,' says HR."
     },
@@ -157,10 +247,18 @@
       "icon": "person_add",
       "category": "talent",
       "description": "Bring in specialized machine learning talent.",
-      "cost": { "budget": 80000, "time": 3 },
-      "impact": { "technical": 10, "talent": 10, "innovation": 5 },
-      "prerequisites": { "flags": ["met_nova"] },
-      "unlocks": ["ml_team_formed"],
+      "cost": {
+        "budget": 80000,
+        "time": 3
+      },
+      "prerequisites": {
+        "flags": [
+          "met_nova"
+        ]
+      },
+      "unlocks": [
+        "ml_team_formed"
+      ],
       "reversible": false,
       "flavor_text": "Nova finally has backup. 'It's like you actually want this to succeed.'"
     },
@@ -170,8 +268,10 @@
       "icon": "warning",
       "category": "talent",
       "description": "Ask the team to work extra hours to catch up. Risky.",
-      "cost": { "budget": 0, "time": -2 },
-      "impact": { "talent": -15, "trust": -10, "technical": 5 },
+      "cost": {
+        "budget": 0,
+        "time": -2
+      },
       "reversible": false,
       "flavor_text": "The team says yes. Their eyes say something else entirely."
     },
@@ -181,9 +281,13 @@
       "icon": "alarm",
       "category": "trust",
       "description": "Tell the CEO what they want to hear. Deal with reality later.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "trust": -20, "strategy": 5 },
-      "unlocks": ["promised_impossible"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "unlocks": [
+        "promised_impossible"
+      ],
       "reversible": false,
       "flavor_text": "Harry nods, satisfied. For now."
     },
@@ -193,9 +297,13 @@
       "icon": "check_circle",
       "category": "trust",
       "description": "Tell the CEO the truth about what's achievable.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "trust": 10, "strategy": -5 },
-      "excludes": ["promise_impossible"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "excludes": [
+        "promise_impossible"
+      ],
       "reversible": false,
       "flavor_text": "Harry's jaw tightens. 'I appreciate the honesty. I think.'"
     },
@@ -205,9 +313,15 @@
       "icon": "presentation",
       "category": "strategy",
       "description": "Show progress to leadership before you're fully ready.",
-      "cost": { "budget": 10000, "time": 1 },
-      "impact": { "strategy": 10, "trust": 5, "change": 5, "technical": -5 },
-      "prerequisites": { "min_scores": { "technical": 3 } },
+      "cost": {
+        "budget": 10000,
+        "time": 1
+      },
+      "prerequisites": {
+        "min_scores": {
+          "technical": 3
+        }
+      },
       "reversible": false,
       "flavor_text": "The demo gods are fickle. Today they smile upon you."
     },
@@ -217,8 +331,10 @@
       "icon": "fast_forward",
       "category": "change",
       "description": "Move fast. Get buy-in later. What could possibly go wrong?",
-      "cost": { "budget": 0, "time": -1 },
-      "impact": { "change": -15, "trust": -10, "innovation": 5 },
+      "cost": {
+        "budget": 0,
+        "time": -1
+      },
       "reversible": false,
       "flavor_text": "'We'll loop them in later.' Famous last words."
     },
@@ -228,8 +344,10 @@
       "icon": "groups",
       "category": "change",
       "description": "Tour the organization explaining the AI initiative.",
-      "cost": { "budget": 5000, "time": 2 },
-      "impact": { "change": 15, "trust": 10, "strategy": 5, "innovation": -5 },
+      "cost": {
+        "budget": 5000,
+        "time": 2
+      },
       "reversible": false,
       "flavor_text": "By meeting 12, your talking points are flawless. By meeting 20, so is your smile."
     },
@@ -239,10 +357,18 @@
       "icon": "bolt",
       "category": "innovation",
       "description": "Focus on something small but visible to build momentum.",
-      "cost": { "budget": 20000, "time": 2 },
-      "impact": { "innovation": 10, "trust": 10, "strategy": -5 },
-      "prerequisites": { "flags": ["met_nova"] },
-      "unlocks": ["quick_win_achieved"],
+      "cost": {
+        "budget": 20000,
+        "time": 2
+      },
+      "prerequisites": {
+        "flags": [
+          "met_nova"
+        ]
+      },
+      "unlocks": [
+        "quick_win_achieved"
+      ],
       "reversible": false,
       "flavor_text": "Nova ships a demo in 48 hours. It's beautiful. It's also very temporary."
     },
@@ -252,10 +378,21 @@
       "icon": "shield",
       "category": "technical",
       "description": "Invest in monitoring, rollback capability, and infrastructure hardening.",
-      "cost": { "budget": 60000, "time": 3 },
-      "impact": { "technical": 15, "trust": 5, "innovation": -5 },
-      "prerequisites": { "flags": ["met_rex"], "min_scores": { "technical": 5 } },
-      "unlocks": ["platform_stable"],
+      "cost": {
+        "budget": 60000,
+        "time": 3
+      },
+      "prerequisites": {
+        "flags": [
+          "met_rex"
+        ],
+        "min_scores": {
+          "technical": 5
+        }
+      },
+      "unlocks": [
+        "platform_stable"
+      ],
       "reversible": false,
       "flavor_text": "Rex looks like he might cry. 'You have no idea how long I've waited for someone to approve this.'"
     },
@@ -265,10 +402,18 @@
       "icon": "server",
       "category": "technical",
       "description": "Unlock and upgrade the basement server room for AI workloads.",
-      "cost": { "budget": 40000, "time": 2 },
-      "impact": { "technical": 10, "innovation": 10, "data": 5 },
-      "prerequisites": { "flags": ["has_server_key"] },
-      "unlocks": ["server_room_active"],
+      "cost": {
+        "budget": 40000,
+        "time": 2
+      },
+      "prerequisites": {
+        "flags": [
+          "has_server_key"
+        ]
+      },
+      "unlocks": [
+        "server_room_active"
+      ],
       "reversible": false,
       "flavor_text": "The server room hums to life for the first time in years. Rex pats a rack affectionately."
     },
@@ -278,9 +423,13 @@
       "icon": "skip",
       "category": "technical",
       "description": "Use existing infrastructure as-is. Save money now, pay later.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "technical": -10, "innovation": 5, "trust": -5 },
-      "excludes": ["platform_reliability"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "excludes": [
+        "platform_reliability"
+      ],
       "reversible": false,
       "flavor_text": "Rex sighs. 'I'll start updating my resume.'"
     },
@@ -290,10 +439,18 @@
       "icon": "people",
       "category": "change",
       "description": "Recruit enthusiastic early adopters as peer advocates across departments.",
-      "cost": { "budget": 10000, "time": 2 },
-      "impact": { "change": 15, "trust": 10, "talent": 5 },
-      "prerequisites": { "flags": ["met_morgan"] },
-      "unlocks": ["champions_active"],
+      "cost": {
+        "budget": 10000,
+        "time": 2
+      },
+      "prerequisites": {
+        "flags": [
+          "met_morgan"
+        ]
+      },
+      "unlocks": [
+        "champions_active"
+      ],
       "reversible": false,
       "flavor_text": "Morgan recruits 8 champions in a week. 'I've been waiting years to try this approach.'"
     },
@@ -303,9 +460,14 @@
       "icon": "force",
       "category": "change",
       "description": "Ignore pushback and mandate adoption. Efficiency over feelings.",
-      "cost": { "budget": 0, "time": -1 },
-      "impact": { "change": -20, "trust": -15, "talent": -10 },
-      "excludes": ["change_champions", "stakeholder_roadshow"],
+      "cost": {
+        "budget": 0,
+        "time": -1
+      },
+      "excludes": [
+        "change_champions",
+        "stakeholder_roadshow"
+      ],
       "reversible": false,
       "flavor_text": "Morgan's face goes white. 'You have no idea what you've just done.'"
     },
@@ -315,9 +477,15 @@
       "icon": "briefcase",
       "category": "change",
       "description": "Brief all managers before any team-wide announcements.",
-      "cost": { "budget": 5000, "time": 1 },
-      "impact": { "change": 10, "trust": 10 },
-      "prerequisites": { "flags": ["morgan_comm_plan"] },
+      "cost": {
+        "budget": 5000,
+        "time": 1
+      },
+      "prerequisites": {
+        "flags": [
+          "morgan_comm_plan"
+        ]
+      },
       "reversible": false,
       "flavor_text": "For the first time, managers feel prepared instead of ambushed. Morgan beams."
     },
@@ -327,10 +495,18 @@
       "icon": "book",
       "category": "talent",
       "description": "Short, hands-on modules teaching AI fundamentals with real company data.",
-      "cost": { "budget": 25000, "time": 2 },
-      "impact": { "talent": 15, "change": 10, "innovation": 5 },
-      "prerequisites": { "flags": ["met_casey"] },
-      "unlocks": ["team_ai_literate"],
+      "cost": {
+        "budget": 25000,
+        "time": 2
+      },
+      "prerequisites": {
+        "flags": [
+          "met_casey"
+        ]
+      },
+      "unlocks": [
+        "team_ai_literate"
+      ],
       "reversible": false,
       "flavor_text": "Casey's modules get a 4.2/5 satisfaction rating. 'That's unheard of for internal training!'"
     },
@@ -340,9 +516,15 @@
       "icon": "handshake",
       "category": "talent",
       "description": "Pair early adopters with skeptics for hands-on peer learning.",
-      "cost": { "budget": 5000, "time": 1 },
-      "impact": { "talent": 10, "change": 10, "trust": 5 },
-      "prerequisites": { "flags": ["casey_literacy_program"] },
+      "cost": {
+        "budget": 5000,
+        "time": 1
+      },
+      "prerequisites": {
+        "flags": [
+          "casey_literacy_program"
+        ]
+      },
       "reversible": false,
       "flavor_text": "'Nothing works better than seeing your colleague succeed.' Casey was right."
     },
@@ -352,10 +534,18 @@
       "icon": "person_add",
       "category": "talent",
       "description": "Give Rex backup — hire someone who can share the on-call burden.",
-      "cost": { "budget": 70000, "time": 3 },
-      "impact": { "technical": 10, "talent": 10, "trust": 5 },
-      "prerequisites": { "flags": ["met_rex"] },
-      "unlocks": ["platform_team_formed"],
+      "cost": {
+        "budget": 70000,
+        "time": 3
+      },
+      "prerequisites": {
+        "flags": [
+          "met_rex"
+        ]
+      },
+      "unlocks": [
+        "platform_team_formed"
+      ],
       "reversible": false,
       "flavor_text": "Rex: 'Another human who understands YAML? I didn't think they existed.'"
     },
@@ -365,10 +555,19 @@
       "icon": "email",
       "category": "change",
       "description": "Company-wide AI initiative announcement. Morgan reviewed the messaging.",
-      "cost": { "budget": 0, "time": 1 },
-      "impact": { "change": 10, "trust": 5 },
-      "prerequisites": { "flags": ["met_morgan", "morgan_comm_plan"] },
-      "unlocks": ["terminal_announce_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 1
+      },
+      "prerequisites": {
+        "flags": [
+          "met_morgan",
+          "morgan_comm_plan"
+        ]
+      },
+      "unlocks": [
+        "terminal_announce_sent"
+      ],
       "reversible": false,
       "flavor_text": "The announcement goes out. This time, managers were ready. Nobody panicked."
     },
@@ -378,10 +577,18 @@
       "icon": "email",
       "category": "change",
       "description": "Company-wide AI initiative announcement. No comms plan in place.",
-      "cost": { "budget": 0, "time": 1 },
-      "impact": { "change": 5, "trust": -10, "talent": -5 },
-      "prerequisites": { "flags": ["met_morgan"] },
-      "unlocks": ["terminal_announce_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 1
+      },
+      "prerequisites": {
+        "flags": [
+          "met_morgan"
+        ]
+      },
+      "unlocks": [
+        "terminal_announce_sent"
+      ],
       "reversible": false,
       "flavor_text": "The announcement goes out. Slack explodes. Three people update their LinkedIn. Just like Falcon."
     },
@@ -391,10 +598,19 @@
       "icon": "email",
       "category": "trust",
       "description": "Reassuring message about job safety. Morgan helped frame the language.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "trust": 15, "change": 5 },
-      "prerequisites": { "flags": ["learned_morale", "morgan_comm_plan"] },
-      "unlocks": ["terminal_roles_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "learned_morale",
+          "morgan_comm_plan"
+        ]
+      },
+      "unlocks": [
+        "terminal_roles_sent"
+      ],
       "reversible": false,
       "flavor_text": "The message lands perfectly. People exhale. The water cooler talk shifts from fear to curiosity."
     },
@@ -404,10 +620,18 @@
       "icon": "email",
       "category": "trust",
       "description": "Reassuring message about job safety. Sent without Morgan's input.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "trust": 5, "change": -5 },
-      "prerequisites": { "flags": ["learned_morale"] },
-      "unlocks": ["terminal_roles_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "learned_morale"
+        ]
+      },
+      "unlocks": [
+        "terminal_roles_sent"
+      ],
       "reversible": false,
       "flavor_text": "'Roles not being eliminated' — the subject line alone makes three people nervous. Phrasing matters."
     },
@@ -417,10 +641,19 @@
       "icon": "email",
       "category": "talent",
       "description": "Announce AI training programs. Casey's programs are ready to go.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "talent": 10, "change": 5 },
-      "prerequisites": { "flags": ["met_casey", "morgan_comm_plan"] },
-      "unlocks": ["terminal_training_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "met_casey",
+          "morgan_comm_plan"
+        ]
+      },
+      "unlocks": [
+        "terminal_training_sent"
+      ],
       "reversible": false,
       "flavor_text": "Sign-up rate: 34%. Casey nearly falls out of her chair. 'That's triple the normal rate!'"
     },
@@ -430,10 +663,18 @@
       "icon": "email",
       "category": "talent",
       "description": "Announce AI training programs. No comms strategy behind it.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "talent": 5 },
-      "prerequisites": { "flags": ["met_casey"] },
-      "unlocks": ["terminal_training_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "met_casey"
+        ]
+      },
+      "unlocks": [
+        "terminal_training_sent"
+      ],
       "reversible": false,
       "flavor_text": "Sign-up rate: 8%. 'That's... about average,' says HR. Casey winces."
     },
@@ -443,10 +684,19 @@
       "icon": "email",
       "category": "strategy",
       "description": "Stakeholder progress report. Data-driven, well-structured.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "strategy": 10, "trust": 5 },
-      "prerequisites": { "flags": ["stakeholder_roadshow", "morgan_comm_plan"] },
-      "unlocks": ["terminal_progress_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "stakeholder_roadshow",
+          "morgan_comm_plan"
+        ]
+      },
+      "unlocks": [
+        "terminal_progress_sent"
+      ],
       "reversible": false,
       "flavor_text": "The update gets forwarded to the board. Harry sends a rare thumbs-up emoji."
     },
@@ -456,10 +706,18 @@
       "icon": "email",
       "category": "strategy",
       "description": "Stakeholder progress report. Thrown together without a comms plan.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "strategy": 5 },
-      "prerequisites": { "flags": ["stakeholder_roadshow"] },
-      "unlocks": ["terminal_progress_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "stakeholder_roadshow"
+        ]
+      },
+      "unlocks": [
+        "terminal_progress_sent"
+      ],
       "reversible": false,
       "flavor_text": "The update is fine. Just fine. Nobody is impressed. Nobody is alarmed. Corporate beige."
     },
@@ -469,10 +727,19 @@
       "icon": "email",
       "category": "innovation",
       "description": "Recruit early adopters for the AI pilot. Morgan helped craft the pitch.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "innovation": 10, "change": 5 },
-      "prerequisites": { "flags": ["quick_win_achieved", "morgan_comm_plan"] },
-      "unlocks": ["terminal_adopters_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "quick_win_achieved",
+          "morgan_comm_plan"
+        ]
+      },
+      "unlocks": [
+        "terminal_adopters_sent"
+      ],
       "reversible": false,
       "flavor_text": "22 volunteers in 48 hours. Nova is overwhelmed. 'I only have 3 beta slots!'"
     },
@@ -482,10 +749,18 @@
       "icon": "email",
       "category": "innovation",
       "description": "Recruit early adopters for the AI pilot. Sent without comms strategy.",
-      "cost": { "budget": 0, "time": 0 },
-      "impact": { "innovation": 5, "change": -5 },
-      "prerequisites": { "flags": ["quick_win_achieved"] },
-      "unlocks": ["terminal_adopters_sent"],
+      "cost": {
+        "budget": 0,
+        "time": 0
+      },
+      "prerequisites": {
+        "flags": [
+          "quick_win_achieved"
+        ]
+      },
+      "unlocks": [
+        "terminal_adopters_sent"
+      ],
       "reversible": false,
       "flavor_text": "4 volunteers. All from IT. The rest of the org didn't understand what they were signing up for."
     }

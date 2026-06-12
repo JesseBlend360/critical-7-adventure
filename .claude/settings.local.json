@@ -6,7 +6,23 @@
       "Bash(grep:*)",
       "Bash(for f:*)",
       "Bash(python3:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(pip3 install:*)",
+      "Bash(pkill -x Godot)",
+      "Bash(uv pip:*)",
+      "Bash(npm --version)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Read(//Applications/**)",
+      "Read(//Applications/Godot.app/Contents/MacOS/**)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --check-only --script scripts/main.gd)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --editor --quit)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --quit-after 3)",
+      "Bash(/Applications/Godot.app/Contents/MacOS/Godot --headless --quit-after 5)",
+      "Bash(awk '/tile_map_data = PackedByteArray/ {print length\\($0\\)}')",
+      "Bash(awk '/tile_map_data = PackedByteArray/ {print length\\($0\\)}' scenes/rooms/common_hub.tscn)"
     ]
   }
 }

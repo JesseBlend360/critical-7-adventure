@@ -9,15 +9,18 @@ class_name CharacterAnimator
 const FRAME_SIZE := Vector2(16, 32)
 
 # Sprite sheet layout (all characters share this):
-# Row 0: 4 idle frames — col 0: RIGHT, col 1: UP, col 2: LEFT, col 3: DOWN
-# Row 1: 24 walk frames — cols 0-5: RIGHT, 6-11: UP, 12-17: LEFT, 18-23: DOWN
+# Row 0: Head/preview sprites (not used)
+# Row 1: Idle — 6 frames each: RIGHT (0-5), UP (6-11), LEFT (12-17), DOWN (18-23)
+# Row 2: Walk — 6 frames each: RIGHT (0-5), UP (6-11), LEFT (12-17), DOWN (18-23)
+# Left-facing uses walk_right/idle_right with flip_h = true
+# Row 3+: Sleep, sit, etc.
 const ANIM_MAP := {
-	"idle_down":  {"row": 0, "col": 3, "count": 1, "fps": 1},
-	"idle_up":    {"row": 0, "col": 1, "count": 1, "fps": 1},
-	"idle_right": {"row": 0, "col": 0, "count": 1, "fps": 1},
-	"walk_down":  {"row": 1, "col": 18, "count": 6, "fps": 10},
-	"walk_up":    {"row": 1, "col": 6, "count": 6, "fps": 10},
-	"walk_right": {"row": 1, "col": 0, "count": 6, "fps": 10},
+	"idle_down":  {"row": 1, "col": 18, "count": 6, "fps": 6},
+	"idle_up":    {"row": 1, "col": 6,  "count": 6, "fps": 6},
+	"idle_right": {"row": 1, "col": 0,  "count": 6, "fps": 6},
+	"walk_down":  {"row": 2, "col": 18, "count": 6, "fps": 10},
+	"walk_up":    {"row": 2, "col": 6,  "count": 6, "fps": 10},
+	"walk_right": {"row": 2, "col": 0,  "count": 6, "fps": 10},
 }
 
 var _sprite: AnimatedSprite2D
@@ -115,3 +118,5 @@ func _update_animation() -> void:
 	if _current_anim != anim_name:
 		_current_anim = anim_name
 		_sprite.play(anim_name)
+		if prefix == "idle_":
+			_sprite.frame = randi() % _sprite.sprite_frames.get_frame_count(anim_name)

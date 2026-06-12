@@ -132,11 +132,10 @@ func make_decision(decision_id: String) -> bool:
 	if decision.has("cost") and decision["cost"].has("time"):
 		GameState.advance_week(decision["cost"]["time"])
 
-	# Apply score impacts
-	if decision.has("impact"):
-		for score_name in decision["impact"]:
-			if GameState.scores.has(score_name):
-				GameState.scores[score_name] += decision["impact"][score_name]
+	# NOTE (v0.3 reorientation): decisions/emails no longer change Critical 7
+	# scores. Score deltas live in conversations only. See docs/game_design_v0.3.md.
+	# The legacy "impact" block has been stripped from decisions.json and the
+	# loop that applied it lived here.
 
 	# Set any unlock flags
 	if decision.has("unlocks"):

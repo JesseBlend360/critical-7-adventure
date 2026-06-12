@@ -2,6 +2,29 @@
 
 All notable changes to Critical 7 will be documented in this file.
 
+## [Unreleased] - v0.3 Design Reorientation (Docs Only)
+
+### Design
+
+- **New canonical design doc:** `docs/game_design_v0.3.md` capturing the
+  full reorientation: three orthogonal resources (conversations → scores,
+  emails → budget, "Next Day" → weeks), daily walk-and-talk + terminal
+  loop with a real-time day timer that pauses during dialogue/menus,
+  fade-to-reception day transition, and a 5–7-slide "lightning round" QBR
+  boss fight with per-slide timers, advocate NPC reactions, and teaching
+  beats.
+- **Single-scene architecture.** Multi-scene `SceneRouter` model formally
+  abandoned. `docs/scene_system.md` marked deprecated; `SceneRouter`
+  autoload + door `target_scene` exports left in place but unused.
+- **Decisions → Emails.** Score impacts being stripped from decisions;
+  budget and flags only. `data/decisions.json` to be migrated to
+  `data/emails.json` with 1–3 score-gated tone variants per card
+  (confident / cautious / snarky). `docs/decisions.md` marked deprecated.
+- **Story-as-data plan.** `data/story_manifest.json` schema + Python
+  validator under `tools/` to enforce score budgets, reachability, and
+  NPC consistency — groundwork for LLM-generated story variants.
+- Roadmap updated with v0.3 task list in cheapest-first order.
+
 ## [Unreleased] - UI Polish & Furniture
 
 ### Added

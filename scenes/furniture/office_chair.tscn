@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5we8ch1hph17"]
+[gd_scene format=3 uid="uid://b5we8ch1hph17"]
 
 [ext_resource type="Texture2D" uid="uid://7ixcfgmls0g3" path="res://p-assets/sprites/modern_office.png" id="1_tex"]
 [ext_resource type="Script" uid="uid://b1q3aqoql0xcd" path="res://scripts/office_chair.gd" id="2_script"]
@@ -9,26 +9,26 @@ size = Vector2(36, 36)
 [sub_resource type="CircleShape2D" id="CircleShape2D_interact"]
 radius = 60.0
 
-[node name="OfficeChair" type="RigidBody2D"]
+[node name="OfficeChair" type="RigidBody2D" unique_id=1373525303]
 gravity_scale = 0.0
+lock_rotation = true
 linear_damp = 5.0
 angular_damp = 5.0
-lock_rotation = true
 script = ExtResource("2_script")
 
-[node name="Sprite" type="Sprite2D" parent="."]
-scale = Vector2(3, 3)
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1363506589]
 position = Vector2(0, -15)
+scale = Vector2(3, 3)
 texture = ExtResource("1_tex")
 region_enabled = true
 region_rect = Rect2(80, 128, 16, 32)
 
-[node name="Collision" type="CollisionShape2D" parent="."]
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=1837584702]
 position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_chair")
 
-[node name="InteractionArea" type="Area2D" parent="."]
+[node name="InteractionArea" type="Area2D" parent="." unique_id=549425985]
 collision_layer = 0
 
-[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea"]
+[node name="InteractionCollision" type="CollisionShape2D" parent="InteractionArea" unique_id=527505699]
 shape = SubResource("CircleShape2D_interact")

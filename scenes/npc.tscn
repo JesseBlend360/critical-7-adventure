@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://npc00001"]
+[gd_scene format=3 uid="uid://npc00001"]
 
 [ext_resource type="Script" uid="uid://dijsfvs7gwoig" path="res://scripts/npc.gd" id="1_npc"]
 [ext_resource type="Script" uid="uid://c0g0l3dgbd014" path="res://scripts/bounce_animator.gd" id="3_bounce"]
-[ext_resource type="Script" path="res://scripts/character_animator.gd" id="4_charanim"]
+[ext_resource type="Script" uid="uid://dcj72i0semu81" path="res://scripts/character_animator.gd" id="4_charanim"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_abqhh"]
 radius = 14.0
@@ -10,24 +10,27 @@ radius = 14.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_zone"]
 radius = 64.0
 
-[node name="NPC" type="RigidBody2D"]
+[node name="NPC" type="RigidBody2D" unique_id=144766555]
 script = ExtResource("1_npc")
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Sprite2D" type="AnimatedSprite2D" parent="." unique_id=689680615]
 texture_filter = 1
 scale = Vector2(3, 3)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 11)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=910346691]
+position = Vector2(0, 38)
 shape = SubResource("CircleShape2D_abqhh")
 
-[node name="InteractionZone" type="Area2D" parent="."]
+[node name="InteractionZone" type="Area2D" parent="." unique_id=912511444]
+visible = false
 collision_layer = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionZone" unique_id=1609634997]
+position = Vector2(0, 17)
 shape = SubResource("CircleShape2D_zone")
 
-[node name="PromptLabel" type="Label" parent="."]
+[node name="PromptLabel" type="Label" parent="." unique_id=65584232]
+texture_filter = 2
 offset_left = -27.0
 offset_top = -49.0
 offset_right = 28.0
@@ -35,10 +38,10 @@ offset_bottom = -26.0
 text = "[space]"
 horizontal_alignment = 1
 
-[node name="BounceAnimator" type="Node" parent="."]
+[node name="BounceAnimator" type="Node" parent="." unique_id=2121692577]
 script = ExtResource("3_bounce")
-shadow_offset_y = 24.0
-shadow_color = Color(0, 0, 0, 1)
+shadow_offset_y = 45.0
+shadow_color = Color(0, 0, 0, 0.5)
 
-[node name="CharacterAnimator" type="Node" parent="."]
+[node name="CharacterAnimator" type="Node" parent="." unique_id=519681801]
 script = ExtResource("4_charanim")

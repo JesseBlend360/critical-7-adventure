@@ -113,6 +113,8 @@ func show_screen() -> void:
 	content.visible = true
 	is_visible = true
 	get_tree().paused = true
+	# v0.3: pause the day clock with a dedicated reason so the HUD dims it.
+	DayClock.pause("status_screen")
 
 
 func hide_screen() -> void:
@@ -120,6 +122,7 @@ func hide_screen() -> void:
 	content.visible = false
 	is_visible = false
 	get_tree().paused = false
+	DayClock.resume("status_screen")
 
 
 func _build_score_displays() -> void:

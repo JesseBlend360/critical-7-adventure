@@ -120,6 +120,10 @@ func _apply_loot() -> void:
 		GameState.set_flag(loot_flag)
 
 	# Apply score effects
+	# v0.3 note: in the reorientation, scores should only change via
+	# conversations. No scene currently populates loot_effect; this path
+	# is kept dormant. Before re-enabling, reconsider whether the reward
+	# should be a flag instead (which gates tomorrow's conversations).
 	if not loot_effect.is_empty():
 		GameState.apply_effects(loot_effect)
 
